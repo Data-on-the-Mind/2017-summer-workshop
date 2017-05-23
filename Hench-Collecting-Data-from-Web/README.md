@@ -30,3 +30,8 @@ This will provide you with both Git and Bash in the Git Bash program.
 All systems:
 
 * Install [Python 3.5 with Anaconda](https://www.continuum.io/downloads) with the Graphical Installer
+
+
+---
+
+Much of these materials were adapted from materials by [Rochelle Terman](https://github.com/rochelleterman) and [UC Berkeley's D-Lab](http://dlab.berkeley.edu/).
