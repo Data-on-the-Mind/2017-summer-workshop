@@ -6,7 +6,14 @@ import sys, cPickle,os
 import random, urllib2
 
 CENSUS_YEAR = 2012
-CENSUS_KEY = '2ce6c596b79f689bd990b6213d1ed4aacbba3f75'
+
+# SF1 variable definitions
+# https://api.census.gov/data/2010/sf1/variables.html
+# ACS variable definitions (big!)
+# https://api.census.gov/data/2012/acs5/variables.html
+
+#GET A CENSUS API KEY HERE: http://api.census.gov/data/key_signup.html
+CENSUS_KEY = 'no_key' 
 
 def extractListFromURL(data_source, variable, year):
     if(data_source=='sf1'):
@@ -14,7 +21,7 @@ def extractListFromURL(data_source, variable, year):
     elif(data_source=='acs5'):
         url = 'http://api.census.gov/data/'+str(year)+ '/acs5?key='+CENSUS_KEY+'&get=' + variable + '&for=zip+code+tabulation+area:*'
 
-    print url
+    print 'collecting data from:', url
         
     response = urllib2.urlopen(url)
     resp_text = response.read().split('\n') 
