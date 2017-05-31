@@ -20,8 +20,6 @@ lott['composite'] = (lott['Take5'] + lott['Win4Day'] + lott['Win4Eve'] +lott['Qu
 
 
 demographics = read_pickle('data/demographics.dat')
-demographics['z_ses'] = zscore(demographics.ses)
-
 zoning = read_pickle('data/zoning.dat')
 
 demographics = merge(demographics, zoning, on='ZIP')
