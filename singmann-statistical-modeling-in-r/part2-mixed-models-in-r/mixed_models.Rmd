@@ -1,0 +1,43 @@
+---
+title: "Mixed Models in R"
+subtitle: "A Practical Introduction"
+author: "Henrik Singmann (University of Zurich)"
+date: "June 2017"
+output:
+  xaringan::moon_reader:
+    css: ["default", "my-theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+---
+
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+# see: https://github.com/yihui/xaringan
+# install.packages("xaringan")
+# see: 
+# https://github.com/yihui/xaringan/wiki
+# https://github.com/gnab/remark/wiki/Markdown
+options(width=110)
+options(digits = 4)
+```
+
+# Mixed Models
+
+- Mixed models are a modern class of statistical models that extend regular
+regression models by including random effects parameters to account for dependencies
+among related data points.
+
+
+
+---
+### References Statistical Modeling:
+- Singmann, H., & Kellen, D. (in press). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler & E. Schumacher (Eds.), New Methods in Neuroscience and Cognitive Psychology. Psychology Press. http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf
+
+### References Example Data:
+- Skovgaard-Olsen, N., Singmann, H., & Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26–36. https://doi.org/10.1016/j.cognition.2015.12.017
