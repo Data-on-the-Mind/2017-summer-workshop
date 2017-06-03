@@ -1,0 +1,11 @@
+matplotlib
+numpy
+scipy
+pandas
+statsmodels
+ipywidgets
+nbconvert
+rpy2
+seaborn
+jupyter
+ipython
