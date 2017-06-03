@@ -10,13 +10,6 @@ statsmodels. Additionally, this tutorial will cover more advanced uses,
 including "widgets" for interactively exploring data, conversions to other
 formats such as HTML, using the notebook with R, and reproducibility.
 
-## Learning Objectives
-
-After completing this tutorial, you should come away with:
-
-* A working knowledge of how to use the Jupyter notebook
-* An u
-
 ## Setup
 
 This tutorial requires Python 3 and R to be installed, along with the Python
@@ -31,3 +24,7 @@ You will also need to enable the IPython widgets extension with:
 ```
 jupyter nbextension enable --py --sys-prefix widgetsnbextension
 ```
+
+Additionally, part of the tutorial covers converting the notebook to other
+formats. This requries `pandoc` to be installed:
+http://pandoc.org/installing.html
