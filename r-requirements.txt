@@ -1,0 +1,11 @@
+psych
+afex
+lsmeans
+lme4
+car
+dplyr
+tidyr
+purrr
+ggplot2
+broom
+xarigan
