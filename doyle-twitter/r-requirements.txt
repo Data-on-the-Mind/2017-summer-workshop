@@ -1,0 +1,8 @@
+ggplot2
+data.table
+dplyr
+readr
+tidyr
+tidytext
+bit64
+magrittr
