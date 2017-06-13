@@ -1,0 +1,27 @@
+cull:
+  enabled: false
+singleuser:
+  lifecycleHooks:
+    postStart:
+      exec:
+        command: ["/bin/sh", "-c", "test -f $HOME/.copied || cp -Rf ${APP_DIR}/src/. $HOME/; touch ${HOME}/.copied"]
+  storage:
+    capacity: 2Gi
+    storageClass:
+      parameters:
+         type: pd-ssd
+  image:
+    name: gcr.io/Data-on-the-Mind/2017-summer-workshop
+    tag: CHANGEME
+    memory:
+        limit: 1G
+        guarantee: 0.5G
+auth:
+   dummy:
+      password: dummy
+hub:
+  # output of first execution of 'openssl rand -hex 32'
+  cookieSecret: "CHANGEME"
+token:
+  # output of second execution of 'openssl rand -hex 32'
+  proxy: "CHANGEME"
