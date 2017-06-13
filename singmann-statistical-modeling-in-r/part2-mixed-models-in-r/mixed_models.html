@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mixed Models in R</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Henrik Singmann (University of Zurich)" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Mixed Models in R
+## A Practical Introduction
+### Henrik Singmann (University of Zurich)
+### June 2017
+
+---
+
+
+
+
+
+
+# Mixed Models
+
+- Mixed models are a modern class of statistical models that extend regular
+regression models by including random effects parameters to account for dependencies
+among related data points.
+
+
+
+---
+### References Statistical Modeling:
+- Singmann, H., &amp; Kellen, D. (in press). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp; E. Schumacher (Eds.), New Methods in Neuroscience and Cognitive Psychology. Psychology Press. http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf
+
+### References Example Data:
+- Skovgaard-Olsen, N., Singmann, H., &amp; Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26–36. https://doi.org/10.1016/j.cognition.2015.12.017
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
