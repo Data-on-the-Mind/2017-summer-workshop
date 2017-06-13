@@ -1,7 +1,7 @@
 ---
 title: "Statistical Modeling in R"
 subtitle: "The Basics"
-author: "Henrik Singmann (University of Zurich)"
+author: "Henrik Singmann (University of Zurich)<br/>Twitter: <a href='https://twitter.com/HenrikSingmann'>@HenrikSingmann</a>"
 date: "June 2017"
 output:
   xaringan::moon_reader:
@@ -470,7 +470,7 @@ class: inline-grey
   - `+` = main effects
   - `:` = interaction
   - `*` = main effects plus interaction
-  - `0+` = no intercept
+  - `0+`/`-1` = no intercept
 
 - Categorical variables are transformed into numerical variables using contrast functions (via `model.matrix()`).
   - If models include interactions, orthogonal contrasts (e.g., `contr.sum`) in which the intercept corresponds to the (unweighted) grand mean should be used: `afex::set_sum_contrasts()`
@@ -577,11 +577,12 @@ Functions supporting repeated-measures usually require more complicated formulas
 class: inline-grey
 # Summary: Analysis with Statistical Models in R
 
-1. Identify probability distribution data (or residuals) follow
+1. Identify probability distribution of data (or better: of residuals)
 2. Make sure variables are of correct type via `str()`
 3. Set appropriate contrasts (orthogonal contrasts if model includes interaction): `afex::set_sum_contrasts()`
 4. Describe statistical model using `formula`
 4. Fit model: pass `formula` and `data.frame` to corresponding modeling function (e.g., `lm()`, `glm()`)
+4. Check model fit (e.g., inspect residuals)
 5. Test terms (i.e., main effects and interactions): Pass fitted model to `car::Anova()`
 7. Follow-up tests: 
    - Estimated marginal means: Pass fitted model to `lsmeans::lsmeans()`
@@ -590,10 +591,40 @@ class: inline-grey
 --
 
 `afex` combines fitting (5.) and testing (6.):
-- ANOVAs: `afex::aov_car()`
+- ANOVAs: `afex::aov_car()`, `afex::aov_ez()`, or `afex::aov_4()`
 - (Generalized) linear mixed-effects models: `afex::mixed()`
 
+---
+class: small
+# ANOVAs with afex
 
+.pull-left[
+`afex::aov_car()` allows specification of ANOVA using formula, but requires specification of participant id in `Error()` term.
+
+```{r, message=FALSE, comment='#'}
+require(afex)
+sat.act$id <- factor(1:nrow(sat.act))
+(a1 <- aov_car(ACT ~ gender+Error(id), sat.act))
+
+```
+```{r}
+sat_long <- tidyr::gather(
+  sat.act, key = "SAT_type", 
+  value = "SAT_value", SATV, SATQ)
+```
+
+]
+
+--
+.pull-right[
+
+```{r, message=FALSE, comment='#'}
+(a2 <- aov_car(SAT_value ~ gender*SAT_type+
+                 Error(id/SAT_type), sat_long))
+lsmeans(a2, c("gender", "SAT_type"))
+```
+
+]
 
 ---
 class: center, middle, inverse
@@ -637,7 +668,7 @@ class: small
   - irrelevance (IR): *A* and *B* have no apparent relationship 
 
 - 348 participants recruited via `crowdflower.com` worked on 12 items:
-  > Sophia’s scenario: Sophia wishes to find a nice present for her 13-year-old son, Tim, for Christmas. She is running on a tight budget, but she knows that Tim loves participating in live role-playing in the forest and she is really skilled at sewing the orc costumes he needs. Unfortunately, she will not be able to afford the leather parts that such costumes usually have, but she will still be able to make them look nice.
+  > Sophia's scenario: Sophia wishes to find a nice present for her 13-year-old son, Tim, for Christmas. She is running on a tight budget, but she knows that Tim loves participating in live role-playing in the forest and she is really skilled at sewing the orc costumes he needs. Unfortunately, she will not be able to afford the leather parts that such costumes usually have, but she will still be able to make them look nice.
 
 --
 
@@ -683,4 +714,4 @@ class: small
   
 ### References Example Data:
 - Revelle, William, Wilt, Joshua, and Rosenthal, Allen (2009) Personality and Cognition: The Personality-Cognition Link. In Gruszka, Alexandra and Matthews, Gerald and Szymura, Blazej (Eds.) _Handbook of Individual Differences in Cognition: Attention, Memory and Executive Control_, Springer.
-- Skovgaard-Olsen, N., Singmann, H., & Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26–36. https://doi.org/10.1016/j.cognition.2015.12.017
+- Skovgaard-Olsen, N., Singmann, H., & Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26-36. https://doi.org/10.1016/j.cognition.2015.12.017

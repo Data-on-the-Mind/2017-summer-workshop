@@ -5,7 +5,7 @@ This repo contains the slides and exercise materials for the 2017 summer worksho
 ### Requirements
 - A recent version of `R` (preferrably `R 3.4.0`): `https://cran.rstudio.com/`
 - `R` packages necessary for the analysis (install with `install.packages("package")` at `R` prompt): `afex` (which automatically installs the additional requirements `lsmeans`, `lme4`, and `car`), `psych` (for example data)
-- `R` packages `dplyr`, `tidyr`, `purrr`, `ggplot2` and potentially `broom` for the exercise.
+- `R` packages `dplyr`, `broom`, `tidyr`, `purrr`, and `ggplot2` for the exercise (not all might be necessary).
 - `R` package `xaringan` to compile the slides.
 - A html 5 compatible browser to view the slides.
 - Preferrably `RStudio`: https://www.rstudio.com/products/rstudio/download3/#download

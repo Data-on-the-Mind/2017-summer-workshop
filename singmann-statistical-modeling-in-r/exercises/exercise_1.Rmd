@@ -16,7 +16,7 @@ output: html_notebook
 
 - Participant first saw a vignette:
   
-  > Sophia’s scenario: Sophia wishes to find a nice present for her 13-year-old son, Tim, for Christmas. She is running on a tight budget, but she knows that Tim loves participating in live role-playing in the forest and she is really skilled at sewing the orc costumes he needs. Unfortunately, she will not be able to afford the leather parts that such costumes usually have, but she will still be able to make them look nice.
+  > Sophia's scenario: Sophia wishes to find a nice present for her 13-year-old son, Tim, for Christmas. She is running on a tight budget, but she knows that Tim loves participating in live role-playing in the forest and she is really skilled at sewing the orc costumes he needs. Unfortunately, she will not be able to afford the leather parts that such costumes usually have, but she will still be able to make them look nice.
 
 - Then we asked participant for their rating for the conditional probability *P*(*B*|*A*) on the probability scale from 0% to 100%:
 
@@ -56,7 +56,7 @@ Some package we might need.
 require(dplyr)
 require(tidyr)
 require(ggplot2)
-require(purrr)
+require(broom)
 
 ```
 
@@ -114,7 +114,7 @@ Further Instructions:
 - Your task is to calculate the regression parameter (and potentially also the intercept) for each participant and within-subject condition.
 - Then compare the regression parameters across conditions. In a graphical way and also statistically (i.e., ANOVA).
 - The goal of this exercise is to combine your knowledge of the `tidyverse` and use it to solve the aforementioned task.
-- I would suggest you use package `dplyr` and potentially `tidyr` and `purrr` (the latter two are not necessary, but possible).
+- I would suggest you use package `dplyr` and potentially `broom` or `tidyr` and `purrr`.
 - In case you need some inspiration for `tidyr` and `purr`, you might want to take a look at chapter 25 (especially 25.2.1, 25.2.2, 25.2.3) of Wickham and Grolemund (2017) see: http://r4ds.had.co.nz/many-models.html
 
 
@@ -123,6 +123,6 @@ Further Instructions:
 ```
 
 ## References 
-- Skovgaard-Olsen, N., Singmann, H., & Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26–36. https://doi.org/10.1016/j.cognition.2015.12.017
-- Wickham, H., & Grolemund, G. (2017). R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. Sebastopol  CA: O’Reilly.
+- Skovgaard-Olsen, N., Singmann, H., & Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26-36. https://doi.org/10.1016/j.cognition.2015.12.017
+- Wickham, H., & Grolemund, G. (2017). *R for Data Science: Import, Tidy, Transform, Visualize, and Model Data.* Sebastopol  CA: O'Reilly.
 

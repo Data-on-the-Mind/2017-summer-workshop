@@ -3,7 +3,7 @@
   <head>
     <title>Statistical Modeling in R</title>
     <meta charset="utf-8">
-    <meta name="author" content="Henrik Singmann (University of Zurich)" />
+    <meta name="author" content="Henrik Singmann (University of Zurich) Twitter: @HenrikSingmann" />
     <link href="libs/remark-css/example.css" rel="stylesheet" />
     <link rel="stylesheet" href="my-theme.css" type="text/css" />
   </head>
@@ -13,7 +13,7 @@ class: center, middle, inverse, title-slide
 
 # Statistical Modeling in R
 ## The Basics
-### Henrik Singmann (University of Zurich)
+### Henrik Singmann (University of Zurich)<br/>Twitter: <a href='https://twitter.com/HenrikSingmann'><span class="citation">@HenrikSingmann</span></a>
 ### June 2017
 
 ---
@@ -839,7 +839,7 @@ class: inline-grey
   - `+` = main effects
   - `:` = interaction
   - `*` = main effects plus interaction
-  - `0+` = no intercept
+  - `0+`/`-1` = no intercept
 
 - Categorical variables are transformed into numerical variables using contrast functions (via `model.matrix()`).
   - If models include interactions, orthogonal contrasts (e.g., `contr.sum`) in which the intercept corresponds to the (unweighted) grand mean should be used: `afex::set_sum_contrasts()`
@@ -1031,11 +1031,12 @@ Functions supporting repeated-measures usually require more complicated formulas
 class: inline-grey
 # Summary: Analysis with Statistical Models in R
 
-1. Identify probability distribution data (or residuals) follow
+1. Identify probability distribution of data (or better: of residuals)
 2. Make sure variables are of correct type via `str()`
 3. Set appropriate contrasts (orthogonal contrasts if model includes interaction): `afex::set_sum_contrasts()`
 4. Describe statistical model using `formula`
 4. Fit model: pass `formula` and `data.frame` to corresponding modeling function (e.g., `lm()`, `glm()`)
+4. Check model fit (e.g., inspect residuals)
 5. Test terms (i.e., main effects and interactions): Pass fitted model to `car::Anova()`
 7. Follow-up tests: 
    - Estimated marginal means: Pass fitted model to `lsmeans::lsmeans()`
@@ -1044,10 +1045,77 @@ class: inline-grey
 --
 
 `afex` combines fitting (5.) and testing (6.):
-- ANOVAs: `afex::aov_car()`
+- ANOVAs: `afex::aov_car()`, `afex::aov_ez()`, or `afex::aov_4()`
 - (Generalized) linear mixed-effects models: `afex::mixed()`
 
+---
+class: small
+# ANOVAs with afex
 
+.pull-left[
+`afex::aov_car()` allows specification of ANOVA using formula, but requires specification of participant id in `Error()` term.
+
+
+```r
+require(afex)
+sat.act$id &lt;- factor(1:nrow(sat.act))
+(a1 &lt;- aov_car(ACT ~ gender+Error(id), sat.act))
+```
+
+```
+# Anova Table (Type 3 tests)
+# 
+# Response: ACT
+#   Effect     df   MSE    F  ges p.value
+# 1 gender 1, 685 23.33 1.19 .002     .28
+# ---
+# Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+```r
+sat_long &lt;- tidyr::gather(
+  sat.act, key = "SAT_type", 
+  value = "SAT_value", SATV, SATQ)
+```
+
+]
+
+--
+.pull-right[
+
+
+```r
+(a2 &lt;- aov_car(SAT_value ~ gender*SAT_type+
+                 Error(id/SAT_type), sat_long))
+```
+
+```
+# Anova Table (Type 3 tests)
+# 
+# Response: SAT_value
+#            Effect     df      MSE         F   ges p.value
+# 1          gender 1, 685 21348.07   7.34 **  .009    .007
+# 2        SAT_type 1, 685  4527.32      0.60 .0002     .44
+# 3 gender:SAT_type 1, 685  4527.32 21.54 ***  .005  &lt;.0001
+# ---
+# Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+```r
+lsmeans(a2, c("gender", "SAT_type"))
+```
+
+```
+#  gender SAT_type lsmean    SE     df lower.CL upper.CL
+#  male   SATV      612.2 6.458 1045.7    599.5    624.8
+#  female SATV      607.5 6.131  895.9    595.4    619.5
+#  male   SATQ      632.7 6.458 1045.7    620.0    645.3
+#  female SATQ      592.8 6.131  895.9    580.8    604.8
+# 
+# Confidence level used: 0.95
+```
+
+]
 
 ---
 class: center, middle, inverse
@@ -1091,7 +1159,7 @@ class: small
   - irrelevance (IR): *A* and *B* have no apparent relationship 
 
 - 348 participants recruited via `crowdflower.com` worked on 12 items:
-  &gt; Sophia’s scenario: Sophia wishes to find a nice present for her 13-year-old son, Tim, for Christmas. She is running on a tight budget, but she knows that Tim loves participating in live role-playing in the forest and she is really skilled at sewing the orc costumes he needs. Unfortunately, she will not be able to afford the leather parts that such costumes usually have, but she will still be able to make them look nice.
+  &gt; Sophia's scenario: Sophia wishes to find a nice present for her 13-year-old son, Tim, for Christmas. She is running on a tight budget, but she knows that Tim loves participating in live role-playing in the forest and she is really skilled at sewing the orc costumes he needs. Unfortunately, she will not be able to afford the leather parts that such costumes usually have, but she will still be able to make them look nice.
 
 --
 
@@ -1118,7 +1186,7 @@ class: small
 - For each item, participants provide idiosyncratic estimates of *P*(if *A* then *B*) and *P*(*B*|*A*).
 - Each participant worked on 12 items, 4 per relevance condition.
 - 2 x 2 between-subjects design:
-  - IV: probability versus acceptability of 'if *A* then *B*'
+  - DV: probability versus acceptability of 'if *A* then *B*'
   - Indicative conditional (if *A* then *B*) versus concessive conditional (even if *A* then *B*)
   
 - Data available at: https://osf.io/j4swp/
@@ -1137,7 +1205,7 @@ class: small
   
 ### References Example Data:
 - Revelle, William, Wilt, Joshua, and Rosenthal, Allen (2009) Personality and Cognition: The Personality-Cognition Link. In Gruszka, Alexandra and Matthews, Gerald and Szymura, Blazej (Eds.) _Handbook of Individual Differences in Cognition: Attention, Memory and Executive Control_, Springer.
-- Skovgaard-Olsen, N., Singmann, H., &amp; Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26–36. https://doi.org/10.1016/j.cognition.2015.12.017
+- Skovgaard-Olsen, N., Singmann, H., &amp; Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26-36. https://doi.org/10.1016/j.cognition.2015.12.017
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
