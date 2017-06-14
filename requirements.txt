@@ -1,15 +1,23 @@
-matplotlib
-bs4
-selenium
-lxml
-pandas
-numpy
-scipy
-statsmodels
-ipywidgets
-nbconvert
-rpy2
-seaborn
-jupyter
-ipython
-dallinger==3.0.0
+# ## Already installed by jupyter/datascience-notebook
+# #matplotlib
+# #pandas
+# #numpy
+# #scipy
+# #statsmodels
+# #ipywidgets
+# #nbconvert
+# #seaborn
+# #jupyter
+# #ipython
+# 
+# ## install with conda
+# #bs4
+# beautifulsoup4
+# selenium
+# lxml
+# rpy2
+# nose
+# 
+# ## install with pip2
+# dallinger==3.0.0
+# 

@@ -1,11 +1,23 @@
-psych
-afex
-lsmeans
-lme4
-car
-dplyr
-tidyr
-purrr
-ggplot2
-broom
-xarigan
+# ## Already installed by jupyter/datascience-notebook
+# dplyr
+# tidyr
+# ggplot2
+# 
+# ## install with conda
+# #psych
+# #afex
+# #lsmeans
+# #lme4
+# #car
+# #broom
+# #purrr
+# r-psych
+# r-afex
+# r-lsmeans
+# r-lme4
+# r-car
+# r-broom
+# r-purrr
+# 
+# ## packages not found
+# xarigan
