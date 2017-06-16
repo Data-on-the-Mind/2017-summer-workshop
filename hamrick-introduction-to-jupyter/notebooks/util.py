@@ -40,3 +40,21 @@ def mds(similarities):
     df = pd.DataFrame(pos, index=similarities.index.copy(), columns=["x", "y"])
     df.index.name = "label"
     return df.reset_index()
+
+
+def zscore(X):
+    """Normalize an array by shifting it by its mean and scaling it
+    by its standard deviation.
+    
+    """
+    return (X - X.mean(axis=0)) / X.std(axis=0)
+
+
+def generate_swiss_roll(N=1000):
+    """Generate dataset C with `N` points."""
+    np.random.seed(123)
+    phi = (3 * np.pi / 2) * (1 + 2 * np.random.rand(N))
+    height = 50 * np.random.rand(N)
+    data = zscore(np.array([2 * phi * np.cos(phi), height, phi * np.sin(phi)]).T)
+    colors = phi.copy()
+    return data, colors
