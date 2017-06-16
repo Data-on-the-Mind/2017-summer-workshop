@@ -9,3 +9,4 @@ rpy2
 seaborn
 jupyter
 ipython
+sklearn
