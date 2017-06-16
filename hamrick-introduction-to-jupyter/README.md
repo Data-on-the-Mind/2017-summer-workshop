@@ -28,3 +28,28 @@ jupyter nbextension enable --py --sys-prefix widgetsnbextension
 Additionally, part of the tutorial covers converting the notebook to other
 formats. This requries `pandoc` to be installed:
 http://pandoc.org/installing.html
+
+## Outline
+
+This tutorial will be broken down into two sections: *basics* and *advanced
+usage*. In the basics section of the tutorial, we will cover the following
+topics:
+
+1. **Introduction to the Jupyter Notebook** -- in this notebook, we will go
+   through basic usage of the notebook (editing and executing cells, restarting
+   the kernel, adding new cells, etc.)
+2. **Markdown and LaTeX Cheatsheet** -- this notebook introduces the basis of
+   using Markdown (a language for formatting text) and LaTeX equations (a
+   language for rendering mathematical equations). While we won't go through the
+   whole notebook in detail during the workshop, it is provided as a reference
+   for you afterwards and to encourage you to document your notebooks with rich
+   text and math.
+3. **Manipulating and Plotting Data in the Notebook** -- in this notebook, I
+   will give a very brief introduction to Pandas and Matplotlib, and demonstrate
+   how to create simple plots in the notebook.
+4. **Using Matplotlib Interactively** -- this notebook is really more of an
+   extension of the previous notebook, and introduces an alternate way of
+   creating plots in the notebook. In the interactive mode, plots can be
+   modified on the fly and interactively inspected.
+
+In the advanced section of the tutorial we will cover:
