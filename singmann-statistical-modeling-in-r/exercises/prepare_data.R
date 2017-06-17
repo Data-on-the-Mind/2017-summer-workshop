@@ -44,7 +44,10 @@ dat <- within(dw, {
 dat$AC <- NULL
 dat$conclusion <- NULL
 
+dat <- droplevels(dat[ dat$conditional == "indicative", ])
+dat$conditional <- NULL
+dat$type <- NULL
 
-str(dat)
+length(levels(dat$lfdn))
 
 save(dat, file="ssk16_dat_preapred.rda")

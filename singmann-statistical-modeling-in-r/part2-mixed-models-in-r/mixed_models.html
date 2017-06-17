@@ -3,7 +3,7 @@
   <head>
     <title>Mixed Models in R</title>
     <meta charset="utf-8">
-    <meta name="author" content="Henrik Singmann (University of Zurich)" />
+    <meta name="author" content="Henrik Singmann (University of Zurich) Twitter: @HenrikSingmann" />
     <link href="libs/remark-css/example.css" rel="stylesheet" />
     <link rel="stylesheet" href="my-theme.css" type="text/css" />
   </head>
@@ -13,7 +13,7 @@ class: center, middle, inverse, title-slide
 
 # Mixed Models in R
 ## A Practical Introduction
-### Henrik Singmann (University of Zurich)
+### Henrik Singmann (University of Zurich)<br/>Twitter: <a href='https://twitter.com/HenrikSingmann'><span class="citation">@HenrikSingmann</span></a>
 ### June 2017
 
 ---
@@ -25,9 +25,35 @@ class: center, middle, inverse, title-slide
 
 # Mixed Models
 
-- Mixed models are a modern class of statistical models that extend regular
-regression models by including random effects parameters to account for dependencies
-among related data points.
+- Mixed models are a modern class of statistical models that extend regular regression models by including random effects parameters to account for dependencies among related data points.
+
+--
+
+.pull-left[
+
+### Fixed Effects
+- Overall  or *population-level average* effect of specific model term (i.e., main effect, interaction, parameter) on dependent variable
+- Independent of stochastic variability controlled for by random effects
+- Hyptothesis tests on fixed effect interpreted as hypothesis tests for terms in standard ANOVA or regression model
+- Possible to test specific hypotheses among factor levels (e.g., planned contrasts)
+
+]
+
+.pull-right[
+### Random Effects
+
+- *Random effect grouping factors*: Categorical variables that capture random or stochastic variability (e.g., participants, items, groups, or other hierarchical-structures).
+- In experimental settings, random effects grouping factors often part of design one wants to generalize over.
+- Random effects factor out idiosyncrasies of sample, thereby providing a more general estimate of the fixed effects of interest.
+]
+
+---
+
+# Example Data
+
+description follows...
+
+---
 
 
 
@@ -36,7 +62,7 @@ among related data points.
 - Singmann, H., &amp; Kellen, D. (in press). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp; E. Schumacher (Eds.), New Methods in Neuroscience and Cognitive Psychology. Psychology Press. http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf
 
 ### References Example Data:
-- Skovgaard-Olsen, N., Singmann, H., &amp; Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26–36. https://doi.org/10.1016/j.cognition.2015.12.017
+- Skovgaard-Olsen, N., Singmann, H., &amp; Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26-36. https://doi.org/10.1016/j.cognition.2015.12.017
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
