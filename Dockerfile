@@ -1,4 +1,4 @@
-FROM aculich/minimalist:f9c685c
+FROM aculich/minimalist:8bec485
 
 RUN conda install --yes r-psych r-afex r-lsmeans r-lme4 r-car r-broom r-purrr
 
