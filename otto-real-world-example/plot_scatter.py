@@ -1,3 +1,5 @@
+from pylab import *
+
 figure()
 [x, y] = [[],[]]
 grouped = lott.groupby('ZIP') 

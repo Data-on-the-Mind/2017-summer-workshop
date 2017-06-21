@@ -1,3 +1,5 @@
+from pylab import *
+
 mean_lott = lott.groupby('date').aggregate(mean)
 
 figure()
