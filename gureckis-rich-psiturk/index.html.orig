@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Using Mechanical Turk for Cognition Experiments - John McDonnell and Todd Gureckis</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css" media="screen">
+    /* Slideshow styles */
+      @import url(http://fonts.googleapis.com/css?family=Lobster);
+      @import url(http://fonts.googleapis.com/css?family=Bitter);
+      @import url(http://fonts.googleapis.com/css?family=Oxygen);
+      
+      body { 
+        font-family: 'Oxygen', sans-serif;
+        font-size: 24px;
+      }
+      h1 {
+          font-family: 'Lobster', cursive;
+          color: #444;
+          font-weight: normal;
+          font-size: 55px;
+      }
+      h2 {
+      }
+      li {
+        margin-bottom: 15px;
+      }
+      ul {
+          margin: 0;
+          margin-top: 10px;
+      }
+      a {
+        color: #eaab0c;
+        text-decoration: 1px dotted #ccc;
+      }
+      p {
+          margin: 0px;
+      }
+      .slide {
+          
+      }
+      iframe {
+        position: relative;
+        width: 750px;
+        height: 450px;
+        margin: 0 auto;
+      }
+      .center {
+        margin: 0 auto;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+
+      .refs {
+        font-size: 18px;
+      }
+
+      .red    { color: #FF4943; }
+      .gray   { color: #787878; }
+      .green  { color: #92d12d; }
+      .blue   { color: #41C8F0; }
+      .yellow { color: #dbcb14; }
+      .orange { color: #eaab0c; }
+
+      
+      .people {
+          border-top: 1px solid #f1f1f1;
+      }
+      
+
+      .task {
+        /* float: right; */
+        position: absolute;
+        top: 25px;
+        right: 50px;
+        font-size: 18px;
+        padding-top: 0.6em;
+        color: #d3d3d3;
+      }
+      .task a {
+        color: #080;
+        text-decoration: none;
+      }      
+
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      
+      .shortlist {
+          font-size: 27px;
+      }
+     
+      
+      .rotatetitle {
+          transform:rotate(-12deg);
+          -ms-transform:rotate(12deg);
+          -moz-transform:rotate(12deg);
+          -webkit-transform:rotate(-12deg);
+          -o-transform:rotate(-12deg);
+
+          -ms-transform-origin:150% -170%;
+          -moz-transform-origin:150% -170%;
+          -webkit-transform-origin:150% -170%;
+          -o-transform-origin:150% -170%;
+
+          font-size: 15px;
+      }
+      
+      .smallquote {
+          font-size: 14px;
+      }
+      
+      .position {
+          color: #ccc;
+          font-size: 12px;
+      }
+      
+      pre code {
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+      }
+
+
+      /* Two-column layout */
+      .left-column {
+        width: 70%;
+        float: left;
+      }
+
+      .right-column {
+        width: 30%;
+        float: right;
+      }
+      
+      #slideshow .slide .content code { font-size: 11px;
+        
+      }
+   </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: title
+class: center, middle
+
+# Using .blue[Mechanical Turk] and .blue[PsiTurk] for Dynamic Web Experiments
+.author[
+Anna Coenen ([@AnnaCoenen](http://twitter.com/AnnaCoenen)), Doug Markant ([@dougmarkant](http://twitter.com/dougmarkant)), Jay Martin, and John McDonnell ([@johnvmcdonnell](http://twitter.com/johnvmcdonnell))  
+_[Computation and Cognition Lab](http://gureckislab.org)_  
+_Department of Psychology_  
+_New York University_  
+]
+
+
+---
+name: goals
+class: shortlist, middle
+
+# Our three goals
+
+1. Give an introduction to Amazon Mechanical Turk
+
+2. Discuss the capabilities and limits of web-based experiments
+
+3. Introduce the psiturk toolbox for making AMT-based web experiments as painless as possible
+
+<<<<<<< HEAD
+Get slides here: [nyuccl.org/pages/mtworkshop2](http://nyuccl.org/pages/mtworkshop2) 
+
+...or on [github](http://github.com/NYUCCL/MTurkWorkshop_CogSci2013) (bottom right: "download zip")
+
+=======
+>>>>>>> Minor intro changes #   (use "git reset HEAD <file>..." to unstage)
+---
+
+name: whatisamt
+class: center, middle
+# What is ".blue[Mechanical Turk]"?
+
+---
+
+.task[Part 1: What is AMT?]
+# The history
+
+
+- Developed by [Amazon.com](http://amazon.com)
+
+- Originally for in-house use to detect duplicate product postings on Amazon's site .red[*]
+
+<br><br>
+.center[<img src="images/AMTLogo.png" width="300">
+]
+
+
+
+.footnote[.red[*] Nice summary in the [New York Times](http://www.nytimes.com/2007/03/25/business/yourmoney/25Stream.html)]
+
+
+---
+
+
+name: terminology
+class: shortlist, middle
+
+.task[Part 1: What is AMT?]
+# Key terminology
+
+
+- HIT = Human Intelligence Task (a unit of work, e.g. a trial or an entire sequence of trials in an experiment)
+
+- .orange[**Requester**] = an entity (e.g., researcher) who posts HITs
+
+- .blue[**Worker**] = a person who performs the task
+
+---
+
+
+.task[Part 1: What is AMT?]
+# Who are the workers?
+
+- 46.80% US, 34% India, 19.20% Other
+
+- United States demographic
+    - 55-65% female
+    - Most make  <$60k/year
+    - Median age of 30
+    - Hold bachelor's and are young
+    - Distribution mostly similar to US internet pop.
+    
+- See Ipeirotis, et al. (2010) or Mason and Siddharth (2011).
+
+---
+
+.task[Part 1: What is AMT?]
+# World Distribution
+
+<img src="images/world-turk-distribution.jpg" width="700">
+
+Tamir (2011)
+
+
+---
+
+.task[Part 1: What is AMT?]
+# Compensation
+
+- Median wage is $1.38/hour
+
+- Short tasks (~5 mins) award around 10 cents
+
+- Requester can reject work and revoke payment
+
+- And can also **award bonuses**
+
+- Amazon takes 10% of payments
+
+- Amazon tries to stay out of disputes
+
+
+---
+
+
+.task[Part 1: What is AMT?]
+# Outside of the US
+
+- Unfortunately, getting a requester account from outside the US can be a bit tricky
+
+- Requires US billing address  and US debit or credit card
+
+- If you can't get a US credit card, setting up the account with a US American collaborator is an option
+
+- Or consider international/European alternatives to AMT, such as [clickworker](http://www.clickworker.com), [crowdflower](http://crowdflower.com). The latter actually uses AMT workers, but is accessible worldwide 
+
+- (the psiTurk toolbox could in principle be adapted to work with other platforms)
+
+
+---
+
+.task[Part 1: What is AMT?]
+# Why use web experiments?
+
+- **Convenient**
+    - And the psiTurk toolbox will help you even more
+- **Fast** 
+    - Collect a lot of data quickly, also good for piloting
+- **Affordable**
+    - Workers will sign up for $2.00 for 15-25 minute session
+- **Anonymous**
+    - Subject never meets experimenter
+    - Subjects unlikely to know about "your lab"
+- **Replicable**
+    - Very easy to share your experiment code
+
+
+---
+
+
+.task[Part 1: What is AMT?]
+# Why not?
+A few concerns have been raised abut AMT data:
+<br><br>
+
+- **Selection Bias:** No control over who takes the experiment
+    - Makes AMT sample probably less useful for research on ideology, or political attitudes (53% are self-identified liberals, 25% conservatives, 73% voted for Obama, see details [here](http://themonkeycage.org/2012/12/19/how-representative-are-amazon-mechanical-turk-workers/))
+
+    - See [this](http://www.culturalcognition.net/blog/2013/7/10/fooled-twice-shame-on-who-problems-with-mechanical-turk-stud.html) blogpost for a discussion
+
+    - On the other hand, 20 year old university students are a very special sample too!
+
+---
+.task[Part 1: What is AMT?]
+# Why not?
+
+- **Contamination of subject base** 
+    - Recent [study](http://www.jessechandler.com/uploads/2/8/0/5/2805897/13_chandler_mueller__paolacci.pdf) has addressed this question
+    - Can be a problem for *very* widely used paradigms 
+      - 56% had participated in Prisoner's Dilemma, 52% in Ultimatum game, 30% Trolley problem
+
+    - Cross talk (e.g. in AMT forums) seems to be rare (workers share information about payment, duration, etc.)
+
+    - For specific studies repeated participation can be prevented by recording worker's IDs
+ - .blue[PsiTurk toolbox helps with this!]
+
+---
+.task[Part 1: What is AMT?]
+# Why not?
+- **Non-lab setting **
+    - [This](http://www.jessechandler.com/uploads/2/8/0/5/2805897/13_chandler_mueller__paolacci.pdf) study showed
+      - 27% were not alone while working on the HIT
+      - 18% were watching tv
+      - 14% were listening to music
+
+    - Recording how often participants change windows/take breaks might help clean data
+  - .blue[PsiTurk toolbox helps with this!]
+
+    - Still, the lack of experimental control over a worker's environment might make some studies unsuitable for AMT
+
+
+---
+
+
+class: center, middle
+
+# How does the data compare to that collected in the lab?
+
+
+---
+
+name: replicationstudies
+
+.task[Part 1: What is AMT?]
+# Lots of interest in this...
+
+.refs[
+
+- Gosling, S.D., Vazire, S., Srivastava, S., & John, O.P. (2004). [Should we trust web-based studies? A comparative analysis of six preconceptions about Internet questionnaires](http://ww.w.simine.com/docs/Gosling_et_al_AP_2004.pdf). _American Psychologist_, 59, 2, 93-104.
+
+- Paolacci, G., Chandler, J., & Ipeirotis, P. G. (2010). [Running experiments on Amazon Mechanical Turk](http://repub.eur.nl/res/pub/31983/jdm10630a[1].pdf). _Judgment and Decision Making_, 5, 411-419.
+
+- Buhrmester, M., Kwang, T., & Gosling, S. D. (2011). [Amazon's Mechanical Turk A New Source of Inexpensive, Yet High-Quality, Data?](http://pps.sagepub.com/content/6/1/3.full). _Perspectives on Psychological Science_, 6(1), 3-5.
+
+- Germine, L., Nakayama, K., Duchaine, B.C., Chabris, C.F., Chatterjee, G. & Wilmer, J.B. (2012).  [Is the Web as good as the lab?  Comparable performance from Web and lab in cognitive/perceptual experiments](http://www.springerlink.com/content/f0244t772070138w/)  _Psychonomic Bulletin & Review_,  19.5.
+
+
+- Shapiro, D. N., Chandler, J., & Mueller, P. A. (2013). [Using Mechanical Turk to Study Clinical Populations](http://s3.amazonaws.com/academia.edu.documents/30554524/Clinical_Psychological_Science-2013-Shapiro-2167702612469015.pdf?AWSAccessKeyId=AKIAIR6FSIMDFXPEERSA&Expires=1374090987&Signature=%2B4nErhKWOQhoWYY9gpgV0EbvVa0%3D&response-content-disposition=inline). _Clinical Psychological Science_, 1(2), 213-220.
+
+]
+
+---
+
+
+.task[Part 1: What is AMT?]
+# Do classic findings replicate?
+
+- Some members of our lab recently contributed to this study that tested some classic psychology experiments on AMT.red[*]
+
+    - Crump, M. J., McDonnell, J. V., & Gureckis, T. M. (2013). [Evaluating Amazon's Mechanical Turk as a tool for experimental behavioral research.](http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0057410) PloS one, 8(3).
+
+
+- Focus was on reaction time findings that require sustained attention from subjects and precise recording of responses
+
+- And learning experiments involving more cognitive effort 
+
+
+.footnote[.red[*] For a summary of the paper see this [blog post](http://gureckislab.org/blog/?p=1297)]
+
+---
+
+
+
+.task[Part 1: What is AMT?]
+# Stimulus Detection
+.left-column[ 
+
+Stroop
+
+  - People respond faster to congruent (e.g. .blue[blue]) than to incongruent (.green[blue]) items
+
+
+Task Switching
+
+  - Faster RT if task stays the same (e.g. "Odd or Even?") than when tasks alternate ("Odd or Even?" / "Small or Large?")
+
+Flanker
+
+  - When identifying a target (e.g. "h"), congruent flankers ("hhhhh") lead to faster RTs than incongruent ("ffhhff") ones
+
+]
+  
+
+.center[.right-column[
+<img src="images/StroopResult.png" width="160">
+<img src="images/TaskSwitchingResult.png" width="160">
+<img src="images/FlankerResult.png" width="160">
+]]  
+
+
+---
+
+.task[Part 1: What is AMT?]
+# Stimulus Detection
+.left-column[ 
+
+Simon
+
+  - Targets that are spatially compatible with response key are identified faster
+
+
+Visual Cuing 
+
+  - Stimulus detection is faster for cued  versus uncued targets if cue is presented after short interval (<=300ms) and slower after longer interval (>=400ms)
+
+Attentional Blink
+
+  - During rapid serial visual presentation visual target detection is impaired if target is displayed 100-500ms after another one
+
+
+]
+
+
+.center[.right-column[
+<img src="images/SimonResult.png" width="160">
+<img src="images/ContCueing.png" width="160">
+<img src="images/AttentionalBlink.png" width="160">
+]]  
+
+---
+
+
+.task[Part 1: What is AMT?]
+# Subliminal Perception
+
+Masked priming
+
+  - Responding to arrow probes that are either compatibly (prime: >>, probe: >>) or incompatibly primed (prime: <<, probe: >>) at durations of 16, 32, 48, 64, 80, and 96 ms 
+
+  -  Previous finding was that compatibility effects are negative for very short prime durations and positive for longer ones
+
+
+  .center[
+   <img src="images/PrimingResult.png" width="330">
+   ]
+
+  - Only partially replicated: no negative compatibility effect
+
+  - Lower bound on display duration in browser!
+
+---
+
+
+.task[Part 1: What is AMT?]
+# Category Learning
+
+- Classic Shepard, Hovland, & Jenkins (1961) paper
+
+- Six different ways of classifying the same 8 items (geometric figures with 3 binary dimensions) into deterministic categories
+
+- Generally Type I is learned faster than Type II which is faster that Types III-V, with Type VI the hardest
+.center[
+<img src="images/abstractstructureSHJ.png" width="150"><img src="images/dimstructureSHJ.png" width="170">
+<img src="images/SHJDifficulty.png" width="550">
+]
+
+---
+
+.task[Part 1: What is AMT?]
+# Results
+
+Although type I was learned easily, performance on all other types was significantly worse than in the original study
+<br><br>
+
+.center[
+<img src="images/exp8-nosofsky.png" height="290"><img src="images/exp8-amt.png" height="290">
+]
+
+
+---
+
+
+
+
+.task[Part 1: What is AMT?]
+# Incentives too low?
+There was little difference between high ($2 to $4.50 with bonus), medium ($1.50), and low-payment ($.75) groups
+<br><br>
+
+<img src="images/exp9-typeII.png" height="290">
+<img src="images/exp9-typeIV.png" height="290">
+
+
+---
+
+
+.task[Part 1: What is AMT?]
+# Bad instructions?
+Including manipulation checks that asked non-trivial questions about the task improved performance on types II to VI
+<br><br>
+
+<img src="images/exp10-n-vs-amt.png" height="310">
+<img src="images/exp10-l-vs-amt.png" height="310">
+
+
+---
+
+.task[Part 1: What is AMT?]
+# Replication in other Areas
+
+1. Clinical (Shapiro, et al, 2013)
+
+  - Scores on a range of psychometric tests had high internal consistency and test-retest reliability  (r =.87)
+
+2. Personality (Buhrmeser, et al, 2011)
+
+  - No difference in consistency on personality questionnaires at different payment levels, and absolute levels of consistency and test-retest reliability were high (r = .88)
+
+3. JDM (Paolacci, et al, 2010)
+  
+  -  Compared classic JDM studies (Asian Disease, Linda, Physicians Problem) on AMT and university subject pool
+  - No difference in failure rate of catch trials and pattern of behavior in studies but AMT subjects were more risk averse
+
+---
+
+.task[Part 1: What is AMT?]
+# A word on Ethics
+
+- How much should you pay?  
+    - As much as the market supports or should it match what you pay in the lab (roughly)?
+    - AMT has been criticized for incentivizing companies to outsource labor without adequate compensation (for discussions see for example [here](http://priceonomics.com/who-makes-below-minimum-wage-in-the-mechanical/?utm_source=buffer&utm_campaign=Buffer&utm_content=buffer2d486&utm_medium=twitter), [here](http://economix.blogs.nytimes.com/2013/03/18/the-unregulated-work-of-mechanical-turk/), and [here](http://www.huffingtonpost.com/julian-dobson/mechanical-turk-amazons-underclass_b_2687431.html))
+
+- Can you get IRB approval for your experiment?
+
+    - Arguably, workers have more freedom of choice than lab participants (can stop experiment any time)
+
+    - Wasn't very difficult to add to an existing IRB at NYU
+
+
+---
+
+.task[Part 1: What is AMT?]
+# Be a good requester
+- If your task breaks, workers *will* e-mail you!
+
+- They also share information about good and bad requesters:
+<br><br>
+.center[
+<img src="images/Turkopticon.png" height="350">
+]
+ 
+---
+
+.task[Part 1: What is AMT?]
+# Be a good requester
+ 
+A few recommendations to keep workers happy...
+
+1. Before running, .blue[test your experiment] on different browsers and the sandbox (AMT's testing environment)
+
+1. Give explicit instructions and .blue[show warnings] about closing the page, going back in the browsers, etc.
+
+1. Start collecting data in .blue[small batches]
+ 
+1. If something goes wrong, provide an .blue[alternative payment method] for workers who are unable to finish or submit HIT
+    - One way of doing this is to provide a HIT with no content specifically aimed at workers that had problems and pay them using a "bonus"
+ 
+---
+
+
+.task[Part 1: What is AMT?]
+# Part 1: Summary
+
+1. AMT  allows you to collect data quickly and conveniently
+
+1. Web experiments can prevent experimenter effects and increase anonymity
+
+1. Many classic psychology findings replicate with high fidelity
+    - But  it's important to check for browser limits regarding presentation time, etc.
+
+    - It's also helpful to check participants' understanding of the task
+
+1. Changing payment does not have a large effect performance but does affect signup and dropout rates
+
+1. Make sure to build up a good reputation with AMT workers to make your life easier
+
+    
+<!-- - Note: dropout rates are much higher than in the lab, so maybe consider reporting those if they might interact with performance
+ -->
+
+
+
+---
+
+
+
+class: center, middle
+
+.task[Part 1: What is AMT?]
+
+# End of .blue[Part 1]
+Questions?
+
+
+
+---
+
+
+name: part2
+class: center, middle
+ 
+.task[Part 2: Demo]
+ 
+# Using AMT and the psiTurk Dashboard
+
+
+---
+
+
+class: middle
+.task[Part 2: Using AMT]
+
+# Two perspectives:
+ 
+1. What is it like to use AMT as a [**Worker**](#terminology)?
+ 
+2. What is it like to use AMT as a [**Requester**](#terminology)?
+
+# Two platforms:
+
+1. The sandbox
+
+    - Worker sandbox ([workersandbox.mturk.com](http://workersandbox.mturk.com))
+
+    - Requester sandbox ([requestersandbox.mturk.com](http://requestersandbox.mturk.com))
+
+2. The real deal ([www.mturk.com](http://www.mturk.com))
+
+
+---
+
+
+.task[Part 2: Using AMT]
+# What is a HIT ?
+
+
+- A unit of work, or a "Human Intelligence Task"
+
+- In our experiments, a HIT is typically an entire experiment (as might be done in the lab)
+ 
+- However, it is up to the **Requester** to determine what constitutes a HIT
+ 
+- Could be one trial in an experiment, and you just offer the .blue[**Worker**] as many HITs as they care to do
+ 
+
+---
+
+
+.task[Part 2: Using AMT]
+# Using AMT as a .blue[**Worker**]
+ 
+1. Sign up on Amazon's site
+ 
+2. Search for tasks (i.e., HITs) to do online through the AMT interface.
+ 
+3. Worker accepts a HIT.  The task appears in a frame within the AMT website.
+
+3. Accepting a HIT means it is removed from the .orange[**Requester**] account. If the Worker decides not to complete the HIT, they have to _return_ it to the .orange[**Requester**] so someone else can do it
+
+4. After completing the HIT, the worker signals to Amazon that they have completed the task
+ 
+5. Payment will be credited to a worker's account some time after completion
+
+
+---
+
+
+class: center, middle
+# Let's do a HIT
+ 
+
+---
+
+
+.task[Part 2: Using AMT]
+# Using AMT as a .orange[**Requester**]
+ 
+1. Open a Amazon Web Services (AWS) account: [Subscribe here](http://aws.amazon.com)
+ 
+1. Get a Mechanical Turk Requester Account: [Subscribe here](http://requester.mturk.com)
+   
+1. Create a "dummy" email account which you can use to deal with inevitable issues that come up with Workers
+    - Workers ***will*** contact you when they have issues
+    - Need a way to deal with this efficiently and quickly (your reputation depends on it!)
+     
+1. Use a built-in Amazon template or "External Question" approach to design your experiment
+ 
+1. Test your code on the "sandbox"
+ 
+1. Go live! 
+ 
+ 
+---
+
+
+class: center, middle
+# Let's request some HITs
+
+
+---
+
+
+.task[Part 2: Using AMT]
+# AMT's built-in question templates
+
+###Why use them?
+- Hosted directly on Amazon's servers
+- Good for simple surveys (multiple choice, text fields, radio buttons)
+- Easy to use (don't need your own server)
+- Tools for helping you "build" the question
+- Basic HTML can be included (to format texts, or load data, images, etc. from a separate datafile, for example)
+- HITs can be individualized with different content for each
+
+
+---
+
+
+.task[Part 2: Using AMT]
+# AMT's built-in question templates
+
+###But...
+- Dynamic elements cannot be included!
+- For those purposes, you want to use AMTs **external question** type
+
+
+---
+
+
+.task[Part 2: The mechanics]
+# External questions 
+ 
+- You are responsible for:
+    - Hosting the experiment
+       - **At minimum** you need a computer with a web-accessible HTTP server running (a static IP address may simplify things)
+       - You probably want to avoid trying to host it over WiFi 
+
+    - Posting your link to Amazon
+     
+    - Communicating back to Amazon when the HIT has been completed
+     
+    - Approving completed HITs for payment in a timely manner
+     
+    - Dealing quickly with worker issues
+     
+    - Saving your data in a secure place, etc..
+
+
+---
+
+
+.task[Part 2: Using AMT]
+# External questions
+
+- Interactions with AMT that psiTurk handles:
+
+    - Submit a request for HITs (through the Dashboard)
+
+    - Provide a link to an "ad" that describes the HIT for Workers (this appears within the AMT site when they click 'View a HIT in this group')
+
+    - After HIT is accepted, provide a link to the experiment
+
+    - After HIT is complete, provide a button Worker will click to inform Amazon that they have finished. This submits a form with their identifying information to AMT.
+
+<!--
+.footnote[
+psiTurk hint .red[[1]]: see templates/mturkindex.html<br />
+psiTurk hint .red[[2]]: see templates/thanks.html
+]
+-->
+
+
+---
+
+
+class: center, middle
+# psiTurk Dashboard
+
+
+---
+
+
+.task[Part 2. Using AMT]
+# Be a good requester
+ 
+1. Test your experiment on .blue[different browsers]
+
+1. Use the .blue[sandbox] for testing!
+
+1. Provide users with explicit instructions and .blue[show warnings] about closing the page, going back in the browsers, etc.
+    - For many more "basic" HITs it's ok to close the window and return another time
+
+1. Start collecting data in .blue[small batches]
+ 
+1. If something goes wrong, provide an .blue[alternative payment method] for workers who did your experiment but were unable to submit the HIT
+    - One way of doing this is to provide a HIT with no content specifically aimed at workers that had problems and pay them using a "bonus"
+
+
+---
+
+
+class: center, middle
+# End of .blue[Part 2]
+### .gray[Time for a break!]
+ 
+
+---
+
+
+name: part3
+class: center, middle
+
+.task[Part 3: Using psiTurk]
+# .blue[Part 3]: Using psiTurk
+
+---
+
+
+.task[Part 3: Using psiTurk]
+# Installation
+
+**System requirements **
+
+- psiTurk works only on OS X and Linux. Windows is not supported (cloud-based option coming soon!).
+
+<br>
+**Software dependencies**    
+
+- **Python**
+
+  - If you've never used Python before, we recommend you use the [Enthought Python distribution](http://www.enthought.com/repo/.epd_academic_installers), 
+  because it comes with pip, a tool for easily installing Python packages. 
+
+  <br>
+  <br>
+
+---
+
+.task[Part 3: Using psiTurk]
+# Installation
+
+
+**Software dependencies**
+
+- **pip** (open source app store for Python)
+
+  - If you installed Python using Enthought you don't need to install pip separately.
+    If you want to use another version of Python, you may have to install pip, for example like this:
+
+
+
+```bash
+cd /tmp
+curl -O 'https://raw.github.com/pypa/pip/\
+master/contrib/get-pip.py'
+python get-pip.py 
+# If you get a permissions error, try
+# sudo python get-pip.py
+```
+
+---
+
+.task[Part 3: Using psiTurk]
+
+**3. Installing psiTurk**
+
+- To install psiTurk simply run:
+
+```bash
+pip install psiturk
+# If you get a permissions error try
+# sudo pip install psiturk
+```
+
+---
+
+.task[Part 3: Using psiTurk]
+
+# The 3 components of psiTurk
+
+**1. Experiment server**
+
+  - Hosts lab and web experiments
+
+
+**2. Dashboard **
+
+- Interface for Amazon
+  - post ads, pay workers, change settings, etc.
+- Test suite
+  - launch and debug code
+
+
+**3. Javascript library**
+
+- Provides common experiment functionality
+  - save data to server
+  - load consent, debriefing, and quality control forms
+  - and much more (see next section)
+
+
+
+---
+
+.task[Part 3: Using psiTurk]
+
+ # Work flow
+
+**1. Local testing &amp; debugging**
+
+  - Test experiment locally
+  - Javascript (expt logic) &larr;&rarr; dashboard  &larr;&rarr;  expt server
+
+
+**2. Remote testing (AMZ sandbox)**
+
+  - Test that your code works on Amazon's servers
+  - Javascript &larr;&rarr; dashboard  &larr;&rarr;  expt server &larr;&rarr; AMZ
+
+
+**3. Live (AMZ)**
+
+  - Collect data!
+  - Javascript &larr;&rarr; dashboard  &larr;&rarr;  expt server  &larr;&rarr; AMZ
+
+---
+
+
+.task[Part 3: Using psiTurk]
+
+# Running the Stroop demo
+
+***Goals***
+
+- Test locally
+- Post a HIT in AMZ sandbox.
+
+
+**1. Load demo experiment code**
+
+```bash
+psiturk-setup-example
+```
+
+**2. Start dashboard**
+
+```bash
+psiturk
+```
+
+**3. Dashboard overview** (in browser demo)
+---
+
+
+
+.task[Part 3: Using psiTurk]
+
+# Modifying the Stroop task
+
+<br>
+** Now, let's get our hands dirty!**
+
+- Data entry and export
+- Should code editing wait until Part 4?
+
+---
+
+
+.task[Part 3: Using psiTurk]
+
+# Summary
+
+- blah
+- more important blah
+
+
+---
+
+
+name: part4
+class: center, middle
+
+.task[Part 4: Building dynamic web experiments]
+# .blue[Part 4]: Building dynamic web experiments
+
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# Programming for the web:<br> .blue[The Good]
+
+- Web programming was developed specifically for user interaction.
+- Web experiments will run in the lab too!
+- Tons of existing resources, both .blue[libraries] and .blue[tutorials].
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+Web development has a lot of moving parts:
+
+- .blue[Custom web server] to serve the experiment and interact with Amazon.
+- .blue[Database] for the server to store data.
+- The actual .blue[web page]:
+    - Structure coded in <span class="blue">HTML</span>.
+    - Style defined in <span class="blue">CSS</span>.
+    - Programs written in <span class="blue">Javascript</span>.
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+Web development has a lot of moving parts:
+
+- .blue[Custom web server] to serve the experiment and interact with Amazon. ✓ 
+- .blue[Database] for the server to store data. ✓ 
+- The actual .blue[web page]:
+    - Structure coded in <span class="blue">HTML</span>.
+    - Style defined in <span class="blue">CSS</span>.
+    - Programs written in <span class="blue">Javascript</span>.
+
+???
+
+PsiTurk completely takes care of the server side for you.
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+Web development has a lot of moving parts:
+
+- .blue[Custom web server] to serve the experiment and interact with Amazon. ✓ 
+- .blue[Database] for the server to store data. ✓ 
+- The actual .blue[web page]:
+    - Structure coded in <span class="blue">HTML</span> (`exp.html`).✓ 
+    - Style defined in <span class="blue">CSS</span> (`task.css`). ✓ 
+    - Programs written in <span class="blue">Javascript</span>.
+
+???
+
+We also provide default html and stylesheet files which you could potentially
+leave as they are.
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+```bash
+psiturk-setup-example
+```
+<img src="images/hierarchy.png" height="400" />
+
+???
+
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+Web development has a lot of moving parts:
+
+- .blue[Custom web server] to serve the experiment and interact with Amazon. ✓ 
+- .blue[Database] for the server to store data. ✓ 
+- The actual .blue[web page]:
+    - Structure coded in <span class="blue">HTML</span> (`exp.html`).✓ 
+    - Style defined in <span class="blue">CSS</span> (`task.css`). ✓ 
+    - Programs written in <strong><span class="red">Javascript</span></strong>.
+
+???
+But it's your job to code up the experiment, and you'll have to do that in
+Javascript.
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# What is JavaScript?
+
+- For one thing, it has .blue[nothing to do] with Java.
+- It is the .blue[only language] that browsers understand natively 
+    - (but flash is also an option).
+- These slides were compiled in Javascript!
+- Javascript's role in a behavioral experiment:
+    - Control the <span class="blue">task logic</span>: condition, etc.
+    - Control <span class="blue">what subjects see</span> and when.
+    - Collect and store <span class="blue">data</span>, then send it to the server.
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# What Javascript .blue[can] do
+
+- Interact with a web server (to send or request data for instance)
+- Track clicks, mouse movements, etc.
+- Record response times
+- Track changes in focus and window size
+- Enable group experiments
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# What Javascript .blue[can't] do
+
+- Control focus (lock participants in a window)
+- Disable browser actions (reloading, going back)
+- Saving directly to a file (server interaction is required)
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# Learning Javascript
+
+Lots of resources for learning: E.g., [codecademy.com](http://codecademy.com):
+
+<img src="images/codecademy.png" width="750" />
+
+???
+
+No time to teach javascript
+
+One of the most commonly used languages.
+
+One resource I recommend for beginners is codecademy.
+
+Doesn't assume programming experimence.
+
+Guides you through Javascript interactively.
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# psiturk.js: <br> .blue[A Javascript API]
+
+A small library that will help you:
+
+- Handle page transitions
+- Load images
+- Record and save data
+
+PsitTurk.js will .blue[automatically]:
+
+- Register if user resizes their Window
+- Register if user switches to another tab/window
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# psiturk.js: <br> .blue[Condition and Counterbalance]
+
+```javascript
+// Put this at the top of your file:
+exp = new Psiturk() 
+
+// returns subect's server-assigned condition:
+exp.taskdata.get("condition")
+// returns subect's server-assigned condition:
+exp.taskdata.get("counterbalance") 
+```
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# psiturk.js: <br> .blue[Fetching resources]
+
+```javascript
+exp = new Psiturk()
+
+// Returns HTML from mypage.html, 
+// stored in the templates directory
+exp.getPage("mypage.html") 
+exp.getImage("myimage.jpg") 
+```
+---
+
+.task[Part 4: Building dynamic web experiments]
+# psiturk.js: <br> .blue[Recording and saving data]
+
+```javascript
+exp = new Psiturk()
+
+// Records data for the current trial
+// A list of things which will be put in columns in the spreadsheet
+exp.recordTrialData(["anything", "you", "decide", 1, "L", "CORRECT"]) 
+// Unstructured data, e.g. the answer to a question in a form
+exp.recordUnstructuredData("Age", 28) 
+
+// Save data to server
+exp.saveData()
+```
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# psiturk.js: .blue[API reference]
+
+- `psiturk.taskdata` — Data about task/subject
+    - `.get("condition")` — Get server-assigned condition number
+    - `.get("counterbalance")` — Get server-assigned counterbalance number
+    - `.get("useragent")` — Get browser's user agent string.
+    - *Includes event listeners to record resize/focus change.*
+- `psiturk.getPage` — Retrieve html snippet from `/templates` directory.
+- `psiturk.getImage` — Retrieve image from `/static/images` directory.
+- `psiturk.recordTrialData` — Accepts list of items, which will be a row in `trialdata.csv` along with the subject's unique identifier
+- `psiturk.recordUnstructuredData` — Accepts `key` followed by `value`, encoded along with unique identifier in `questiondata.csv`
+- `psiturk.saveData` — Send all data in `taskdata` to the server.
+- `psiturk.finishInstructions` — Warn participants not to close window.
+- `psiturk.teardownTask` — Allow window to close.
+
+
+---
+
+.task[Part 4: Building dynamic web experiments]
+# Javascript libraries
+
+These are currently dependencies of `psiturk.js`, we also use them in all our experiments.
+
+- [Jquery](http://jquery.org) – Manipulating the website
+- [BackboneJS](http://backbonejs.org) – Organizing your code
+- [UnderscoreJS](http://underscorejs.org) – Helpful functions, e.g. `_.shuffle()` to shuffle stimuli
+
+<!-- ---
+
+(ANNA: Not sure if this should even go here. Or how we can elaborate on this. It seems good to have it in the section that says what psiturk can do, but it's perhaps a bit strange to do this before we even describe what it is...)
+
+
+.task[Part 4: Using psiTurk]
+# What is it actually?
+
+- A small webserver that you run in Python that makes it very easy to customize
+
+- It runs on a designated port on your computer
+
+- You point the Workers at this url
+
+- Based on three key open-source packages:
+
+<img src="http://flask.pocoo.org/static/logo/flask.png" width="250">  
+<img src="http://www.sqlalchemy.org/img/sqla-logo6.gif" width="250">  
+[boto](https://github.com/boto/boto) -->
+
+---
+
+---
+
+
+
+class: middle, center
+
+# Thanks!
+
+
+    </textarea>
+    <script src="remark.min.js" type="text/javascript">
+        
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({ "highlightStyle": "tomorrow-night-bright" });
+    </script>
+  </body>
+</html>
+
+

@@ -1,0 +1,61 @@
+---
+title: "Twitter processing code"
+author: "Gabriel Doyle"
+output: 
+  html_document:
+    toc: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Setup
+
+```{r}
+library(ggplot2)
+library(data.table)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(tidytext)
+library(bit64)
+library(magrittr)
+```
+
+## Example 1: Good morning, good evening, and good night
+
+```{r}
+tdt <- rbind(fread('../data/good+morning.tweets') %>% mutate(term='morning'),
+             fread('../data/good+evening.tweets') %>% mutate(term='evening'),
+             fread('../data/good+night.tweets') %>% mutate(term='night'))
+
+ggplot(aes(x=hour,color=term),data=tdt) +
+  geom_density()
+```
+
+```{r}
+tdt %<>% mutate(time=hour+minute/60+second/3600)
+
+ggplot(aes(x=time,color=term),data=tdt) +
+  geom_density()
+```
+
+### Hmm. What's up with morning?
+
+```{r}
+sample_n(filter(tdt,term=='morning',time>16,time<18),10)
+```
+
+```{r}
+sample_n(filter(tdt,term=='night',time>16,time<18),10)
+```
+
+## Example 2: Conversation structure
+
+## Example 3: Dialect geography
+
+
+
+

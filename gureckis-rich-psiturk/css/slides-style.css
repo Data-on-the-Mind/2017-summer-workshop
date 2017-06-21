@@ -1,0 +1,358 @@
+    /* Slideshow styles */
+      /*
+      @import url(http://fonts.googleapis.com/css?family=Lobster);
+      @import url(http://fonts.googleapis.com/css?family=Open+Sans);
+      @import url(http://fonts.googleapis.com/css?family=Vast+Shadow);
+      @import url(http://fonts.googleapis.com/css?family=Marmelad); 
+      */
+      @import url(http://fonts.googleapis.com/css?family=Bitter);
+      @import url(http://fonts.googleapis.com/css?family=Qwigley);
+      /*@import url(http://fonts.googleapis.com/css?family=Squada+One);*/
+      
+      body { 
+        font-family: "Helvetica Neue", Helvetica;
+        font-size: 19px;
+        font-weight: 200;
+        letter-spacing: .13em;
+        /*font-weight: normal;*/
+        color: #3f4549;
+   
+      }
+      p {
+          -webkit-margin-after: 0.01em;
+          -webkit-margin-before: 0.25em;
+      }
+      li {
+          -webkit-margin-after: 0.6em;
+          -webkit-margin-before: 0.25em;        
+      }
+      li.past {
+          color: #c2c2c2;
+      }
+      li.present {
+          color: black;
+      }
+      li.future {
+          color: #fff;
+          opacity: 0.0;
+      }
+      .citation {
+        color: #c3c3c3;
+        font-size: 20px;
+        font-weight: lighter;
+      }
+      
+      li.past citation {
+          color: #c2c2c2;
+      }
+      
+      li.future.citation {
+          color: #fff;
+      }
+
+
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 30%;
+        height: 100%;
+        float: left;
+      }
+      .left-column h2 {
+        opacity: 0.3;
+      }
+
+      .left-column h2:last-of-type, .left-column h3:last-child {
+        color: #353E4C;
+        opacity: 1.0;
+      }
+
+      .right-column {
+        width: 70%;
+        float: right;
+        padding-top: 1em;
+      }
+
+      .author {
+        font-family: "Bitter", Helvetica;
+        font-size: 20px;
+        color: #E7990F;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        text-shadow: 0px 2px 3px #E0CD83;
+      }
+      .script {
+          font-family: "Quigley";
+          color: #333;
+      }
+      .note {
+          font-size: 12px;
+            color: rgba(189,189,189,1);
+            font-family: "Helvetica Neue";
+            letter-spacing: .2em;
+      }
+    pre {
+      overflow: scroll;
+      width: 720px;
+      height: 450px;
+    }
+
+    iframe {
+      position: relative;
+      width: 750px;
+      height: 550px;
+      margin: 0 auto;
+      border: 0px;
+    }
+
+.remark-slide-content {
+  border: 16px solid #f3f3f3;
+  margin-top: 20px;
+  background: black;
+  width: 100%;
+}
+
+      .inverse {
+        border: 16px solid #f3f3f3;
+        background: #fff;
+        width: 100%;
+      }
+      .bright {
+        border: 16px solid #f3f3f3;
+        margin-top: 20px;
+        background: #fff;
+        width: 100%;
+      }
+      .black {
+        border: 16px solid #f3f3f3;
+        background: #000;
+        width: 100%;        
+      }
+      .light {
+        border: 16px solid #fff;
+        background: #f3f3f3;
+        width: 100%;
+      }
+      .dark {
+        border: 16px solid #f3f3f3;
+        background: #9a9da1;
+        width: 100%;
+      }
+
+      
+      .remark-position {
+          color: black;
+          font-size: 12px;
+          font-family: "Helvetica Neue";
+          bottom: 30px;
+          right: 30px;
+      }
+      
+      .column1 {
+          float: left;
+          width: 50%;
+          height: 100%;
+      }
+
+      .column2 {
+          float: right;
+          height: 100%;
+          width: 50%;
+      }            
+      .center {
+        margin: 0 auto;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      .red    { color: #FF4943; }
+      .gray   { color: #787878; }
+      .green  { color: #92d12d; }
+      .blue   { color: #41C8F0; }
+      .yellow { color: #dbcb14; }
+      .orange { color: #eaab0c; }
+      .white {color: white;}
+
+      
+      .people {
+          border-top: 1px solid #f1f1f1;
+      }
+      
+      
+      .task {
+        /* float: right; */
+        position: absolute;
+        top: 25px;
+        right: 50px;
+          font-size: 12px;
+            color: rgba(189,189,189,1);
+            font-family: "Helvetica Neue";
+            letter-spacing: .2em;
+        padding-top: 0.6em;
+        z-index: -1;
+      }
+      
+      .lablogo {
+        position: absolute;
+        bottom: 25px;
+        left: 25px;
+        width: 300px;
+        text-align: left;
+        vertical-align: bottom
+        z-index: -1;
+        opacity: 0.7;
+      }
+      .task a {
+        color: #080;
+        text-decoration: none;
+      }      
+
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      
+      .shortlist {
+          font-size: 27px;
+      }
+     
+      
+
+      
+      .smallquote {
+          font-size: 14px;
+      }
+      
+
+      
+      pre code {
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+       
+        font-size: 11px;
+      }
+      
+      .infobox {
+          border: 10px solid white;
+          background: #E4DBE3;
+          color: #444;
+          padding: 15px;
+      }
+      .quote {
+          font-size: 23px;
+      }
+      .infobox a:link,
+      a:visited,
+      a:hover,
+      a:active {
+          color: #411233; 
+          text-decoration: none; 
+          border-bottom: 1px dotted #411233; 
+      }
+
+      #slideshow .slide .content code { font-size: 11px;
+        
+      }
+
+
+      #slide-laboverview {
+          background: url('figures/ThinkingHead.png') no-repeat;
+          background-position-x: 580px; 
+          background-position-y: 420px;    
+      }
+
+
+
+
+        svg {
+          font-size: 12px;
+        }
+        
+        rect.background {
+          fill: none;
+          pointer-events: all;
+        }
+        
+        .axis {
+          shape-rendering: crispEdges;
+          font-size: 10px;
+        }
+        
+        .axis path, .axis line {
+          fill: none;
+          stroke: #000;
+          stroke-width: .5px;
+        }
+        
+        .chart div {
+            font: 10px sans-serif;
+            background-color: steelblue;
+            text-align: right;
+            padding: 3px;
+            margin: 1px;
+            color: white;
+        }
+        
+        .chart rect {
+            stroke: white;
+            fill: steelblue;
+        }
+        
+        .chart text.bar {
+          fill: white;
+        }
+        
+        #barchartdemo {
+            width: 725px;
+            height: 500px;
+            border: 0px solid lightgray;
+            margin: 0px auto;
+            text-align: center;
+        }
+        
+        .titleframe {
+            border: 0px solid lightgray;
+            margin: 2px;
+            padding-top: 40px;
+            padding-bottom: 70px;
+        }
+        
+
+        /* cover flow stuff */
+        img.coverflow {
+            position: absolute;
+        }
+        
+        /* some overrides */
+        #slideshow .slide .fullframe {
+            padding: 1em;
+        }
+
+        .labmember {
+            float: left;
+            margin-right: 0px;
+            background: url('thumb_bg.gif') no-repeat 0 0;
+            background-size: 208px 200px;
+            height: 200px;
+            padding: 10px;
+            width: 195px;
+            font-size: 16px;
+        }
+        
+        
+        /* graph stuff */
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+        
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+        

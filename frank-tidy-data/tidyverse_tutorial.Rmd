@@ -1,0 +1,384 @@
+---
+title: "Medium Data in the Tidyverse"
+author: "Mike Frank"
+date: "6/16/2017"
+output: html_document
+---
+
+Starting note: The best reference for this material is Hadley Wickham's [R for data scientists](http://r4ds.had.co.nz/). My contribution here is to translate this for psychology.
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(DT) # dependency
+library(ggthemes) # dependency
+library(wordbankr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- ----------------------------------------------------------------------- -->
+# Goals and Introduction
+
+By the end of this tutorial, you will know:
+
++ What "tidy data" is and why it's an awesome format
++ How to get your data to be tidy
++ How to do some stuff with tidy data
++ Some tips'n'tricks for dealing with "medium data" in R
+
+This intro will describe a few concepts that you will need to know, using the famous `iris` dataset that comes with `ggplot2`.
+
+## Data frames
+
+The basic data structure we're working with is the data frame, or `tibble` (in the `tidyverse` reimplementation). 
+
+Data frames have rows and columns, and each column has a distinct data type. The implementation in Python's `pandas` is distinct but most of the concepts are the same. 
+
+`iris` is a data frame showing the measurements of a bunch of different instances of iris flowers from different species. (Sepals are the things outside the petals of the flowers that protect the petals while it's blooming, petals are the actual petals of the flower).
+
+```{r}
+DT::datatable(iris)
+```
+
+### Exercise
+
+R is a very flexible programming language, which is both a strength and a weakness. There are many ways to get a particular value of a variable in a data frame.
+
+You can use `$` to access a column, as in `iris$Sepal.Length` or you can treat the data frame as a matrix, e.g. `iris[1,1]` or even as a list, as in `iris[[1]]`. You can also mix numeric references and named references, e.g. `iris[["Sepal.Length"]]`.
+
+Turn to your neighbor (and/or google) and find as many ways as you can to access the petal length of the third iris in the dataset (row 3).
+
+```{r}
+# fill me in with calls to the iris dataset that all return the same cell (third from the top, Petal Length).
+```
+
+Discussion: why might some ways of doing this be better than others? 
+
+## Tidy data
+
+> “Tidy datasets are all alike, but every messy dataset is messy in its own way.” –– Hadley Wickham
+
+Here's the basic idea: In tidy data, every row is a single **observation** (trial), and every column describes a **variable** with some **value** describing that trial. 
+
+And if you know that data are formatted this way, then you can do amazing things, basically because you can take a uniform approach to the dataset. From R4DS:
+
+> There’s a general advantage to picking one consistent way of storing data. If you have a consistent data structure, it’s easier to learn the tools that work with it because they have an underlying uniformity.
+
+> There’s a specific advantage to placing variables in columns because it allows R’s vectorised nature to shine.
+
+`iris` is a tidy dataset. Each row is an observation of an individual iris, each column is a different variable. 
+
+### Exercise
+
+Take a look at these data, as downloaded from Amazon Mechanical Turk. They describe an experiment where people had to estimate the price of a dog, a plasma TV, and a sushi dinner (and they were primed with anchors that differed across conditions). It's a replication of a paper by [Janiszewksi & Uy (2008)](http://warrington.ufl.edu/departments/mkt/docs/janiszewski/Anchor.pdf). 
+
+```{r}
+ju <- read_csv("data/janiszewski_rep_cleaned.csv")
+```
+
+> Examine this dataset with your nextdoor neighbor and sketch out what a tidy version of the dataset would look like (using paper and pencil).
+
+## Functions and Pipes
+
+Everything you typically want to do in statistical programming uses **functions**. `mean` is a good example. `mean` takes one **argument**, a numeric vector. 
+
+```{r}
+mean(iris$Petal.Length)
+```
+
+We're going to call this **applying** the function `mean` to the variable `Petal.Length`.
+
+Pipes are a way to write strings of functions more easily. They bring the first argument of the function to the bedginning. So you can write:
+
+```{r}
+iris$Petal.Length %>% mean
+```
+
+That's not very useful yet, but when you start **nesting** functions, it gets better. 
+
+```{r}
+mean(unique(iris$Petal.Length))
+iris$Petal.Length %>% unique %>% mean
+```
+
+or 
+
+```{r}
+round(mean(unique(iris$Petal.Length)), digits = 2)
+iris$Petal.Length %>% unique %>% mean %>% round(digits = 2)
+
+# indenting makes things even easier to read
+iris$Petal.Length %>% 
+  unique %>% 
+  mean %>% 
+  round(digits = 2)
+```
+
+This can be super helpful for writing strings of functions so that they are readable and distinct. 
+
+We'll be doing a lot of piping of functions with multiple arguments later, and it will really help keep our syntax simple. 
+
+### Exercise
+
+Rewrite these commands using pipes and check that they do the same thing! (Or at least produce the same output).
+
+Unpiped versions:
+
+```{r}
+length(unique(iris$Species)) # number of species
+```
+
+Piped version:
+
+```{r}
+# ... 
+```
+
+## `ggplot2` and tidy data
+
+The last piece of our workflow here is going to be the addition of visualiation. 
+
+`aes` 
+`geom`
+
+```{r}
+ggplot(iris, aes(Sepal.Width, Sepal.Length, col = Species)) + 
+  geom_point()
+```
+
+And just to let you know my biases, I really like `theme_few` from `ggthemes` and `scale_color_solarized` as my palette.  
+
+```{r}
+ggplot(iris, aes(Sepal.Width, Sepal.Length, col = Species)) + 
+  geom_point() + 
+  ggthemes::theme_few() + 
+  ggthemes::scale_color_solarized() 
+```
+
+We can even bake in the theme for our other plots.
+
+```{r}
+theme_set(ggthemes::theme_few())
+```
+
+<!-- ----------------------------------------------------------------------- -->
+# Tidy Data Analysis with `dplyr`
+
+Reference: [R4DS Chapter 5](http://r4ds.had.co.nz/transform.html)
+
+Let's take a psychological dataset. Here are the raw data from [Stiller, Goodman, & Frank (2015)]
+
+These data are tidy: each row describes a single trial, each column describes some aspect of tha trial, including their id (`subid`), age (`age`), condition (`condition` - "label" is the experimental condition, "No Label" is the control), item (`item` - which thing furble was trying to find). 
+
+We are going to manipulate these data using "verbs" from dyplyr. I'll only teach four verbs, the most common in my workflow (but there are many other useful ones):
+
++ `filter` - remove rows by some logical condition
++ `mutate` - create new columns 
++ `group_by` - group the data into subsets by some column
++ `summarize` - apply some function over columns in each group  
+
+
+## Exploring and characterizing the dataset
+
+
+```{r}
+sgf <- read_csv("http://langcog.stanford.edu/stiller_scales_data.csv")
+sgf
+```
+
+Inspect the various variables before you start any analysis. Lots of people recommend `summary` but TBH I don't find it useful. 
+
+```{r}
+summary(sgf)
+```
+
+This output just feels overwhelming and uninformative. 
+
+You can look at each variable by itself:
+
+```{r}
+unique(sgf$condition)
+length(unique(sgf$subid))
+```
+
+Or use interactive tools like `View` or `DT::datatable` (which I really like).
+
+```{r}
+View(sgf)
+DT::datatable(sgf)
+```
+
+## Filtering
+
+There are lots of reasons you might want to remove rows from your dataset, including getting rid of outliers, selecting subpopulations, etc. `filter` is a verb (function) that takes a data frame as its first argument, and then as its second takes the **condition** you want to filter on. 
+
+So if you wanted to look only at two year olds, you could do this. (Note you can give two conditions, could also do `age > 2 & age < 3`). 
+
+```{r}
+sgf %>%
+  filter(age > 2, age < 3) 
+```
+
+
+## Standard psychological descriptives
+
+We typically describe datasets at the level of subjects, not trials. We need two verbs to get a summary at the level of subjects: `group_by` and `summarize`.
+
+```{r}
+sgf %>%
+  group_by(subid) 
+```
+
+All that does is add a grouping marker. But now, we can get a summary of the data. The summary is pretty boring for age and condition, we just want to know the age and condition, so we can just take the first one for each field. .  
+
+```{r}
+by_subs <- sgf %>%
+  group_by(subid) %>%
+  summarise(age = age[1], 
+            condition = condition[1]) 
+by_subs
+```
+
+But now we can get some nice histograms from this dataframe. 
+
+```{r}
+ggplot(by_subs, aes(x = age)) + 
+  geom_histogram(binwidth = .25)
+```
+
+Because these are tidy data, it's going to be easy to add extra variables to the histogram, e.g.:
+
+```{r}
+ggplot(by_subs, aes(x = age, fill = condition)) + 
+  geom_histogram(binwidth = .25) 
+```
+
+
+
+Check N observations.
+
+```{r}
+d %>%
+  group_by(condition, age.group) %>%
+  summarise(n_observations = n()) 
+```
+
+Check N subs.
+
+```{r}
+d %>%
+  distinct(subid, condition, age.group) %>%
+  group_by(condition, age.group) %>%
+  summarise(n_subs = n())
+```
+
+## Plots
+
+First global plot, not that informative but better than nothing. Illustrates the power of geom_smooth.
+
+```{r}
+ggplot(d, aes(x = age, y = correct, col = condition)) + 
+  geom_point() + 
+  geom_smooth(method="glm") 
+```
+
+Next, use subject means.
+
+```{r}
+sub_means <- d %>%
+  group_by(condition, age, subid) %>%
+  summarise(correct = mean(correct))
+
+ggplot(sub_means, 
+       aes(x = age, y = correct, col = condition)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+And condition-by-subject means. 
+
+```{r}
+cond_means <- d %>%
+  group_by(condition, age.group, subid) %>%
+  summarise(correct = mean(correct)) %>%
+  summarise(correct = mean(correct))
+
+ggplot(cond_means, 
+       aes(x = age.group, y = correct, col = condition)) + 
+  geom_point() + 
+  geom_line() + 
+  ylim(c(0,1)) + 
+  ggthemes::theme_few() + 
+  ggthemes::scale_colour_solarized() + 
+  ylab("Proportion Inferences Correct") + 
+  xlab("Age (Years)")
+```
+
+
+```{r}
+ggplot(cond_means, 
+       aes(x = age.group, y = correct, fill = condition)) + 
+  geom_bar(stat = "identity", position = "dodge") + 
+  ylim(c(0,1)) + 
+  ggthemes::theme_few() + 
+  ggthemes::scale_fill_solarized() + 
+  ylab("Proportion Inferences Correct") + 
+  xlab("Age (Years)")
+```
+
+## Exercises
+
+
+
+
+
+
+<!-- ----------------------------------------------------------------------- -->
+# Getting to Tidy with `tidyr`
+
+Reference: [R4DS Chapter 12](http://r4ds.had.co.nz/tidy-data.html)
+
+
+
+
+
+
+
+## Exercises
+
+
+
+
+<!-- ----------------------------------------------------------------------- -->
+# A bigger worked example: Wordbank data
+
+[Wordbank](http://wordbank.stanford.edu) is a database of children's language learning. We're going to be using some data on vocabulary growth that we load from a database.
+
+(Go explore it for a moment).
+
+We're going to look at data from the English Words and Sentences form. These data describe the repsonses of parents to questions about whether their child says 680 different words. 
+
+```{r}
+ws <- wordbankr::get_administration_data(language = "English", 
+                                         form = "WS")
+```
+
+Take a look at the data that comes out. 
+
+How many kids are there? What are their ages? 
+
+```{r}
+
+```
+
+<!-- ----------------------------------------------------------------------- -->
+# Exciting stuff you can do with this workflow
+
+## Reading bigger files and better
+
++ `dbplyr`
++ read_csv
++ feather
+
+## Interactive visualization
+
+`shiny`
