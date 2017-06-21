@@ -1,9 +1,12 @@
 import re
 
+#download and uncompress the pluto datafiles (https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/nyc_pluto_11v2.zip  ) to this directory:
+DATA_PATH = 'data/nyc_pluto_11v2/'
+
 zoning = DataFrame() 
 
 for boro in ['bk', 'mn', 'si', 'bx', 'qn']:
-    pluto_file = 'path/to/plutofiles/nyc_pluto_11v2/'+boro+'11v2.txt'
+    pluto_file = DATA_PATH+'/'+boro+'11v2.txt'
     print 'loading:', pluto_file
     burough_zoning = DataFrame.from_csv(pluto_file, index_col = 'Block')
 
