@@ -26,13 +26,13 @@ demographics = merge(demographics, zoning, on='ZIP')
 demographics.index = demographics.ZIP.astype(int)
 
 
-low_residential_zips = demographics[demographics.prop_residential < .1].index
+low_residential_zips = demographics[demographics.prop_residential < .4].index
 for exclude_zip in low_residential_zips:
     lott = lott[(lott.ZIP != exclude_zip)]
     print 'excluding:', exclude_zip, demographics.ix[exclude_zip].desc
     
     
-print 'excluded ', len(low_residential_zips), 'low density ZIPs'
+print 'excluded ', len(low_residential_zips), 'low residential density ZIPs'
 
 lott['composite_per_capita'] = zeros(lott.shape[0])
 grouped = lott.groupby('ZIP')
