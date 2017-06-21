@@ -1,7 +1,7 @@
 import re
 
 #download and uncompress the pluto datafiles (https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/nyc_pluto_11v2.zip  ) to this directory:
-DATA_PATH = 'data/nyc_pluto_11v2/'
+DATA_PATH = 'data/nyc_pluto_11v2'
 
 zoning = DataFrame() 
 
