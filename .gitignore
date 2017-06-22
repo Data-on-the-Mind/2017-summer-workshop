@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+hamrick-introduction-to-jupyter/advanced/1 - Reproducible Plots with Matplotlib.html
+hamrick-introduction-to-jupyter/advanced/1 - Reproducible Plots with Matplotlib.md
+hamrick-introduction-to-jupyter/advanced/1 - Reproducible Plots with Matplotlib.py
+hamrick-introduction-to-jupyter/advanced/1 - Reproducible Plots with Matplotlib_files
+hamrick-introduction-to-jupyter/advanced/nbconvert_config.py
