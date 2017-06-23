@@ -172,8 +172,11 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<div id="skovgaard-olsen-et-al.-2016-the-relevance-effect-and-conditionals" class="section level2">
-<h2>Skovgaard-Olsen et al. (2016): The Relevance Effect and Conditionals</h2>
+<div id="exercise-2a-identifying-random-effects-structure" class="section level1">
+<h1>Exercise 2A: Identifying Random Effects-Structure</h1>
+<p>Your task is to identify the <em>maximal random-effects structure justified by the design</em> (Barr, Levy, Scheepers, &amp; Tily, 2013) for two data sets and implement this structure in <code>lme4::lmer</code> syntax.</p>
+<div id="data-set-1-skovgaard-olsen-et-al.-2016-the-relevance-effect-and-conditionals" class="section level2">
+<h2>Data-Set 1: Skovgaard-Olsen et al. (2016): The Relevance Effect and Conditionals</h2>
 <ul>
 <li>Conditional = <em>if-then</em> statement; e.g., If global warning continues, London will be flooded.</li>
 <li>Bayesian reasoning often assumes ‘the Equation’: <em>P</em>(if <em>A</em> then <em>C</em>) = <em>P</em>(<em>C</em>|<em>A</em>)</li>
@@ -182,32 +185,9 @@ $(document).ready(function () {
 <li>negative relevance (NE): <em>A</em> is a reason against <em>C</em></li>
 <li><p>irrelevance (IR): <em>A</em> and <em>C</em> have no apparent relationship</p></li>
 <li><p>183 (of 348) participants recruited via <code>crowdflower.com</code> worked on 12 items.</p></li>
-<li><p>Participant first saw a vignette:</p></li>
 </ul>
-<blockquote>
-<p>Sophia’s scenario: Sophia wishes to find a nice present for her 13-year-old son, Tim, for Christmas. She is running on a tight budget, but she knows that Tim loves participating in live role-playing in the forest and she is really skilled at sewing the orc costumes he needs. Unfortunately, she will not be able to afford the leather parts that such costumes usually have, but she will still be able to make them look nice.</p>
-</blockquote>
-<ul>
-<li>Then we asked participant for their rating for the conditional probability <em>P</em>(<em>C</em>|<em>A</em>) on the probability scale from 0% to 100%:</li>
-</ul>
-<blockquote>
-<p>Suppose Sophia buys a Barbie doll for Tim.<br />
-Under this assumption, how probable is it that the following sentence is true:<br />
-Tim will be excited about his present.</p>
-</blockquote>
-<ul>
-<li>On the next page, we asked participant for their rating of the probability of the conditional <em>P</em>(if <em>A</em> then <em>C</em>) on the probability scale from 0% to 100%:</li>
-</ul>
-<blockquote>
-<p>Could you please rate the probability that the following sentence is true:<br />
-IF Sophia buys a Barbie doll for Tim, THEN Tim will be excited about his present.</p>
-</blockquote>
-<div id="design" class="section level3">
-<h3>Design</h3>
-<p>Research question: Does the Equation (i.e., <em>P</em>(if <em>A</em> then <em>C</em>) = <em>P</em>(<em>C</em>|<em>A</em>)) hold even if no apparent relationship between <em>A</em> and <em>C</em>?</p>
-<p>Full design: 4 x 3 x 2. First two factors repeated-measures, last factor between-subjects.</p>
-<p>For each item, participants provide idiosyncratic estimates of <em>P</em>(if <em>A</em> then <em>C</em>) (<code>dv</code>) and <em>P</em>(<em>C</em>|<em>A</em>) (<code>c_given_a</code>).<br />
-Each participant worked on 12 items, 4 estimates of <em>P</em>(<em>C</em>|<em>A</em>) (<code>c_given_a</code>) for each of 3 relevance conditions (<code>rel_cond</code>):</p>
+<p>Full design for participants: 4 x 3 x 2. First two factors repeated-measures, last factor between-subjects.</p>
+<p>Each participant worked on 12 items, 4 estimates of <em>P</em>(<em>C</em>|<em>A</em>) (<code>c_given_a</code>) for each of 3 relevance conditions (<code>rel_cond</code>):</p>
 <ul>
 <li>positive relavnce (PO): <em>A</em> is a reason for <em>C</em> (IF Sophia buys an orc costume for Tim, THEN Tim will be excited about his present.)</li>
 <li>negative relevance (NE): <em>A</em> is a reason against <em>C</em> (IF Sophia buys a Barbie doll for Tim, THEN Tim will be excited about his present.)</li>
@@ -218,11 +198,66 @@ Each participant worked on 12 items, 4 estimates of <em>P</em>(<em>C</em>|<em>A<
 <li>Probability of ‘if <em>A</em> then <em>C</em>’: How probable is ‘if <em>A</em> then <em>C</em>’?</li>
 <li>Acceptability of ‘if <em>A</em> then <em>C</em>’: How acceptable is it to say ‘if <em>A</em> then <em>C</em>’?).</li>
 </ul>
-<p>Data available at: <a href="https://osf.io/j4swp/" class="uri">https://osf.io/j4swp/</a></p>
+<p>In total we created 12 vignettes (i.e., items). Each participant provided one responses for each vignette with the condition of the vignette randomly chosen among the 4 x 3 within-subjects design.</p>
+<p>The data is given in:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9hZChcInNzazE2X2RhdF9wcmVhcHJlZC5yZGFcIikgIyBkYXRhIHByZWFwcmVkIGluICdwcmVwYXJlX2RhdGEuUidcbnN0cihkYXQpXG5gYGAifQ== -->
+<pre class="r"><code>load(&quot;ssk16_dat_preapred.rda&quot;) # data preapred in 'prepare_data.R'
+str(dat)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJ2RhdGEuZnJhbWUnOlx0MjE5NiBvYnMuIG9mICA4IHZhcmlhYmxlczpcbiAkIHBfaWQgICAgICAgOiBGYWN0b3Igdy8gMTgzIGxldmVscyBcIjEwMl9QKGlmLHRoZW4pXCIsLi46IDYzIDYzIDYzIDYzIDYzIDYzIDYzIDYzIDYzIDYzIC4uLlxuICQgaV9pZCAgICAgICA6XG4ifQ== -->
+<pre><code>'data.frame':   2196 obs. of  8 variables:
+ $ p_id       : Factor w/ 183 levels &quot;102_P(if,then)&quot;,..: 63 63 63 63 63 63 63 63 63 63 ...
+ $ i_id       :</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>What is the <code>lme4::lmer</code> or <code>afex::mixed</code> formula for the maximal random-effects structure for this design?</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoibWl4ZWQoZHYgfiAuLi4pIn0= -->
+<pre class="r"><code>mixed(dv ~ ...)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
+<div id="data-set-2-freeman-heathcote-chalmers-and-hockley-2010" class="section level2">
+<h2>Data-Set 2: Freeman, Heathcote, Chalmers, and Hockley (2010)</h2>
+<p>Lexical decision and word naming latencies for 300 words and 300 nonwords presented in Freeman, Heathcote, Chalmers, and Hockley (2010). The study had one between-subjects factors, <code>task</code> with two levels (<code>&quot;naming&quot;</code> or <code>&quot;lexdec&quot;</code>), and four within-subjects factors: <code>stimulus</code> type with two levels (<code>&quot;word&quot;</code> or <code>&quot;nonword&quot;</code>), word <code>density</code> and word <code>frequency</code> each with two levels (<code>&quot;low&quot;</code> and <code>&quot;high&quot;</code>) and stimulus <code>length</code> with three levels (<code>4</code>, <code>5</code>, and <code>6</code>).</p>
+<p>The data comes with <code>afex</code> as <code>fhch2010</code>:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YShcImZoY2gyMDEwXCIsIHBhY2thZ2UgPSBcImFmZXhcIilcbnN0cihmaGNoMjAxMClcbmBgYCJ9 -->
+<pre class="r"><code>data(&quot;fhch2010&quot;, package = &quot;afex&quot;)
+str(fhch2010)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJ2RhdGEuZnJhbWUnOlx0MTMyMjIgb2JzLiBvZiAgMTAgdmFyaWFibGVzOlxuICQgaWQgICAgICAgOiBGYWN0b3Igdy8gNDUgbGV2ZWxzIFwiTjFcIixcIk4xMlwiLFwiTjEzXCIsLi46IDEgMSAxIDEgMSAxIDEgMSAxIDEgLi4uXG4gJCB0YXNrICAgICA6IEZhY3RvciB3LyAyIGxldmVscyBcIm5hbWluZ1wiLFwibGV4ZGVjXCI6IDEgMSAxIDEgMSAxIDEgMSAxIDEgLi4uXG4gJCBzdGltdWx1cyA6IEZhY3RvciB3LyAyIGxldmVscyBcIndvcmRcIixcIm5vbndvcmRcIjogMSAxIDEgMiAyIDEgMiAyIDEgMiAuLi5cbiAkIGRlbnNpdHkgIDogRmFjdG9yIHcvIDIgbGV2ZWxzIFwibG93XCIsXCJoaWdoXCI6IDIgMSAxIDIgMSAyIDEgMSAxIDEgLi4uXG4gJCBmcmVxdWVuY3k6IEZhY3RvciB3LyAyIGxldmVscyBcImxvd1wiLFwiaGlnaFwiOiAxIDIgMiAyIDIgMiAxIDIgMSAyIC4uLlxuICQgbGVuZ3RoICAgOiBGYWN0b3Igdy8gMyBsZXZlbHMgXCI0XCIsXCI1XCIsXCI2XCI6IDMgMyAyIDIgMSAxIDMgMiAxIDMgLi4uXG4gJCBpdGVtICAgICA6IEZhY3RvciB3LyA2MDAgbGV2ZWxzIFwiYWJpZGVcIixcImFjdHNcIiwuLjogMzYzIDEyMSAyMDIgNTI1IDU4MCAxMzUgNDIgMzY4IDIyNyAxNDEgLi4uXG4gJCBydCAgICAgICA6IG51bSAgMS4wOTEgMC44NzYgMC43MSAxLjIxIDAuODQzIC4uLlxuICQgbG9nX3J0ICAgOiBudW0gIDAuMDg3MSAtMC4xMzI0IC0wLjM0MjUgMC4xOTA2IC0wLjE3MDggLi4uXG4gJCBjb3JyZWN0ICA6IGxvZ2kgIFRSVUUgVFJVRSBUUlVFIFRSVUUgVFJVRSBUUlVFIC4uLlxuIn0= -->
+<pre><code>'data.frame':   13222 obs. of  10 variables:
+ $ id       : Factor w/ 45 levels &quot;N1&quot;,&quot;N12&quot;,&quot;N13&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ task     : Factor w/ 2 levels &quot;naming&quot;,&quot;lexdec&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+ $ stimulus : Factor w/ 2 levels &quot;word&quot;,&quot;nonword&quot;: 1 1 1 2 2 1 2 2 1 2 ...
+ $ density  : Factor w/ 2 levels &quot;low&quot;,&quot;high&quot;: 2 1 1 2 1 2 1 1 1 1 ...
+ $ frequency: Factor w/ 2 levels &quot;low&quot;,&quot;high&quot;: 1 2 2 2 2 2 1 2 1 2 ...
+ $ length   : Factor w/ 3 levels &quot;4&quot;,&quot;5&quot;,&quot;6&quot;: 3 3 2 2 1 1 3 2 1 3 ...
+ $ item     : Factor w/ 600 levels &quot;abide&quot;,&quot;acts&quot;,..: 363 121 202 525 580 135 42 368 227 141 ...
+ $ rt       : num  1.091 0.876 0.71 1.21 0.843 ...
+ $ log_rt   : num  0.0871 -0.1324 -0.3425 0.1906 -0.1708 ...
+ $ correct  : logi  TRUE TRUE TRUE TRUE TRUE TRUE ...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>What is the maximal random-effects structure justified by the design for this data set for the dependent variable <code>log_rt</code>:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoibWl4ZWQobG9nX3J0IH4gLi4uKSJ9 -->
+<pre class="r"><code>mixed(log_rt ~ ...)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
-<div id="exercise-2-analyse-the-data-using-a-partial-pooling-approach." class="section level2">
-<h2>Exercise 2: Analyse the data using a partial-pooling approach.</h2>
+<div id="exercise-2b-analyse-the-data-using-a-partial-pooling-approach." class="section level2">
+<h2>Exercise 2B: Analyse the data using a partial-pooling approach.</h2>
 <ul>
 <li>Details follow…</li>
 </ul>
@@ -237,13 +272,14 @@ Each participant worked on 12 items, 4 estimates of <em>P</em>(<em>C</em>|<em>A<
 <div id="references" class="section level2">
 <h2>References</h2>
 <ul>
+<li>Barr, D. J., Levy, R., Scheepers, C., &amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. <em>Journal of Memory and Language</em>, 68(3), 255-278. <a href="https://doi.org/10.1016/j.jml.2012.11.001" class="uri">https://doi.org/10.1016/j.jml.2012.11.001</a> -Freeman, E., Heathcote, A., Chalmers, K., &amp; Hockley, W. (2010). Item effects in recognition memory for words. <em>Journal of Memory and Language</em>, 62(1), 1-18. <a href="http://doi.org/10.1016/j.jml.2009.09.004" class="uri">http://doi.org/10.1016/j.jml.2009.09.004</a></li>
 <li>Skovgaard-Olsen, N., Singmann, H., &amp; Klauer, K. C. (2016). The relevance effect and conditionals. <em>Cognition</em>, 150, 26-36. <a href="https://doi.org/10.1016/j.cognition.2015.12.017" class="uri">https://doi.org/10.1016/j.cognition.2015.12.017</a></li>
-<li>Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data.</em> Sebastopol CA: O’Reilly.</li>
 </ul>
 <!-- rnb-text-end -->
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkV4ZXJjaXNlIDIiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIyBTa292Z2FhcmQtT2xzZW4gZXQgYWwuICgyMDE2KTogVGhlIFJlbGV2YW5jZSBFZmZlY3QgYW5kIENvbmRpdGlvbmFscw0KDQotIENvbmRpdGlvbmFsID0gKmlmLXRoZW4qIHN0YXRlbWVudDsgZS5nLiwgSWYgZ2xvYmFsIHdhcm5pbmcgY29udGludWVzLCBMb25kb24gd2lsbCBiZSBmbG9vZGVkLg0KLSBCYXllc2lhbiByZWFzb25pbmcgb2Z0ZW4gYXNzdW1lcyAndGhlIEVxdWF0aW9uJzogKlAqKGlmICpBKiB0aGVuICpDKikgPSAqUCooKkMqfCpBKikNCi0gT3VyIHF1ZXN0aW9uOiBEb2VzIHRoZSBFcXVhdGlvbiBob2xkIGV2ZW4gaWYgbm8gYXBwYXJlbnQgcmVsYXRpb25zaGlwIGJldHdlZW4gKkEqIGFuZCAqQyo/IA0KICAtIHBvc2l0aXZlIHJlbGV2YW5jZSAoUE8pOiAqQSogaXMgYSByZWFzb24gZm9yICpDKiANCiAgLSBuZWdhdGl2ZSByZWxldmFuY2UgKE5FKTogKkEqIGlzIGEgcmVhc29uIGFnYWluc3QgKkMqIA0KICAtIGlycmVsZXZhbmNlIChJUik6ICpBKiBhbmQgKkMqIGhhdmUgbm8gYXBwYXJlbnQgcmVsYXRpb25zaGlwIA0KDQotIDE4MyAob2YgMzQ4KSBwYXJ0aWNpcGFudHMgcmVjcnVpdGVkIHZpYSBgY3Jvd2RmbG93ZXIuY29tYCB3b3JrZWQgb24gMTIgaXRlbXMuDQoNCi0gUGFydGljaXBhbnQgZmlyc3Qgc2F3IGEgdmlnbmV0dGU6DQogIA0KICA+IFNvcGhpYSdzIHNjZW5hcmlvOiBTb3BoaWEgd2lzaGVzIHRvIGZpbmQgYSBuaWNlIHByZXNlbnQgZm9yIGhlciAxMy15ZWFyLW9sZCBzb24sIFRpbSwgZm9yIENocmlzdG1hcy4gU2hlIGlzIHJ1bm5pbmcgb24gYSB0aWdodCBidWRnZXQsIGJ1dCBzaGUga25vd3MgdGhhdCBUaW0gbG92ZXMgcGFydGljaXBhdGluZyBpbiBsaXZlIHJvbGUtcGxheWluZyBpbiB0aGUgZm9yZXN0IGFuZCBzaGUgaXMgcmVhbGx5IHNraWxsZWQgYXQgc2V3aW5nIHRoZSBvcmMgY29zdHVtZXMgaGUgbmVlZHMuIFVuZm9ydHVuYXRlbHksIHNoZSB3aWxsIG5vdCBiZSBhYmxlIHRvIGFmZm9yZCB0aGUgbGVhdGhlciBwYXJ0cyB0aGF0IHN1Y2ggY29zdHVtZXMgdXN1YWxseSBoYXZlLCBidXQgc2hlIHdpbGwgc3RpbGwgYmUgYWJsZSB0byBtYWtlIHRoZW0gbG9vayBuaWNlLg0KDQotIFRoZW4gd2UgYXNrZWQgcGFydGljaXBhbnQgZm9yIHRoZWlyIHJhdGluZyBmb3IgdGhlIGNvbmRpdGlvbmFsIHByb2JhYmlsaXR5ICpQKigqQyp8KkEqKSBvbiB0aGUgcHJvYmFiaWxpdHkgc2NhbGUgZnJvbSAwJSB0byAxMDAlOg0KDQogID4gU3VwcG9zZSBTb3BoaWEgYnV5cyBhIEJhcmJpZSBkb2xsIGZvciBUaW0uICAgDQogID4gVW5kZXIgdGhpcyBhc3N1bXB0aW9uLCBob3cgcHJvYmFibGUgaXMgaXQgdGhhdCB0aGUgZm9sbG93aW5nIHNlbnRlbmNlIGlzIHRydWU6ICAgDQogID4gVGltIHdpbGwgYmUgZXhjaXRlZCBhYm91dCBoaXMgcHJlc2VudC4NCg0KLSBPbiB0aGUgbmV4dCBwYWdlLCB3ZSBhc2tlZCBwYXJ0aWNpcGFudCBmb3IgdGhlaXIgcmF0aW5nIG9mIHRoZSBwcm9iYWJpbGl0eSBvZiB0aGUgY29uZGl0aW9uYWwgKlAqKGlmICpBKiB0aGVuICpDKikgb24gdGhlIHByb2JhYmlsaXR5IHNjYWxlIGZyb20gMCUgdG8gMTAwJToNCg0KICA+IENvdWxkIHlvdSBwbGVhc2UgcmF0ZSB0aGUgcHJvYmFiaWxpdHkgdGhhdCB0aGUgZm9sbG93aW5nIHNlbnRlbmNlIGlzIHRydWU6ICAgDQogID4gSUYgU29waGlhIGJ1eXMgYSBCYXJiaWUgZG9sbCBmb3IgVGltLCBUSEVOIFRpbSB3aWxsIGJlIGV4Y2l0ZWQgYWJvdXQgaGlzIHByZXNlbnQuDQoNCiMjIyBEZXNpZ24NCg0KUmVzZWFyY2ggcXVlc3Rpb246IERvZXMgdGhlIEVxdWF0aW9uIChpLmUuLCAqUCooaWYgKkEqIHRoZW4gKkMqKSA9ICpQKigqQyp8KkEqKSkgaG9sZCBldmVuIGlmIG5vIGFwcGFyZW50IHJlbGF0aW9uc2hpcCBiZXR3ZWVuICpBKiBhbmQgKkMqPyANCg0KRnVsbCBkZXNpZ246IDQgeCAzIHggMi4gRmlyc3QgdHdvIGZhY3RvcnMgcmVwZWF0ZWQtbWVhc3VyZXMsIGxhc3QgZmFjdG9yIGJldHdlZW4tc3ViamVjdHMuDQoNCkZvciBlYWNoIGl0ZW0sIHBhcnRpY2lwYW50cyBwcm92aWRlIGlkaW9zeW5jcmF0aWMgZXN0aW1hdGVzIG9mICpQKihpZiAqQSogdGhlbiAqQyopIChgZHZgKSBhbmQgKlAqKCpDKnwqQSopIChgY19naXZlbl9hYCkuICANCkVhY2ggcGFydGljaXBhbnQgd29ya2VkIG9uIDEyIGl0ZW1zLCA0IGVzdGltYXRlcyBvZiAqUCooKkMqfCpBKikgKGBjX2dpdmVuX2FgKSBmb3IgZWFjaCBvZiAzIHJlbGV2YW5jZSBjb25kaXRpb25zIChgcmVsX2NvbmRgKToNCg0KLSBwb3NpdGl2ZSByZWxhdm5jZSAoUE8pOiAqQSogaXMgYSByZWFzb24gZm9yICpDKiAoSUYgU29waGlhIGJ1eXMgYW4gb3JjIGNvc3R1bWUgZm9yIFRpbSwgVEhFTiBUaW0gd2lsbCBiZSBleGNpdGVkIGFib3V0IGhpcyBwcmVzZW50LikNCi0gbmVnYXRpdmUgcmVsZXZhbmNlIChORSk6ICpBKiBpcyBhIHJlYXNvbiBhZ2FpbnN0ICpDKiAoSUYgU29waGlhIGJ1eXMgYSBCYXJiaWUgZG9sbCBmb3IgVGltLCBUSEVOIFRpbSB3aWxsIGJlIGV4Y2l0ZWQgYWJvdXQgaGlzIHByZXNlbnQuKSANCi0gaXJyZWxldmFuY2UgKElSKTogKkEqIGFuZCAqQyogaGF2ZSBubyBhcHBhcmVudCByZWxhdGlvbnNoaXAgKElGIFNvcGhpYSByZWd1bGFybHkgd2VhcnMgc2hvZXMsIFRIRU4gVGltIHdpbGwgYmUgZXhjaXRlZCBhYm91dCBoaXMgcHJlc2VudC4pDQoNClR5cGUgb2YgRFYgKGBkdl9xdWVzdGlvbmApIGlzIGJldHdlZW4tc3ViamVjdHMgY29uZGl0aW9uOiANCg0KLSBQcm9iYWJpbGl0eSBvZiAnaWYgKkEqIHRoZW4gKkMqJzogSG93IHByb2JhYmxlIGlzICdpZiAqQSogdGhlbiAqQyonPw0KLSBBY2NlcHRhYmlsaXR5IG9mICdpZiAqQSogdGhlbiAqQyonOiBIb3cgYWNjZXB0YWJsZSBpcyBpdCB0byBzYXkgJ2lmICpBKiB0aGVuICpDKic/KS4NCiAgDQpEYXRhIGF2YWlsYWJsZSBhdDogaHR0cHM6Ly9vc2YuaW8vajRzd3AvDQoNCiMjIEV4ZXJjaXNlIDI6IEFuYWx5c2UgdGhlIGRhdGEgdXNpbmcgYSBwYXJ0aWFsLXBvb2xpbmcgYXBwcm9hY2guDQotIERldGFpbHMgZm9sbG93Li4uDQoNCmBgYHtyfQ0KIyBnbw0KYGBgDQoNCiMjIFJlZmVyZW5jZXMgDQotIFNrb3ZnYWFyZC1PbHNlbiwgTi4sIFNpbmdtYW5uLCBILiwgJiBLbGF1ZXIsIEsuIEMuICgyMDE2KS4gVGhlIHJlbGV2YW5jZSBlZmZlY3QgYW5kIGNvbmRpdGlvbmFscy4gKkNvZ25pdGlvbiosIDE1MCwgMjYtMzYuIGh0dHBzOi8vZG9pLm9yZy8xMC4xMDE2L2ouY29nbml0aW9uLjIwMTUuMTIuMDE3DQotIFdpY2toYW0sIEguLCAmIEdyb2xlbXVuZCwgRy4gKDIwMTcpLiAqUiBmb3IgRGF0YSBTY2llbmNlOiBJbXBvcnQsIFRpZHksIFRyYW5zZm9ybSwgVmlzdWFsaXplLCBhbmQgTW9kZWwgRGF0YS4qIFNlYmFzdG9wb2wgIENBOiBPJ1JlaWxseS4NCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkV4ZXJjaXNlIDIiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIEV4ZXJjaXNlIDJBOiBJZGVudGlmeWluZyBSYW5kb20gRWZmZWN0cy1TdHJ1Y3R1cmUNCg0KWW91ciB0YXNrIGlzIHRvIGlkZW50aWZ5IHRoZSAqbWF4aW1hbCByYW5kb20tZWZmZWN0cyBzdHJ1Y3R1cmUganVzdGlmaWVkIGJ5IHRoZSBkZXNpZ24qIChCYXJyLCBMZXZ5LCBTY2hlZXBlcnMsICYgVGlseSwgMjAxMykgZm9yIHR3byBkYXRhIHNldHMgYW5kIGltcGxlbWVudCB0aGlzIHN0cnVjdHVyZSBpbiBgbG1lNDo6bG1lcmAgc3ludGF4Lg0KDQojIyBEYXRhLVNldCAxOiBTa292Z2FhcmQtT2xzZW4gZXQgYWwuICgyMDE2KTogVGhlIFJlbGV2YW5jZSBFZmZlY3QgYW5kIENvbmRpdGlvbmFscw0KDQotIENvbmRpdGlvbmFsID0gKmlmLXRoZW4qIHN0YXRlbWVudDsgZS5nLiwgSWYgZ2xvYmFsIHdhcm5pbmcgY29udGludWVzLCBMb25kb24gd2lsbCBiZSBmbG9vZGVkLg0KLSBCYXllc2lhbiByZWFzb25pbmcgb2Z0ZW4gYXNzdW1lcyAndGhlIEVxdWF0aW9uJzogKlAqKGlmICpBKiB0aGVuICpDKikgPSAqUCooKkMqfCpBKikNCi0gT3VyIHF1ZXN0aW9uOiBEb2VzIHRoZSBFcXVhdGlvbiBob2xkIGV2ZW4gaWYgbm8gYXBwYXJlbnQgcmVsYXRpb25zaGlwIGJldHdlZW4gKkEqIGFuZCAqQyo/IA0KICAtIHBvc2l0aXZlIHJlbGV2YW5jZSAoUE8pOiAqQSogaXMgYSByZWFzb24gZm9yICpDKiANCiAgLSBuZWdhdGl2ZSByZWxldmFuY2UgKE5FKTogKkEqIGlzIGEgcmVhc29uIGFnYWluc3QgKkMqIA0KICAtIGlycmVsZXZhbmNlIChJUik6ICpBKiBhbmQgKkMqIGhhdmUgbm8gYXBwYXJlbnQgcmVsYXRpb25zaGlwIA0KDQotIDE4MyAob2YgMzQ4KSBwYXJ0aWNpcGFudHMgcmVjcnVpdGVkIHZpYSBgY3Jvd2RmbG93ZXIuY29tYCB3b3JrZWQgb24gMTIgaXRlbXMuDQoNCkZ1bGwgZGVzaWduIGZvciBwYXJ0aWNpcGFudHM6IDQgeCAzIHggMi4gRmlyc3QgdHdvIGZhY3RvcnMgcmVwZWF0ZWQtbWVhc3VyZXMsIGxhc3QgZmFjdG9yIGJldHdlZW4tc3ViamVjdHMuDQoNCkVhY2ggcGFydGljaXBhbnQgd29ya2VkIG9uIDEyIGl0ZW1zLCA0IGVzdGltYXRlcyBvZiAqUCooKkMqfCpBKikgKGBjX2dpdmVuX2FgKSBmb3IgZWFjaCBvZiAzIHJlbGV2YW5jZSBjb25kaXRpb25zIChgcmVsX2NvbmRgKToNCg0KLSBwb3NpdGl2ZSByZWxhdm5jZSAoUE8pOiAqQSogaXMgYSByZWFzb24gZm9yICpDKiAoSUYgU29waGlhIGJ1eXMgYW4gb3JjIGNvc3R1bWUgZm9yIFRpbSwgVEhFTiBUaW0gd2lsbCBiZSBleGNpdGVkIGFib3V0IGhpcyBwcmVzZW50LikNCi0gbmVnYXRpdmUgcmVsZXZhbmNlIChORSk6ICpBKiBpcyBhIHJlYXNvbiBhZ2FpbnN0ICpDKiAoSUYgU29waGlhIGJ1eXMgYSBCYXJiaWUgZG9sbCBmb3IgVGltLCBUSEVOIFRpbSB3aWxsIGJlIGV4Y2l0ZWQgYWJvdXQgaGlzIHByZXNlbnQuKSANCi0gaXJyZWxldmFuY2UgKElSKTogKkEqIGFuZCAqQyogaGF2ZSBubyBhcHBhcmVudCByZWxhdGlvbnNoaXAgKElGIFNvcGhpYSByZWd1bGFybHkgd2VhcnMgc2hvZXMsIFRIRU4gVGltIHdpbGwgYmUgZXhjaXRlZCBhYm91dCBoaXMgcHJlc2VudC4pDQoNClR5cGUgb2YgRFYgKGBkdl9xdWVzdGlvbmApIGlzIGJldHdlZW4tc3ViamVjdHMgY29uZGl0aW9uOiANCg0KLSBQcm9iYWJpbGl0eSBvZiAnaWYgKkEqIHRoZW4gKkMqJzogSG93IHByb2JhYmxlIGlzICdpZiAqQSogdGhlbiAqQyonPw0KLSBBY2NlcHRhYmlsaXR5IG9mICdpZiAqQSogdGhlbiAqQyonOiBIb3cgYWNjZXB0YWJsZSBpcyBpdCB0byBzYXkgJ2lmICpBKiB0aGVuICpDKic/KS4NCg0KSW4gdG90YWwgd2UgY3JlYXRlZCAxMiB2aWduZXR0ZXMgKGkuZS4sIGl0ZW1zKS4gRWFjaCBwYXJ0aWNpcGFudCBwcm92aWRlZCBvbmUgcmVzcG9uc2VzIGZvciBlYWNoIHZpZ25ldHRlIHdpdGggdGhlIGNvbmRpdGlvbiBvZiB0aGUgdmlnbmV0dGUgcmFuZG9tbHkgY2hvc2VuIGFtb25nIHRoZSA0IHggMyB3aXRoaW4tc3ViamVjdHMgZGVzaWduLg0KDQpUaGUgZGF0YSBpcyBnaXZlbiBpbjoNCg0KYGBge3J9DQpsb2FkKCJzc2sxNl9kYXRfcHJlYXByZWQucmRhIikgIyBkYXRhIHByZWFwcmVkIGluICdwcmVwYXJlX2RhdGEuUicNCnN0cihkYXQpDQpgYGANCg0KDQpXaGF0IGlzIHRoZSBgbG1lNDo6bG1lcmAgb3IgYGFmZXg6Om1peGVkYCBmb3JtdWxhIGZvciB0aGUgbWF4aW1hbCByYW5kb20tZWZmZWN0cyBzdHJ1Y3R1cmUgZm9yIHRoaXMgZGVzaWduPw0KDQpgYGB7ciwgZXZhbD1GQUxTRX0NCm1peGVkKGR2IH4gLi4uKQ0KYGBgDQoNCiMjIERhdGEtU2V0IDI6IEZyZWVtYW4sIEhlYXRoY290ZSwgQ2hhbG1lcnMsIGFuZCBIb2NrbGV5ICgyMDEwKQ0KDQpMZXhpY2FsIGRlY2lzaW9uIGFuZCB3b3JkIG5hbWluZyBsYXRlbmNpZXMgZm9yIDMwMCB3b3JkcyBhbmQgMzAwIG5vbndvcmRzIHByZXNlbnRlZCBpbiBGcmVlbWFuLCBIZWF0aGNvdGUsIENoYWxtZXJzLCBhbmQgSG9ja2xleSAoMjAxMCkuIFRoZSBzdHVkeSBoYWQgb25lIGJldHdlZW4tc3ViamVjdHMgZmFjdG9ycywgYHRhc2tgIHdpdGggdHdvIGxldmVscyAoYCJuYW1pbmciYCBvciBgImxleGRlYyJgKSwgYW5kIGZvdXIgd2l0aGluLXN1YmplY3RzIGZhY3RvcnM6IGBzdGltdWx1c2AgdHlwZSB3aXRoIHR3byBsZXZlbHMgKGAid29yZCJgIG9yIGAibm9ud29yZCJgKSwgd29yZCBgZGVuc2l0eWAgYW5kIHdvcmQgYGZyZXF1ZW5jeWAgZWFjaCB3aXRoIHR3byBsZXZlbHMgKGAibG93ImAgYW5kIGAiaGlnaCJgKSBhbmQgc3RpbXVsdXMgYGxlbmd0aGAgd2l0aCB0aHJlZSBsZXZlbHMgKGA0YCwgYDVgLCBhbmQgYDZgKS4NCg0KVGhlIGRhdGEgY29tZXMgd2l0aCBgYWZleGAgYXMgYGZoY2gyMDEwYDoNCmBgYHtyfQ0KZGF0YSgiZmhjaDIwMTAiLCBwYWNrYWdlID0gImFmZXgiKQ0Kc3RyKGZoY2gyMDEwKQ0KYGBgDQoNCldoYXQgaXMgdGhlIG1heGltYWwgcmFuZG9tLWVmZmVjdHMgc3RydWN0dXJlIGp1c3RpZmllZCBieSB0aGUgZGVzaWduIGZvciB0aGlzIGRhdGEgc2V0IGZvciB0aGUgZGVwZW5kZW50IHZhcmlhYmxlIGBsb2dfcnRgOg0KDQpgYGB7ciwgZXZhbD1GQUxTRX0NCm1peGVkKGxvZ19ydCB+IC4uLikNCg0KYGBgDQoNCg0KDQojIyBFeGVyY2lzZSAyQjogQW5hbHlzZSB0aGUgZGF0YSB1c2luZyBhIHBhcnRpYWwtcG9vbGluZyBhcHByb2FjaC4NCi0gRGV0YWlscyBmb2xsb3cuLi4NCg0KYGBge3J9DQojIGdvDQpgYGANCg0KIyMgUmVmZXJlbmNlcyANCi0gQmFyciwgRC4gSi4sIExldnksIFIuLCBTY2hlZXBlcnMsIEMuLCAmIFRpbHksIEguIEouICgyMDEzKS4gUmFuZG9tIGVmZmVjdHMgc3RydWN0dXJlIGZvciBjb25maXJtYXRvcnkgaHlwb3RoZXNpcyB0ZXN0aW5nOiBLZWVwIGl0IG1heGltYWwuICpKb3VybmFsIG9mIE1lbW9yeSBhbmQgTGFuZ3VhZ2UqLCA2OCgzKSwgMjU1LTI3OC4gaHR0cHM6Ly9kb2kub3JnLzEwLjEwMTYvai5qbWwuMjAxMi4xMS4wMDENCi1GcmVlbWFuLCBFLiwgSGVhdGhjb3RlLCBBLiwgQ2hhbG1lcnMsIEsuLCAmIEhvY2tsZXksIFcuICgyMDEwKS4gSXRlbSBlZmZlY3RzIGluIHJlY29nbml0aW9uIG1lbW9yeSBmb3Igd29yZHMuICpKb3VybmFsIG9mIE1lbW9yeSBhbmQgTGFuZ3VhZ2UqLCA2MigxKSwgMS0xOC4gaHR0cDovL2RvaS5vcmcvMTAuMTAxNi9qLmptbC4yMDA5LjA5LjAwNA0KLSBTa292Z2FhcmQtT2xzZW4sIE4uLCBTaW5nbWFubiwgSC4sICYgS2xhdWVyLCBLLiBDLiAoMjAxNikuIFRoZSByZWxldmFuY2UgZWZmZWN0IGFuZCBjb25kaXRpb25hbHMuICpDb2duaXRpb24qLCAxNTAsIDI2LTM2LiBodHRwczovL2RvaS5vcmcvMTAuMTAxNi9qLmNvZ25pdGlvbi4yMDE1LjEyLjAxNw0KDQo=</div>
 
 
 
