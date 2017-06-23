@@ -1,18 +1,19 @@
 ---
 title: "Medium Data in the Tidyverse"
 author: "Mike Frank"
-date: "6/16/2017"
+date: "6/22/2017"
 output: html_document
 ---
 
-Starting note: The best reference for this material is Hadley Wickham's [R for data scientists](http://r4ds.had.co.nz/). My contribution here is to translate this for psychology.
+Starting note: The best reference for this material is Hadley Wickham's [R for data scientists](http://r4ds.had.co.nz/). My contribution here is to translate this reference for psychology.
 
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(DT) # dependency
 library(ggthemes) # dependency
 library(wordbankr)
-knitr::opts_chunk$set(echo = TRUE)
+library(purrr)
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
 ```
 
 <!-- ----------------------------------------------------------------------- -->
@@ -21,8 +22,8 @@ knitr::opts_chunk$set(echo = TRUE)
 By the end of this tutorial, you will know:
 
 + What "tidy data" is and why it's an awesome format
-+ How to get your data to be tidy
 + How to do some stuff with tidy data
++ How to get your data to be tidy
 + Some tips'n'tricks for dealing with "medium data" in R
 
 This intro will describe a few concepts that you will need to know, using the famous `iris` dataset that comes with `ggplot2`.
@@ -32,26 +33,19 @@ This intro will describe a few concepts that you will need to know, using the fa
 The basic data structure we're working with is the data frame, or `tibble` (in the `tidyverse` reimplementation). 
 
 Data frames have rows and columns, and each column has a distinct data type. The implementation in Python's `pandas` is distinct but most of the concepts are the same. 
-
 `iris` is a data frame showing the measurements of a bunch of different instances of iris flowers from different species. (Sepals are the things outside the petals of the flowers that protect the petals while it's blooming, petals are the actual petals of the flower).
 
 ```{r}
-DT::datatable(iris)
+head(iris)
 ```
 
-### Exercise
-
-R is a very flexible programming language, which is both a strength and a weakness. There are many ways to get a particular value of a variable in a data frame.
-
-You can use `$` to access a column, as in `iris$Sepal.Length` or you can treat the data frame as a matrix, e.g. `iris[1,1]` or even as a list, as in `iris[[1]]`. You can also mix numeric references and named references, e.g. `iris[["Sepal.Length"]]`.
-
-Turn to your neighbor (and/or google) and find as many ways as you can to access the petal length of the third iris in the dataset (row 3).
+> **Exercise.** R is a very flexible programming language, which is both a strength and a weakness. There are many ways to get a particular value of a variable in a data frame. You can use `$` to access a column, as in `iris$Sepal.Length` or you can treat the data frame as a matrix, e.g. `iris[1,1]` or even as a list, as in `iris[[1]]`. You can also mix numeric references and named references, e.g. `iris[["Sepal.Length"]]`. Turn to your neighbor (and/or google) and find as many ways as you can to access the petal length of the third iris in the dataset (row 3).
 
 ```{r}
 # fill me in with calls to the iris dataset that all return the same cell (third from the top, Petal Length).
 ```
 
-Discussion: why might some ways of doing this be better than others? 
+> **Discussion.** Why might some ways of doing this be better than others? 
 
 ## Tidy data
 
@@ -61,21 +55,15 @@ Here's the basic idea: In tidy data, every row is a single **observation** (tria
 
 And if you know that data are formatted this way, then you can do amazing things, basically because you can take a uniform approach to the dataset. From R4DS:
 
-> There’s a general advantage to picking one consistent way of storing data. If you have a consistent data structure, it’s easier to learn the tools that work with it because they have an underlying uniformity.
-
-> There’s a specific advantage to placing variables in columns because it allows R’s vectorised nature to shine.
+"There’s a general advantage to picking one consistent way of storing data. If you have a consistent data structure, it’s easier to learn the tools that work with it because they have an underlying uniformity. There’s a specific advantage to placing variables in columns because it allows R’s vectorised nature to shine."
 
 `iris` is a tidy dataset. Each row is an observation of an individual iris, each column is a different variable. 
 
-### Exercise
-
-Take a look at these data, as downloaded from Amazon Mechanical Turk. They describe an experiment where people had to estimate the price of a dog, a plasma TV, and a sushi dinner (and they were primed with anchors that differed across conditions). It's a replication of a paper by [Janiszewksi & Uy (2008)](http://warrington.ufl.edu/departments/mkt/docs/janiszewski/Anchor.pdf). 
+> **Exercise.** Take a look at these data, as downloaded from Amazon Mechanical Turk. They describe an experiment where people had to estimate the price of a dog, a plasma TV, and a sushi dinner (and they were primed with anchors that differed across conditions). It's a replication of a paper by [Janiszewksi & Uy (2008)](http://warrington.ufl.edu/departments/mkt/docs/janiszewski/Anchor.pdf). Examine this dataset with your nextdoor neighbor and sketch out what a tidy version of the dataset would look like (using paper and pencil).
 
 ```{r}
 ju <- read_csv("data/janiszewski_rep_cleaned.csv")
 ```
-
-> Examine this dataset with your nextdoor neighbor and sketch out what a tidy version of the dataset would look like (using paper and pencil).
 
 ## Functions and Pipes
 
@@ -117,11 +105,7 @@ This can be super helpful for writing strings of functions so that they are read
 
 We'll be doing a lot of piping of functions with multiple arguments later, and it will really help keep our syntax simple. 
 
-### Exercise
-
-Rewrite these commands using pipes and check that they do the same thing! (Or at least produce the same output).
-
-Unpiped versions:
+> **Exercise.** Rewrite these commands using pipes and check that they do the same thing! (Or at least produce the same output). Unpiped version:
 
 ```{r}
 length(unique(iris$Species)) # number of species
@@ -135,17 +119,17 @@ Piped version:
 
 ## `ggplot2` and tidy data
 
-The last piece of our workflow here is going to be the addition of visualiation. 
+The last piece of our workflow here is going to be the addition of visualiation elements. `ggplot2` is a plotting package that easily takes advantage of tidy data. ggplots have two important parts (there are of course more):
 
-`aes` 
-`geom`
++ `aes` - the aesthetic mapping, or which data variables get mapped to which visual variables (x, y, color, symbol, etc.)
++ `geom` - the plotting objects that represent the data (points, lines, shapes, etc.)
 
 ```{r}
 ggplot(iris, aes(Sepal.Width, Sepal.Length, col = Species)) + 
   geom_point()
 ```
 
-And just to let you know my biases, I really like `theme_few` from `ggthemes` and `scale_color_solarized` as my palette.  
+And just to let you know my biases, I like `theme_few` from `ggthemes` and `scale_color_solarized` as my palette.  
 
 ```{r}
 ggplot(iris, aes(Sepal.Width, Sepal.Length, col = Species)) + 
@@ -203,159 +187,156 @@ length(unique(sgf$subid))
 Or use interactive tools like `View` or `DT::datatable` (which I really like).
 
 ```{r}
-View(sgf)
+# View(sgf)
 DT::datatable(sgf)
 ```
 
-## Filtering
+## Filtering & Mutating
 
-There are lots of reasons you might want to remove rows from your dataset, including getting rid of outliers, selecting subpopulations, etc. `filter` is a verb (function) that takes a data frame as its first argument, and then as its second takes the **condition** you want to filter on. 
+There are lots of reasons you might want to remove *rows* from your dataset, including getting rid of outliers, selecting subpopulations, etc. `filter` is a verb (function) that takes a data frame as its first argument, and then as its second takes the **condition** you want to filter on. 
 
 So if you wanted to look only at two year olds, you could do this. (Note you can give two conditions, could also do `age > 2 & age < 3`). 
+
+Note that we're going to be using pipes with functions over data frames here. The way this works is that:
+
++ `dplyr` verbs always take the data frame as their first argument, and
++ because pipes pull out the first argument, the data frame just gets passed through successive operations
++ so you can read a pipe chain as "take this data frame and first do this, then do this, then do that."
+
+This is essentially the huge insight of `dplyr`: you can chain verbs into readable and efficient sequences of operations over dataframes, provided 1) the verbs all have the same syntax (which they do) and 2) the data all have the same structure (which they do if they are tidy). 
+
+OK, so filtering:
 
 ```{r}
 sgf %>%
   filter(age > 2, age < 3) 
 ```
 
+There are also times when you want to add or remove *columns*. You might want to remove columns to simplify the dataset. There's not much to simplify here, but if you wanted to do that, the verb is `select`. 
+
+Perhaps more useful is *adding columns*. You might do this perhaps to compute some kind of derived variable. `mutate` is the verb for these situations - it allows you to add a column. Let's add a discrete age group factor to our dataset.
+
+```{r}
+sgf <- sgf %>%
+  mutate(age_group = cut(age, 2:5, include.lowest=TRUE))
+
+head(sgf$age_group)
+```
 
 ## Standard psychological descriptives
 
-We typically describe datasets at the level of subjects, not trials. We need two verbs to get a summary at the level of subjects: `group_by` and `summarize`.
+We typically describe datasets at the level of subjects, not trials. We need two verbs to get a summary at the level of subjects: `group_by` and `summarise` (kiwi spelling). Grouping alone doesn't do much.
 
 ```{r}
 sgf %>%
-  group_by(subid) 
+  group_by(age_group) 
 ```
 
-All that does is add a grouping marker. But now, we can get a summary of the data. The summary is pretty boring for age and condition, we just want to know the age and condition, so we can just take the first one for each field. .  
+All it does is add a grouping marker. 
+
+What `summarise` does is to *apply a function* to a part of the dataset to create a new summary dataset. So we can apply the function `mean` to the dataset and get the grand mean. 
 
 ```{r}
-by_subs <- sgf %>%
-  group_by(subid) %>%
-  summarise(age = age[1], 
-            condition = condition[1]) 
-by_subs
-```
-
-But now we can get some nice histograms from this dataframe. 
-
-```{r}
-ggplot(by_subs, aes(x = age)) + 
-  geom_histogram(binwidth = .25)
-```
-
-Because these are tidy data, it's going to be easy to add extra variables to the histogram, e.g.:
-
-```{r}
-ggplot(by_subs, aes(x = age, fill = condition)) + 
-  geom_histogram(binwidth = .25) 
-```
-
-
-
-Check N observations.
-
-```{r}
-d %>%
-  group_by(condition, age.group) %>%
-  summarise(n_observations = n()) 
-```
-
-Check N subs.
-
-```{r}
-d %>%
-  distinct(subid, condition, age.group) %>%
-  group_by(condition, age.group) %>%
-  summarise(n_subs = n())
-```
-
-## Plots
-
-First global plot, not that informative but better than nothing. Illustrates the power of geom_smooth.
-
-```{r}
-ggplot(d, aes(x = age, y = correct, col = condition)) + 
-  geom_point() + 
-  geom_smooth(method="glm") 
-```
-
-Next, use subject means.
-
-```{r}
-sub_means <- d %>%
-  group_by(condition, age, subid) %>%
+sgf %>%
   summarise(correct = mean(correct))
-
-ggplot(sub_means, 
-       aes(x = age, y = correct, col = condition)) + 
-  geom_point() + 
-  geom_smooth()
 ```
-
-And condition-by-subject means. 
+Note the syntax here: `summarise` takes multiple  `new_column_name = function_to_be_applied_to_data(data_column)`. Using this syntax, we can create more elaborate summary datasets also:
 
 ```{r}
-cond_means <- d %>%
-  group_by(condition, age.group, subid) %>%
-  summarise(correct = mean(correct)) %>%
-  summarise(correct = mean(correct))
-
-ggplot(cond_means, 
-       aes(x = age.group, y = correct, col = condition)) + 
-  geom_point() + 
-  geom_line() + 
-  ylim(c(0,1)) + 
-  ggthemes::theme_few() + 
-  ggthemes::scale_colour_solarized() + 
-  ylab("Proportion Inferences Correct") + 
-  xlab("Age (Years)")
+sgf %>%
+  summarise(correct = mean(correct), 
+            n_observations = length(subid))
 ```
 
+Where these two verbs shine is in combination, though. Because `summarise` applies functions to columns in your *grouped data*, not just to the whole dataset!
+
+So we can group by age or condition or whatever else we want and then carry out the same procedure, and all of a sudden we are doing something extremely useful!
 
 ```{r}
-ggplot(cond_means, 
-       aes(x = age.group, y = correct, fill = condition)) + 
-  geom_bar(stat = "identity", position = "dodge") + 
-  ylim(c(0,1)) + 
-  ggthemes::theme_few() + 
-  ggthemes::scale_fill_solarized() + 
-  ylab("Proportion Inferences Correct") + 
-  xlab("Age (Years)")
+sgf_means <- sgf %>%
+  group_by(age_group, condition) %>%
+  summarise(correct = mean(correct), 
+            n_observations = length(subid))
+sgf_means
 ```
 
-## Exercises
+These summary data are typically very useful for plotting. .
 
+```{r}
+ggplot(sgf_means, 
+       aes(x = age_group, y = correct, col = condition, group=condition)) + 
+  geom_line() 
+```
 
+> **Exercise.** One of the most important analytic workflows for psychological data is to take some function (e.g., the mean) *for each participant* and then look at grand means and variabiulity *across participant means*. This analytic workflow requires grouping, summarising, and then grouping again and summarising again! Use `dplyr` to make the same table as above (`sgf_means`) but with means (and SDs) computed across subject means, not across all data points. (The means will be pretty similar as this is a balanced design but in a case with lots of missing data, they will vary. In contrast, the SD doesn't even really make sense across the binary data before you aggregate across subjects.) 
 
-
-
+```{r}
+# exercise
+```
 
 <!-- ----------------------------------------------------------------------- -->
 # Getting to Tidy with `tidyr`
 
 Reference: [R4DS Chapter 12](http://r4ds.had.co.nz/tidy-data.html)
 
+Psychological data often comes in two flavors: *long* and *wide* data. Long form data is *tidy*, but that format is less common. It's much more common to get *wide* data, in which every row is a case (e.g., a subject), and each column is a variable. In this format multiple trials (observations) are stored as columns. 
+
+This can go a bunch of ways, for example, the most common might be to have subjects as rows and trials as colkumns. But here's an example from a real dataset on "unconscious arithmetic" from [Sklar et al. (2012)](http://www.pnas.org/content/109/48/19614.short). In it, *items* (particular arithmetic problems) are rows and *subjects* are columns. 
 
 
+```{r}
+d_sklar <- read_csv("http://langcog.stanford.edu/sklar_expt6a_corrected.csv")
+head(d_sklar)
+```
 
+## Tidy verbs
 
+The two main verbs for tidying are `gather` and `spread`. (There are lots of others in the `tidyr` package if you want to split or merge columns etc.). 
 
+First, let's go *away* from tidiness. We're going to `spread` a tidy dataset. Remember that tidy data has one observation in each row, but we want to "spread" it out so it's wide. (The metaphor works better in this description). This may not be helpful, but I think of the data as a long cream cheese pat, and I "spread" it over a wide bagel. 
 
-## Exercises
+Let's try it on the SGF data above. First we'll spread it so it's wide. I do this by indicating what column is going to be the *column labels* in the new data frame, here it's `item`, and what column is going to have the *values* in those columns, here it's `correct`:
 
+```{r}
+sgf_wide <- sgf %>% 
+  spread(item, correct)
+head(sgf_wide)
+```
 
+Now you can see that there is no explicit specification that all those item columns, e.g. `faces`, `beds` are holding `correct` values, but the data are much more compact. (This form is easy to work with in Excel, so that's probably why people use it in psych). 
+
+OK, let's go back to our original format. `gather` is about making wide data into tidy (long) data. When you gather a dataset you are "gathering" a bunch of columns (maybe that you previusly `spread`). You specify what all the columns have in common (e.g., they are all `subject_id`s in the example above), and you say what measure they all contain (they all have RTs). So in that sense, it's the flip of `spread`. You did `spread(item, correct)` and now you'll `gather(item, correct, ...)`. The one extra argument is that you need to specify the columns that will go into `item`! 
+
+```{r}
+sgf_long <- sgf_wide %>% 
+  gather(item, correct, beds, faces, houses, pasta)
+head(sgf_long)
+head(sgf)
+```
+
+There are lots of flexible ways to specify these columns - you can enumerate their names like I did. 
+
+```{r}
+# demo column labeling
+```
+
+> **Exercise.** Take the Sklar data from above, where each column is a separate subject, and `gather` it so that it's a tidy dataset. What challenges come up? 
+
+```{r}
+# sklar_tidy <- ... 
+```
 
 
 <!-- ----------------------------------------------------------------------- -->
 # A bigger worked example: Wordbank data
 
-[Wordbank](http://wordbank.stanford.edu) is a database of children's language learning. We're going to be using some data on vocabulary growth that we load from a database.
+We're going to be using some data on vocabulary growth that we load from the Wordbank database. [Wordbank](http://wordbank.stanford.edu) is a database of children's language learning. 
 
 (Go explore it for a moment).
 
 We're going to look at data from the English Words and Sentences form. These data describe the repsonses of parents to questions about whether their child says 680 different words. 
+
+`dplyr` really shines in this context. 
 
 ```{r}
 ws <- wordbankr::get_administration_data(language = "English", 
@@ -364,11 +345,53 @@ ws <- wordbankr::get_administration_data(language = "English",
 
 Take a look at the data that comes out. 
 
-How many kids are there? What are their ages? 
+```{r}
+DT::datatable(ws)
+```
+
 
 ```{r}
-
+ggplot(ws, aes(x= age, y = production)) + 
+  geom_point()
 ```
+
+Aside: How can we fix this plot? Suggestions from group? 
+
+```{r}
+# online demo
+```
+
+Ok, let's plot the relationship between sex and productive vocabulary, using `dplyr`.
+
+```{r}
+ggplot(ws, aes(x= age, y = production, col=sex)) + 
+  geom_point()
+```
+This is a bit useless, because the variability is so high. So let's summarise!
+
+> **Exercise.** Get means and SDs by age and sex. Filter the missing sex data kids. 
+
+```{r}
+# ws_sex <- ...
+```
+
+Now plot:
+
+```{r}
+ggplot(ws_sex, 
+       aes(x = age, y = production_mean, col = sex)) + 
+  geom_line() + 
+  geom_linerange(aes(ymin = production_mean - production_sd, 
+                     ymax = production_mean + production_sd), 
+                 position = position_dodge(width = .2)) # keep SDs from overlapping
+```
+
+**Bonus: Compute effect size.**
+
+```{r}
+# instructor demo
+```
+
 
 <!-- ----------------------------------------------------------------------- -->
 # Exciting stuff you can do with this workflow
@@ -382,3 +405,31 @@ How many kids are there? What are their ages?
 ## Interactive visualization
 
 `shiny`
+
+<!-- ----------------------------------------------------------------------- -->
+# Exercise solution code
+
+Sex means.
+
+```{r}
+ws_sex <- ws %>%
+  filter(!is.na(sex)) %>%
+  group_by(age, sex) %>%
+  summarise(production_sd = sd(production, na.rm=TRUE),
+            production_mean = mean(production))
+```
+
+Effect size. 
+
+```{r}
+ws_es <- ws_sex %>%
+  group_by(age) %>%
+  summarise(es = (production_mean[sex=="Female"] - production_mean[sex=="Male"]) / 
+              mean(production_sd))
+
+ggplot(ws_es, aes(x = age, y = es)) + 
+  geom_point() + 
+  geom_smooth(span = 1) + 
+  ylab("Female advantage (standard deviations)") + 
+  xlab("Age (months)")
+```
