@@ -35,6 +35,9 @@ def extractListFromURL(data_source, variable, year):
 zip_locs = DataFrame.from_csv('data/zip_names.csv',index_col='ZIP')
 all_zips = zip_locs.index.tolist()
 
+if(CENSUS_KEY=='no_key'):
+    print 'no census API key found, get one here: http://api.census.gov/data/key_signup.html'
+    raise SystemExit
 
 demographics = DataFrame(columns=['ZIP', 'population'])
 for data_line in extractListFromURL('sf1', 'PCT0130001', CENSUS_YEAR): #TOTAL POPULATION   P0010001 #POPULATION IN HOUSEHOUDS PCT0130001
