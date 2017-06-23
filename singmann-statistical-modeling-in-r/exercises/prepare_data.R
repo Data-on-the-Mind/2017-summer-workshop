@@ -48,6 +48,7 @@ dat <- droplevels(dat[ dat$conditional == "indicative", ])
 dat$conditional <- NULL
 dat$type <- NULL
 
-length(levels(dat$lfdn))
+dat <- dplyr::rename(dat, p_id = lfdn, i_id = le_nr)
+length(levels(dat$p_id))
 
 save(dat, file="ssk16_dat_preapred.rda")

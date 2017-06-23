@@ -81,17 +81,16 @@ str(dat)
 
 Variables in the data:
 
-- `lfdn`: participant identifier
-- `le_nr`: id of vignette
+- `p_id`: participant identifier
+- `i_id`: item identifier (i.e., id of vignette)
 - `CgivenA`: original *P*(*C*|*A*)
 - `DV`: original *P*(if *A* then *C*)
 - `rel_cond`: relevance condition with three levels. Within-subject variable
 - `dv_question`: type of question for dv (between-subjects)
-- `conditional`: type of conditional (between-subjects)
 - `dv`: *P*(if *A* then *C*) centered at midpoint of scale (as used in paper)
 - `c_given_a`: *P*(*C*|*A*) centered at midpoint of scale (as used in paper)
 
-### Complete-Pooling Approach
+## Complete-Pooling Approach
 
 
 
@@ -112,9 +111,9 @@ ggplot(data = dat) +
 ```
 
 
-Further Instructions:  
+## Full Instructions  
 
-- Your task is to calculate the regression parameter (and potentially also the intercept) for each participant and within-subject and between-subject condition (i.e., relationship of `dv` and `c_given_a` for each `lfdn`, `rel_cond`, and `dv_question` combination).
+- Your task is to calculate the regression parameter (and potentially also the intercept) for each participant and within-subject and between-subject condition (i.e., relationship of `dv` and `c_given_a` for each `p_id`, `rel_cond`, and `dv_question` combination).
 - Then compare the individual regression parameters across conditions (i.e., `rel_cond` and `dv_question` combinations). Do this comparison in a graphical way and also statistically (i.e., ANOVA).
 - The goal of this exercise is to combine your knowledge of the `tidyverse` and use it to solve the aforementioned task.
 - I would suggest you use package `dplyr` and potentially `broom` or `tidyr` and `purrr`.
