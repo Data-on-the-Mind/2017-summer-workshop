@@ -1,0 +1,44 @@
+{% set in_group = "In-group" %}
+
+{% set items = [
+    "I feel a bond with %s.",
+    "I feel solidarity with %s.",
+    "I feel committed to %s.",
+    "I am glad to be %s.",
+    "I think that %s have a lot to be proud of.",
+    "It is pleasant to be %s.",
+    "Being %s gives me a good feeling.",
+    "I often think about the fact that I am %s.",
+    "The fact that I am %s is an important part of my identity.",
+    "Being %s is an important part of how I see myself.",
+    "I have a lot in common with the average %s person.",
+    "I am similar to the average %s person.",
+    "%s people have a lot in common with each other.",
+    "%s people are very similar to each other.",
+    "I see myself as %s.",
+    "I identify with other %s people.",
+    "Being %s just feels natural to me.",
+    "I feel (personally) implicated when %s people are criticized.",
+    "%s are an important group to me.",
+    "I have a lot of respect for %s people.",
+] %}
+
+{% macro multichoice(name, num_choices) -%}
+    {% for i in range(num_choices) %}
+        <label class="label-inline"><span class="label-inline">{{ i }}</span></label>
+        <input type="radio" name="{{ name }}" value="{{ i }}">
+    {% endfor %}
+{%- endmacro %}
+
+{% macro prompt(text, group) -%}
+    <p>{{ text|format(group) }}</p>
+{%- endmacro %}
+
+<hr/>
+{% for item in items %}
+    {% set name = 'leach_' + loop.index|string %}
+    <fieldset id="{{ name }}">
+        {{ prompt(item, in_group) }}
+        {{ multichoice(name, 7)}}
+    </fieldset>
+{% endfor %}
