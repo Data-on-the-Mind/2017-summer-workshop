@@ -70,7 +70,7 @@ plot(sat.act$SATQ, sat.act$ACT)
 # Linear Regression Model
 
 - $\bf{y}$ = vector of ACT scores of length $n$ (*dependent variable*)
-- $\bf{x_{\mbox{SATV}}}$ = vector os SATV scores of length $n$ (*independent variable* or *covariate*)
+- $\bf{x_{\mbox{SATV}}}$ = vector of SATV scores of length $n$ (*independent variable* or *covariate*)
 
 $$y_i = \beta_0x_{0,i}+\beta_{\mbox{SATV}}x_{\mbox{SATV},i}+\epsilon_i, \ \ i = 1, ..., n, \\
 \bf{\epsilon} \sim \mathcal{N}(0, \sigma^2_{\epsilon}),$$
@@ -147,13 +147,13 @@ cbind(y1, y2, y3) ~ x # multivariate model
 
 Independent variables are to the right of the `~`:
 
-| Formula      | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   | Interpretation                   |
-| -------------|---|----------------------------------|
-| `~ x` or `~1+x`| | Intercept and main effect of `x` | 
-| ` ~ x-1` or `~0 + x` | | Only main effect of `x` and no intercept (questionable) |
-| `~ x+y` || Main effects of `x` and `y`|
-| `~ x:y`|| Interaction between `x` and `y` (and no) |
-| `~ x*y` or `~ x+y+x:y` || Main effects and interaction between `x` and `y` |
+| Formula | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Interpretation  |
+| ------------------------|---|----------------------------------|
+| `~ x` or `~1+x`         || Intercept and main effect of `x` | 
+| ` ~ x-1` or `~0 + x`    || Only main effect of `x` and no intercept (questionable) |
+| `~ x+y`                 || Main effects of `x` and `y`|
+| `~ x:y`                 || Interaction between `x` and `y` (and no) |
+| `~ x*y` or `~ x+y+x:y`  || Main effects and interaction between `x` and `y` |
 
 ---
 class: small
@@ -260,7 +260,7 @@ options(op)
 class: small
 
 # R and Categorical Covariates
-`model.matrix()` tranforms categorical covariates into numerical variables that can be used for fitting using a specific contrast function (see `?contr.sum`).
+`model.matrix()` transforms categorical covariates into numerical variables that can be used for fitting using a specific contrast function (see `?contr.sum`).
 
 .pull-left[
 ```{r}
@@ -272,7 +272,7 @@ model.matrix(ACT ~ gender, sat.act[1:5,])
 class: small
 # R and Categorical Covariates
 
-`model.matrix()` tranforms categorical covariates into numerical variables that can be used for fitting using a specific contrast function (see `?contr.sum`).
+`model.matrix()` transforms categorical covariates into numerical variables that can be used for fitting using a specific contrast function (see `?contr.sum`).
 
 .pull-left[
 ```{r}
@@ -472,7 +472,7 @@ class: inline-grey
   - `*` = main effects plus interaction
   - `0+`/`-1` = no intercept
 
-- Categorical variables are transformed into numerical variables using contrast functions (via `model.matrix()`).
+- Categorical variables are transformed into numerical variables using contrast functions (via `model.matrix()`; see Cohen et al., 2002)
   - If models include interactions, orthogonal contrasts (e.g., `contr.sum`) in which the intercept corresponds to the (unweighted) grand mean should be used: `afex::set_sum_contrasts()`
   - Dummy/treatment contrasts (`R` default) lead to simple effects for lower order effects.
   - **Coding only affects interpretation of parameters/tests not overall model fit.**
@@ -527,7 +527,7 @@ Anova(m6, type = 3)
 - Type II and III tests equivalent for balanced designs (i.e., equal group sizes) and highest-order effect.
 - Type III tests require orthogonal contrasts (e.g.,`contr.sum`); recommended:
   - For experimental designs in which imbalance is completely random and not structural,
-  - Complete cross-over interactions (i.e., main effects in presense of interaction) possible.
+  - Complete cross-over interactions (i.e., main effects in presence of interaction) possible.
 - Type II are more appropriate if imbalance is structural (i.e., observational data; maybe here).
 
 ---
@@ -542,7 +542,7 @@ lsmeans(m6, ~education)
 ```
 `lsmeans` returns estimated marginal means (or least-square means for linear regression) for model terms (e.g., `lsmeans(m6, ~education*gender)`).
 
-One can specify arbitray constrasts on marginal means (e.g., `contrast()`).
+One can specify arbitrary contrasts on marginal means (e.g., `contrast()`).
 
 ]
 --
@@ -556,11 +556,11 @@ pairs(lsmeans(m6,~education),adjust='holm')
 class: inline-grey
 # Beyond Linear Models
 
-Statistical models defined by relationship of covariates and assumption of residual probability distribution. `formula` defines the relationship of covariates, `function` defines disributional assumption.
+Statistical models defined by relationship of covariates and assumption of residual probability distribution. `formula` defines the relationship of covariates, `function` defines distributional assumption.
 
 Most models assume independent data points (i.e., no replicates or repeated measures):  
 - `lm()` linear model (normal distribution of residuals, includes multivariate IVs)
-- `glm()` generalized linear model (other residual distribution, e.g., binomial, poisson)
+- `glm()` generalized linear model (other residual distribution, e.g., binomial, Poisson)
 - `MASS::rlm()` robust linear model
 - `MASS::polr()` ordered logistic or probit regression
 - `MASS::loglm()` log-linear model (for contingency tables)
@@ -663,7 +663,7 @@ class: small
 - Conditional = *if-then* statement; e.g., If global warning continues, London will be flooded.
 - Bayesian reasoning often assumes 'the Equation': *P*(if *A* then *B*) = *P*(*B*|*A*)
 - Our question: Does the Equation hold even if no apparent relationship between *A* and *B*? 
-  - positive relavnce (PO): *A* is a reason for *B* 
+  - positive relevance (PO): *A* is a reason for *B* 
   - negative relevance (NE): *A* is a reason against *B* 
   - irrelevance (IR): *A* and *B* have no apparent relationship 
 
@@ -688,7 +688,7 @@ class: small
 ### Skovgaard-Olsen et al. (2016)
 
 - Does the Equation (i.e., *P*(if *A* then *B*) = *P*(*B*|*A*)) hold even if no apparent relationship between *A* and *B*? 
-  - positive relavnce (PO): *A* is a reason for *B* 
+  - positive relevance (PO): *A* is a reason for *B* 
   - negative relevance (NE): *A* is a reason against *B* 
   - irrelevance (IR): *A* and *B* have no apparent relationship 
 
@@ -711,7 +711,8 @@ class: small
 - John Fox and Sanford Weisberg (2011). *An R Companion to Applied Regression, Second Edition.* Thousand Oaks CA: Sage. URL: http://socserv.socsci.mcmaster.ca/jfox/Books/Companion
 - Russell V. Lenth (2016). Least-Squares Means: The R Package lsmeans. *Journal of Statistical
   Software*, 69(1), 1-33. https://doi.org/10.18637/jss.v069.i01
-  
+- Cohen, J., Cohen, P., West, S. G., & Aiken, L. S. (2002). *Applied Multiple Regression/Correlation Analysis for the Behavioral Sciences.* New York: Routledge Academic.
+
 ### References Example Data:
 - Revelle, William, Wilt, Joshua, and Rosenthal, Allen (2009) Personality and Cognition: The Personality-Cognition Link. In Gruszka, Alexandra and Matthews, Gerald and Szymura, Blazej (Eds.) _Handbook of Individual Differences in Cognition: Attention, Memory and Executive Control_, Springer.
 - Skovgaard-Olsen, N., Singmann, H., & Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26-36. https://doi.org/10.1016/j.cognition.2015.12.017
