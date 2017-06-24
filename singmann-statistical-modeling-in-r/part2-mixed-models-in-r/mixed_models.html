@@ -34,7 +34,7 @@ class: center, middle, inverse, title-slide
 ### Fixed Effects
 - Overall  or *population-level average* effect of specific model term (i.e., main effect, interaction, parameter) on dependent variable
 - Independent of stochastic variability controlled for by random effects
-- Hyptothesis tests on fixed effect interpreted as hypothesis tests for terms in standard ANOVA or regression model
+- Hypothesis tests on fixed effect interpreted as hypothesis tests for terms in standard ANOVA or regression model
 - Possible to test specific hypotheses among factor levels (e.g., planned contrasts)
 
 ]
@@ -131,6 +131,34 @@ class: small
 ---
 class: small
 
+
+.pull-left[
+### Fixed Effects Model
+
+`$$y=\beta_0 + \beta_{C|A}X_{C|A} + \beta_{r}X_{r} + \beta_{I}X_{I} + \epsilon$$`
+
+- `\(\beta\)` are scalar regression parameters
+- `\(X\)` are covariate vectors (numerical independent variables with -1 and 1 for factors)
+- assumes error vector `\(\epsilon\)` is *iid*, `\(\epsilon \sim \mathcal{N}(0, \sigma^2_{\epsilon})\)`, which is likely false.
+]
+
+.pull-right[
+![](mixed_models_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+
+### A First Mixed Effects Model
+
+`$$y=\beta_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + \beta_{r}X_{r} + \beta_{I}X_{I} + \epsilon$$`
+- `\(S_{C|A}\)` is a zero-centered vector of participant specific random effects: `\(S_{C|A} \sim \mathcal{N}(0, \sigma^2_{S_{C|A}})\)`
+- `\(S_{C|A}\)` provides each participant with their own regression weight: overall `\(\beta_{C|A}\)` plus idiosyncratic `\(S_{C|A}\)`.
+- As parameter, model estimates variance of random effects vector, `\(\sigma^2_{S_{C|A}}\)`.
+- As `\(S_{C|A}\)` alters the regression slope `\(\beta_{C|A}\)`, also known as *random slope*.
+- In `lme4::lmer` syntax: `lmer(dv ~ c_given_a*rel_cond + (0+c_given_a|p_id), datr)`
+
+
+---
+class: small
+
 ### A More Reasonable Mixed Model
 
 First model did not allow for different `\(\beta\)`s for each participant and relevance condition. 
@@ -142,9 +170,13 @@ First model did not allow for different `\(\beta\)`s for each participant and re
 `$$\left( \begin{matrix} S_{C|A} \\ S_{I} \end{matrix} \right)
  \sim \mathcal{N}\left( \left[ \begin{matrix} 0 \\ 0 \end{matrix} \right] , \left[ \begin{matrix} \sigma^2_{S_{C|A}}&amp;\rho_{S_{C|A},S_{I}}\sigma_{S_{C|A}}\sigma_{S_{I}} \\ \rho_{S_{I},S_{C|A}}\sigma_{S_{C|A}}\sigma_{S_{I}}&amp;\sigma^2_{S_{I}} \end{matrix} \right] \right)$$`
 
-- This model allows each participant to have idosyncratic slope per relevance condition.
+- This model allows each participant to have idiosyncratic slope per relevance condition.
 
---
+.pull-left[
+![](mixed_models_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+]
+
+---
 
 ### Interim Summary
 
@@ -153,7 +185,7 @@ First model did not allow for different `\(\beta\)`s for each participant and re
 *Random-effects parameters*: 
 - zero-centered offsets/displacements for each level of random effect grouping factor
 - added to specific fixed effect parameter
-- assumed to follow normal distribution which provides hierarchical shrinkage, thereby avoids overfitting
+- assumed to follow normal distribution which provides hierarchical shrinkage, thereby avoids over-fitting
 - should be added to each parameter that varies within the levels of a random effects grouping factor
 
 ---
@@ -164,7 +196,7 @@ class: small
 - Model estimates 4 variances for zero-centered `\(S\)` vectors and 6 correlations among random effects.
 
 --
-
+.pull-left[
 
 ```r
 require(lme4)
@@ -192,6 +224,11 @@ summary(m_p_max)$coefficients
 ## rel_cond1            0.15044    0.01229  12.245
 ## c_given_a:rel_cond1  0.17899    0.02985   5.996
 ```
+]
+
+.pull-right[
+![](mixed_models_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
 
 ---
 class: small
@@ -201,7 +238,7 @@ So far only considered *participant* as random effects grouping factor:
 - Each participant provides several responses: Random-intercept allows idiosyncratic intercept.
 - `c_given_a` and `rel_cond` are within-subjects variables: Random-slopes allow idiosyncratic effects.
 
-Participant is only one source of stochastic variability. We usually want to genealize over both *participants* and *items*. 
+Participant is only one source of stochastic variability. We usually want to generalize over both *participants* and *items*. 
 - Example data: Each participant provides 1 response for each of 12 items with condition randomly selected.
 - All factors also vary within-items.
 
@@ -265,6 +302,40 @@ summary(m_max)
 ```
 
 ---
+class:small
+
+### Effect of Partial-Pooling / Hierarchical Shrinkage / Regularization
+
+
+
+.pull-left[
+
+Comparison of no-pooling and partial-pooling (i.e., LMM) estimates for `c_given_a` slopes:
+
+&lt;img src="mixed_models_files/figure-html/unnamed-chunk-12-1.png" width="500px" height="300px" /&gt;
+
+]
+
+
+.pull-right[
+
+Distribution of no-pooling and partial-pooling (i.e., LMM) estimates for `c_given_a` slopes:
+
+&lt;img src="mixed_models_files/figure-html/unnamed-chunk-13-1.png" width="400px" height="350px" /&gt;
+]
+
+- If individual effects can be assumed to come from one normal distribution, partial-pooling provides better estimates than no-pooling even on the individual level (at least on average).
+- a.k.a. *James-Stein Estimation* (e.g., Efron &amp; Hastie, 2016, ch. 7) or *Stein's phenomenon*, more generally *regularization*: *ridge regression*, *lasso*, *penalized least squares*, *penalized likelihood*, ...
+
+---
+class:small
+
+&lt;img src="mixed_models_files/figure-html/unnamed-chunk-14-1.png" width="1000px" height="500px" /&gt;
+
+- from Tristan Mahr: https://tjmahr.github.io/plotting-partial-pooling-in-mixed-effects-models/
+
+
+---
 class: small
 ### Types of Random Effects
 
@@ -301,7 +372,7 @@ class:small
 
 - Omitting random-effects parameters for model terms which vary within the levels of a random-effects grouping factor and for which random variability exists leads to non-iid residuals (i.e., `\(\epsilon\)`) and anti-conservative results (e.g., Barr, Levy, Scheepers, &amp; Tily, 2013).
 - Safeguard is *maximal model justified by the design*.
-- If maximal model is overparameterized and/or contains degenrate estimates or singular fits, power of maximal model can be severly reduced and a reduced model should be used (Bates et al., 2015; Matuschek et al., 2015).
+- If maximal model is overparameterized and/or contains degenerate estimates or singular fits, power of maximal model can be severely reduced and a reduced model should be used (Bates et al., 2015; Matuschek et al., 2017).
 
 Steps for running a mixed model analysis:
 1. Identify desired fixed-effects structure
@@ -317,15 +388,218 @@ If the maximal model shows critical convergence warnings, reduce random-effects 
 
 ---
 
+class: center, middle, inverse
 
+# Exercise 2
 
 ---
 class: small
+
+### Mixed Models in R: Fitting
+
+
+
+
+```r
+require(afex)
+m_full &lt;- mixed(dv ~ c_given_a*rel_cond*dv_question +
+                       (rel_cond*c_given_a|p_id) +
+                       (rel_cond*c_given_a*dv_question|i_id),
+                     dat,
+                     control = lmerControl(optCtrl = list(maxfun=1e8)),
+                     method = "S")
+m_full
+```
+
+
+```
+## Mixed Model Anova Table (Type 3 tests, S-method)
+## 
+## Model: dv ~ c_given_a * rel_cond * dv_question + (rel_cond * c_given_a | 
+## Model:     p_id) + (rel_cond * c_given_a * dv_question | i_id)
+## Data: dat
+##                           Effect       df          F p.value
+## 1                      c_given_a 1, 33.46 619.36 ***  &lt;.0001
+## 2                       rel_cond 2, 16.33  95.07 ***  &lt;.0001
+## 3                    dv_question 1, 40.04       0.06     .80
+## 4             c_given_a:rel_cond 2, 21.74  22.90 ***  &lt;.0001
+## 5          c_given_a:dv_question 1, 24.50       0.01     .94
+## 6           rel_cond:dv_question 2, 20.29       0.84     .45
+## 7 c_given_a:rel_cond:dv_question 2, 24.15       1.01     .38
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+---
+class: small
+
+### Mixed Models in R: Follow-up Analyses
+
+
+```r
+lsm.options(lmer.df = "asymptotic") # or "Kenward-Roger" or "Satterthwaite"
+lstrends(m_full, "rel_cond", var = "c_given_a")
+```
+
+```
+## NOTE: Results may be misleading due to involvement in interactions
+```
+
+```
+##  rel_cond c_given_a.trend      SE df asymp.LCL asymp.UCL
+##  PO                0.7815 0.03525 NA    0.7124    0.8506
+##  NE                0.6135 0.04722 NA    0.5210    0.7061
+##  IR                0.4339 0.04127 NA    0.3531    0.5148
+## 
+## Results are averaged over the levels of: dv_question 
+## Degrees-of-freedom method: asymptotic 
+## Confidence level used: 0.95
+```
+
+
+```r
+# fixef(m_full$full_model)[2] + fixef(m_full$full_model)[6]
+# fixef(m_full$full_model)[2] + fixef(m_full$full_model)[7]
+fixef(m_full$full_model)[2] - fixef(m_full$full_model)[6] - fixef(m_full$full_model)[7]
+```
+
+```
+## c_given_a 
+##    0.4339
+```
+
+More examples of interplay between `mixed` or `lmer` with `lsmeans`:
+- https://cran.r-project.org/package=afex/vignettes/afex_mixed_example.html
+- https://cran.r-project.org/package=lsmeans/vignettes/using-lsmeans.pdf
+
+---
+class: small
+
+
+
+.pull-left[
+### Intraclass Correlation Coefficient (ICC)
+
+Assumption of mixed models: Data points from same unit of observation more similar to each other than unrelated data point.
+
+**Intraclass correlation coefficient (ICC)**: Measure of similarity for data points of a given unit of observations ranging from 0 to 1:
+`$$\rho=\frac{\sigma^2_S}{\sigma^2_S+\sigma^2_\epsilon}$$`
+
+&gt; The intraclass correlation `\(\rho\)` can also be interpreted as the expected correlation between two randomly drawn units that are in the same group. (Hox, 2010, p. 15)
+]
+
+.pull-right[
+
+```r
+m1 &lt;- lmer(dv ~ 1 + (1|p_id), datr)
+# summary(m1)
+# Random effects:
+#  Groups   Name        Variance Std.Dev.
+#  p_id     (Intercept) 0.00572  0.0757  
+#  Residual             0.14607  0.3822  
+# Number of obs: 752, groups:  p_id, 94
+
+0.00572 / (0.0057+0.1461)
+```
+
+```
+## [1] 0.03768
+```
+
+```r
+require(sjstats)
+icc(m1)
+```
+
+```
+## Linear mixed model
+##  Family: gaussian (identity)
+## Formula: dv ~ 1 + (1 | p_id)
+## 
+##   ICC (p_id): 0.037706
+```
+]
+---
+class: small
+
+### Intraclass Correlation Coefficient (ICC)
+
+.pull-left[
+
+```r
+m1 &lt;- lmer(dv ~ 1 + (1|p_id), datr)
+# summary(m1)
+# Random effects:
+#  Groups   Name        Variance Std.Dev.
+#  p_id     (Intercept) 0.00572  0.0757  
+#  Residual             0.14607  0.3822  
+# Number of obs: 752, groups:  p_id, 94
+
+icc(m1)
+```
+
+```
+## Linear mixed model
+##  Family: gaussian (identity)
+## Formula: dv ~ 1 + (1 | p_id)
+## 
+##   ICC (p_id): 0.037706
+```
+]
+
+.pull-right[
+
+```r
+m2 &lt;- lmer(dv ~ 1 + (rel_cond:c_given_a|p_id), 
+           datr)
+# summary(m2)
+ # Groups   Name                 Variance Std.Dev. Corr       
+ # p_id     (Intercept)          0.0398   0.200               
+ #          rel_condPO:c_given_a 1.0186   1.009    -0.94      
+ #          rel_condIR:c_given_a 0.3262   0.571    -0.48  0.75
+ # Residual                      0.0570   0.239 
+icc(m2)
+```
+
+```
+## Linear mixed model
+##  Family: gaussian (identity)
+## Formula: dv ~ 1 + (rel_cond:c_given_a | p_id)
+## 
+##   ICC (p_id): 0.411454
+```
+]
+
+- ICC useful to determine if mixed models necessary or to determine how multilevel-clustering effects response.
+- ICC often not very useful for random-slope models (Goldstein et al., 2002), direct inspection of SDs often more helpful. 
+
+---
+
+# Summary 
+
+- Mixed models allow to directly account for dependencies originating in clustered data via random effects.
+- Fixed effects represent the overall/average effect; random effects add offset to specific fixed effects.
+- Random-effects parameters are variances of offsets and covariances among different random-effects parameters.
+- Random-effects assumed to follow normal distribution thereby implementing partial-pooling / hierarchical-shrinkage (regularization).
+- Mixed-models analyses should start with maximal model which includes random slopes for all effects that vary within a random-effects grouping factor.
+- If maximal model fails to converge or is singular/degenerate: Start by removing correlation, then highest-order effects.
+
+- Linear mixed models (LMMs) can be extended to generalized linear mixed models (GLMMs) that support different link function and residual distribution (via `glmer` or `mixed`).
+- Bayesian estimation possible: `rstanarm::stan_lmer`, `blme`, or `MCMCglmm`.
+- More powerful model class: generalized additive mixed models (GAMM; Baayen, Vasisth, Kliegl, &amp; Bates, 2017).
+
+---
+
+class: small
 ### References Mixed Modeling:
 - Singmann, H., &amp; Kellen, D. (in press). An Introduction to Mixed Models for Experimental Psychology. In D. H. Spieler &amp; E. Schumacher (Eds.), *New Methods in Neuroscience and Cognitive Psychology*. Psychology Press. http://singmann.org/download/publications/singmann_kellen-introduction-mixed-models.pdf
+- Baayen, H., Vasishth, S., Kliegl, R., &amp; Bates, D. (2017). The cave of shadows: Addressing the human factor with generalized additive mixed models. *Journal of Memory and Language*, 94, 206-234. https://doi.org/10.1016/j.jml.2016.11.006
 - Barr, D. J., Levy, R., Scheepers, C., &amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. *Journal of Memory and Language*, 68(3), 255-278. https://doi.org/10.1016/j.jml.2012.11.001
 - Bates, D., Kliegl, R., Vasishth, S., &amp; Baayen, H. (2015). *Parsimonious Mixed Models.* arXiv:1506.04967 [stat]. http://arxiv.org/abs/1506.04967
+- Goldstein, H., Browne, W., &amp; Rasbash, J. (2002). Partitioning Variation in Multilevel Models. *Understanding Statistics*, 1(4), 223-231. https://doi.org/10.1207/S15328031US0104_02
+- Hox, J. J. (2010). *Multilevel analysis: techniques and applications.* New York: Routledge.
 - Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp; Bates, D. (2017). Balancing Type I error and power in linear mixed models. *Journal of Memory and Language*, 94, 305-315. https://doi.org/10.1016/j.jml.2017.01.001
+- https://tjmahr.github.io/plotting-partial-pooling-in-mixed-effects-models/
 
 
 
