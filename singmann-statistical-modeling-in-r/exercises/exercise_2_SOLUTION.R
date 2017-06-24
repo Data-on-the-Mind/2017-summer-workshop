@@ -57,6 +57,6 @@ str(fhch2010)
 ## mixed(log_rt ~ ...)
 ## 
 
-m_fhch <- mixed(log_rt ~ task*density*frequency*length + 
-                  (density*frequency*length||id) +
+m_fhch <- mixed(log_rt ~ task*stimulus*density*frequency*length + 
+                  (stimulus*density*frequency*length||id) +
                   (task||item), fhch2010, expand_re = TRUE)
