@@ -472,7 +472,7 @@ class: inline-grey
   - `*` = main effects plus interaction
   - `0+`/`-1` = no intercept
 
-- Categorical variables are transformed into numerical variables using contrast functions (via `model.matrix()`).
+- Categorical variables are transformed into numerical variables using contrast functions (via `model.matrix()`; see Cohen et al., 2002)
   - If models include interactions, orthogonal contrasts (e.g., `contr.sum`) in which the intercept corresponds to the (unweighted) grand mean should be used: `afex::set_sum_contrasts()`
   - Dummy/treatment contrasts (`R` default) lead to simple effects for lower order effects.
   - **Coding only affects interpretation of parameters/tests not overall model fit.**
@@ -711,7 +711,8 @@ class: small
 - John Fox and Sanford Weisberg (2011). *An R Companion to Applied Regression, Second Edition.* Thousand Oaks CA: Sage. URL: http://socserv.socsci.mcmaster.ca/jfox/Books/Companion
 - Russell V. Lenth (2016). Least-Squares Means: The R Package lsmeans. *Journal of Statistical
   Software*, 69(1), 1-33. https://doi.org/10.18637/jss.v069.i01
-  
+- Cohen, J., Cohen, P., West, S. G., & Aiken, L. S. (2002). *Applied Multiple Regression/Correlation Analysis for the Behavioral Sciences.* New York: Routledge Academic.
+
 ### References Example Data:
 - Revelle, William, Wilt, Joshua, and Rosenthal, Allen (2009) Personality and Cognition: The Personality-Cognition Link. In Gruszka, Alexandra and Matthews, Gerald and Szymura, Blazej (Eds.) _Handbook of Individual Differences in Cognition: Attention, Memory and Executive Control_, Springer.
 - Skovgaard-Olsen, N., Singmann, H., & Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26-36. https://doi.org/10.1016/j.cognition.2015.12.017
