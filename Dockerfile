@@ -22,3 +22,9 @@ USER $NB_USER
 RUN conda install --yes            pyvirtualdisplay xvfbwrapper
 RUN conda install --yes -n python2 pyvirtualdisplay xvfbwrapper
 RUN conda install --yes r-rjson r-formatr
+RUN conda install --yes r-data.table r-dt
+RUN Rscript -e "install.packages('ggthemes', dependencies = TRUE, repos='http://cran.us.r-project.org')"
+RUN Rscript -e "install.packages('wordbankr', dependencies = TRUE, repos='http://cran.us.r-project.org')"
+RUN Rscript -e "install.packages('sjstats', dependencies = TRUE, repos='http://cran.us.r-project.org')"
+RUN Rscript -e "install.packages('xaringan', dependencies = TRUE, repos='http://cran.us.r-project.org')"
+RUN conda install --yes r-afex==0.17_8
