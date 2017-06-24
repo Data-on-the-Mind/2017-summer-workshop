@@ -165,7 +165,7 @@ We are going to manipulate these data using "verbs" from dyplyr. I'll only teach
 
 
 ```{r}
-sgf <- read_csv("http://langcog.stanford.edu/stiller_scales_data.csv")
+sgf <- read_csv("data/stiller_scales_data.csv")
 sgf
 ```
 
@@ -285,8 +285,8 @@ This can go a bunch of ways, for example, the most common might be to have subje
 
 
 ```{r}
-d_sklar <- read_csv("http://langcog.stanford.edu/sklar_expt6a_corrected.csv")
-head(d_sklar)
+sklar <- read_csv("data/sklar_data.csv")
+head(sklar)
 ```
 
 ## Tidy verbs
@@ -408,6 +408,15 @@ ggplot(ws_sex,
 
 <!-- ----------------------------------------------------------------------- -->
 # Exercise solution code
+
+Piped commands. 
+
+
+```{r}
+iris$Species %>%
+  unique %>%
+  length
+```
 
 Sex means.
 
