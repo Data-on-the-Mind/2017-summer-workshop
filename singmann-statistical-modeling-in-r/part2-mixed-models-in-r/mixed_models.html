@@ -161,16 +161,16 @@ class: small
 
 ### A More Reasonable Mixed Model
 
-First model did not allow for different `\(\beta\)`s for each participant and relevance condition. 
+First model did not allow for different intercepts, `\(\beta_0\)`, for each participant. 
 
-`$$y=\beta_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + \beta_{r}X_{r} + (\beta_{I}+ S_{I})X_{I} + \epsilon$$`
-- Model now has two random slopes, `\(S_{C|A}\)` and `\(S_{I}\)`.
-- `\(S\)` are still zero-centered vector of participant specific random effects. However, we now estimate both, variance and covariance of random effects:
+`$$y=\beta_0 + \S_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + \beta_{r}X_{r} + \beta_{I}X_{I} + \epsilon$$`
+- Model now has a random intercept, `\(\S_0\)`, and a random slope, `\(S_{C|A}\)`.
+- `\(S\)`-vectors are still zero-centered vector of participant specific random effects. However, we now estimate both, variance and covariance of random effects:
   
-`$$\left( \begin{matrix} S_{C|A} \\ S_{I} \end{matrix} \right)
- \sim \mathcal{N}\left( \left[ \begin{matrix} 0 \\ 0 \end{matrix} \right] , \left[ \begin{matrix} \sigma^2_{S_{C|A}}&amp;\rho_{S_{C|A},S_{I}}\sigma_{S_{C|A}}\sigma_{S_{I}} \\ \rho_{S_{I},S_{C|A}}\sigma_{S_{C|A}}\sigma_{S_{I}}&amp;\sigma^2_{S_{I}} \end{matrix} \right] \right)$$`
+`$$\left( \begin{matrix} S_0 \\ S_{C|A} \end{matrix} \right)
+ \sim \mathcal{N}\left( \left[ \begin{matrix} 0 \\ 0 \end{matrix} \right] , \left[ \begin{matrix} \sigma^2_{S_0}&amp;\rho_{S_{0},S_{C|A}}\sigma_{S_{0}}\sigma_{S_{C|A}} \\ \rho_{S_{C|A},S_{0}}\sigma_{S_{0}}\sigma_{S_{C|A}}&amp;\sigma^2_{S_{C|A}} \end{matrix} \right] \right)$$`
 
-- This model allows each participant to have idiosyncratic slope per relevance condition.
+- This model allows each participant to have an idiosyncratic intercept and slope.
 
 .pull-left[
 ![](mixed_models_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
@@ -187,6 +187,14 @@ First model did not allow for different `\(\beta\)`s for each participant and re
 - added to specific fixed effect parameter
 - assumed to follow normal distribution which provides hierarchical shrinkage, thereby avoids over-fitting
 - should be added to each parameter that varies within the levels of a random effects grouping factor
+
+.pull-left[
+![](mixed_models_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+![](mixed_models_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
 
 ---
 class: small
@@ -227,7 +235,7 @@ summary(m_p_max)$coefficients
 ]
 
 .pull-right[
-![](mixed_models_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+![](mixed_models_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -312,7 +320,7 @@ class:small
 
 Comparison of no-pooling and partial-pooling (i.e., LMM) estimates for `c_given_a` slopes:
 
-&lt;img src="mixed_models_files/figure-html/unnamed-chunk-12-1.png" width="500px" height="300px" /&gt;
+&lt;img src="mixed_models_files/figure-html/unnamed-chunk-14-1.png" width="500px" height="300px" /&gt;
 
 ]
 
@@ -321,7 +329,7 @@ Comparison of no-pooling and partial-pooling (i.e., LMM) estimates for `c_given_
 
 Distribution of no-pooling and partial-pooling (i.e., LMM) estimates for `c_given_a` slopes:
 
-&lt;img src="mixed_models_files/figure-html/unnamed-chunk-13-1.png" width="400px" height="350px" /&gt;
+&lt;img src="mixed_models_files/figure-html/unnamed-chunk-15-1.png" width="400px" height="350px" /&gt;
 ]
 
 - If individual effects can be assumed to come from one normal distribution, partial-pooling provides better estimates than no-pooling even on the individual level (at least on average).
@@ -330,7 +338,7 @@ Distribution of no-pooling and partial-pooling (i.e., LMM) estimates for `c_give
 ---
 class:small
 
-&lt;img src="mixed_models_files/figure-html/unnamed-chunk-14-1.png" width="1000px" height="500px" /&gt;
+&lt;img src="mixed_models_files/figure-html/unnamed-chunk-16-1.png" width="1000px" height="500px" /&gt;
 
 - from Tristan Mahr: https://tjmahr.github.io/plotting-partial-pooling-in-mixed-effects-models/
 

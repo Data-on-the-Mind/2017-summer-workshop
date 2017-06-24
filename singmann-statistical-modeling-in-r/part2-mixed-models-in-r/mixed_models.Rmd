@@ -194,16 +194,16 @@ class: small
 
 ### A More Reasonable Mixed Model
 
-First model did not allow for different $\beta$s for each participant and relevance condition. 
+First model did not allow for different intercepts, $\beta_0$, for each participant. 
 
-$$y=\beta_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + \beta_{r}X_{r} + (\beta_{I}+ S_{I})X_{I} + \epsilon$$
-- Model now has two random slopes, $S_{C|A}$ and $S_{I}$.
-- $S$ are still zero-centered vector of participant specific random effects. However, we now estimate both, variance and covariance of random effects:
+$$y=\beta_0 + \S_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + \beta_{r}X_{r} + \beta_{I}X_{I} + \epsilon$$
+- Model now has a random intercept, $\S_0$, and a random slope, $S_{C|A}$.
+- $S$-vectors are still zero-centered vector of participant specific random effects. However, we now estimate both, variance and covariance of random effects:
   
-$$\left( \begin{matrix} S_{C|A} \\ S_{I} \end{matrix} \right)
- \sim \mathcal{N}\left( \left[ \begin{matrix} 0 \\ 0 \end{matrix} \right] , \left[ \begin{matrix} \sigma^2_{S_{C|A}}&\rho_{S_{C|A},S_{I}}\sigma_{S_{C|A}}\sigma_{S_{I}} \\ \rho_{S_{I},S_{C|A}}\sigma_{S_{C|A}}\sigma_{S_{I}}&\sigma^2_{S_{I}} \end{matrix} \right] \right)$$
+$$\left( \begin{matrix} S_0 \\ S_{C|A} \end{matrix} \right)
+ \sim \mathcal{N}\left( \left[ \begin{matrix} 0 \\ 0 \end{matrix} \right] , \left[ \begin{matrix} \sigma^2_{S_0}&\rho_{S_{0},S_{C|A}}\sigma_{S_{0}}\sigma_{S_{C|A}} \\ \rho_{S_{C|A},S_{0}}\sigma_{S_{0}}\sigma_{S_{C|A}}&\sigma^2_{S_{C|A}} \end{matrix} \right] \right)$$
 
-- This model allows each participant to have idiosyncratic slope per relevance condition.
+- This model allows each participant to have an idiosyncratic intercept and slope.
 
 .pull-left[
 ```{r, echo=FALSE, dpi=500, fig.width=7, fig.height=4, warning=FALSE}
@@ -243,12 +243,64 @@ abline(a = coef(m_fixed)[1] - coef(m_fixed)[3],
 - assumed to follow normal distribution which provides hierarchical shrinkage, thereby avoids over-fitting
 - should be added to each parameter that varies within the levels of a random effects grouping factor
 
+.pull-left[
+```{r, echo=FALSE, dpi=500, fig.width=7, fig.height=4, warning=FALSE}
+m_tmp <- lmer(dv ~ c_given_a*rel_cond + (0+c_given_a|p_id), datr)
+rnd_coefs <- coef(m_tmp)$p_id
+par(mfrow = c(1,2))
+par(pty="s")
+limits <- c(-0.5, 0.5)
+plot(dv ~ c_given_a, datr, subset = rel_cond == "PO", 
+     asp = 1, ylim=limits, xlim=limits, main ="PO")
+for (i in seq_len(nrow(rnd_coefs))) 
+  abline(a = rnd_coefs[i,1] + rnd_coefs[i,3], 
+         b = rnd_coefs[i,2] + rnd_coefs[i,4],
+         col = "lightgrey")
+abline(a = coef(m_fixed)[1] + coef(m_fixed)[3], 
+       b = coef(m_fixed)[2] + coef(m_fixed)[4])
+plot(dv ~ c_given_a, datr, subset = rel_cond == "IR", 
+     asp = 1, ylim=limits, xlim=limits, main ="IR")
+for (i in seq_len(nrow(rnd_coefs))) 
+  abline(a = rnd_coefs[i,1] - rnd_coefs[i,3], 
+         b = rnd_coefs[i,2] - rnd_coefs[i,4],
+         col = "lightgrey")
+abline(a = coef(m_fixed)[1] - coef(m_fixed)[3], 
+       b = coef(m_fixed)[2] - coef(m_fixed)[4])
+```
+]
+
+.pull-right[
+```{r, echo=FALSE, dpi=500, fig.width=7, fig.height=4, warning=FALSE}
+m_tmp <- lmer(dv ~ c_given_a*rel_cond + (1+c_given_a|p_id), datr)
+rnd_coefs <- coef(m_tmp)$p_id
+par(mfrow = c(1,2))
+par(pty="s")
+limits <- c(-0.5, 0.5)
+plot(dv ~ c_given_a, datr, subset = rel_cond == "PO", 
+     asp = 1, ylim=limits, xlim=limits, main ="PO")
+for (i in seq_len(nrow(rnd_coefs))) 
+  abline(a = rnd_coefs[i,1] + rnd_coefs[i,3], 
+         b = rnd_coefs[i,2] + rnd_coefs[i,4],
+         col = "lightgrey")
+abline(a = coef(m_fixed)[1] + coef(m_fixed)[3], 
+       b = coef(m_fixed)[2] + coef(m_fixed)[4])
+plot(dv ~ c_given_a, datr, subset = rel_cond == "IR", 
+     asp = 1, ylim=limits, xlim=limits, main ="IR")
+for (i in seq_len(nrow(rnd_coefs))) 
+  abline(a = rnd_coefs[i,1] - rnd_coefs[i,3], 
+         b = rnd_coefs[i,2] - rnd_coefs[i,4],
+         col = "lightgrey")
+abline(a = coef(m_fixed)[1] - coef(m_fixed)[3], 
+       b = coef(m_fixed)[2] - coef(m_fixed)[4])
+```
+]
+
 ---
 class: small
 ### Maximal By-Participant Mixed Model
 
 $$y=\beta_0 + S_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + (\beta_{r}+ S_{r})X_{r} + (\beta_{I}+ S_{I})X_{I} + \epsilon$$
-- Model estimates 4 variances for zero-centered $S$ vectors and 6 correlations among random effects.
+- Model estimates 4 variances for zero-centered $S$ vectors, 1 residual variance, and 6 correlations among random effects.
 
 --
 .pull-left[
