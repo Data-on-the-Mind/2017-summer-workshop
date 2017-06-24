@@ -306,7 +306,8 @@ $$y=\beta_0 + S_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + (\beta_{r}+ S_{r})X_{r} + (\
 .pull-left[
 ```{r}
 require(lme4)
-m_p_max <- lmer(dv ~ c_given_a*rel_cond + (c_given_a*rel_cond|p_id), datr)
+m_p_max <- lmer(dv ~ c_given_a*rel_cond + 
+                  (c_given_a*rel_cond|p_id), datr)
 summary(m_p_max)$varcor
 summary(m_p_max)$coefficients
 
@@ -511,6 +512,37 @@ If the maximal model shows critical convergence warnings, reduce random-effects 
 - Remove random-effects parameters for highest-order effects with lowest variance
 - It can sometimes help to try different optimizers
 - Compare *p*-values and fixed-effects estimates across models
+
+---
+class: small
+
+### Suppressing Correlations Among Random Effects
+
+```{r, echo=FALSE, results='hide', message=FALSE}
+require(afex)
+```
+
+- `lmer` allows suppressing correlation among random effects using `||` syntax. However, **only for numerical variables.**
+- `afex::mixed()` allows using `||` also for factors if `expand_re = TRUE`:
+
+
+.pull-left[
+```{r, results='hide', message=FALSE}
+m_red <- mixed(dv ~ c_given_a*rel_cond + 
+                 (c_given_a*rel_cond||p_id), 
+               datr, method = "S", 
+               expand_re = TRUE)
+```
+```{r}
+summary(m_red)$varcor
+```
+]
+
+.pull-right[
+```{r}
+m_red
+```
+]
 
 ---
 

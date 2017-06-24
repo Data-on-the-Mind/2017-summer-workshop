@@ -201,14 +201,15 @@ class: small
 ### Maximal By-Participant Mixed Model
 
 `$$y=\beta_0 + S_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + (\beta_{r}+ S_{r})X_{r} + (\beta_{I}+ S_{I})X_{I} + \epsilon$$`
-- Model estimates 4 variances for zero-centered `\(S\)` vectors and 6 correlations among random effects.
+- Model estimates 4 variances for zero-centered `\(S\)` vectors, 1 residual variance, and 6 correlations among random effects.
 
 --
 .pull-left[
 
 ```r
 require(lme4)
-m_p_max &lt;- lmer(dv ~ c_given_a*rel_cond + (c_given_a*rel_cond|p_id), datr)
+m_p_max &lt;- lmer(dv ~ c_given_a*rel_cond + 
+                  (c_given_a*rel_cond|p_id), datr)
 summary(m_p_max)$varcor
 ```
 
@@ -393,6 +394,60 @@ If the maximal model shows critical convergence warnings, reduce random-effects 
 - Remove random-effects parameters for highest-order effects with lowest variance
 - It can sometimes help to try different optimizers
 - Compare *p*-values and fixed-effects estimates across models
+
+---
+class: small
+
+### Suppressing Correlations Among Random Effects
+
+
+
+- `lmer` allows suppressing correlation among random effects using `||` syntax. However, **only for numerical variables.**
+- `afex::mixed()` allows using `||` also for factors if `expand_re = TRUE`:
+
+
+.pull-left[
+
+```r
+m_red &lt;- mixed(dv ~ c_given_a*rel_cond + 
+                 (c_given_a*rel_cond||p_id), 
+               datr, method = "S", 
+               expand_re = TRUE)
+```
+
+```r
+summary(m_red)$varcor
+```
+
+```
+##  Groups   Name                       Std.Dev.
+##  p_id     (Intercept)                0.1102  
+##  p_id.1   re1.c_given_a              0.1757  
+##  p_id.2   re1.rel_cond1              0.0842  
+##  p_id.3   re1.c_given_a_by_rel_cond1 0.1939  
+##  Residual                            0.1723
+```
+]
+
+.pull-right[
+
+```r
+m_red
+```
+
+```
+## Mixed Model Anova Table (Type 3 tests, S-method)
+## 
+## Model: dv ~ c_given_a * rel_cond + (c_given_a * rel_cond || p_id)
+## Data: datr
+##               Effect       df          F p.value
+## 1          c_given_a 1, 89.04 484.41 ***  &lt;.0001
+## 2           rel_cond 1, 89.44 174.44 ***  &lt;.0001
+## 3 c_given_a:rel_cond 1, 85.45  42.24 ***  &lt;.0001
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+]
 
 ---
 
