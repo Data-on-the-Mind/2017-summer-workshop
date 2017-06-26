@@ -235,21 +235,21 @@ summary(m3)
 
 ```{r, include=FALSE}
 op <- options(width = 40)
+require(dplyr)
 ```
 
 .pull-right2[
 ```{r}
 mean(sat.act$ACT)
-aggregate(ACT ~ gender, sat.act, 
-          mean)
+sat.act %>% group_by(gender) %>%
+  summarise(m = mean(ACT))
 ```
+
 ```{r}
-diff(aggregate(ACT ~ gender, 
-               sat.act, 
-          mean)$ACT)
+sat.act %>% group_by(gender) %>%
+  summarise(m = mean(ACT)) %>%
+  {.$m[2] - .$m[1]}
 ```
-
-
 ]
 
 ```{r, include=FALSE}
@@ -313,11 +313,12 @@ op <- options(width = 40)
 .pull-right2[
 ```{r}
 mean(sat.act$ACT)
-aggregate(ACT ~ gender, sat.act, 
-          mean)
-mean(aggregate(ACT ~ gender, 
-               sat.act, 
-          mean)$ACT)
+sat.act %>% group_by(gender) %>%
+  summarise(m = mean(ACT))
+sat.act %>% group_by(gender) %>%
+  summarise(m = mean(ACT)) %>% 
+  summarise(mean(m))
+
 ```
 
 ]
@@ -349,8 +350,9 @@ coef(m5)
 
 .pull-right2[
 ```{r}
-aggregate(ACT ~ gender+education, 
-          sat.act, mean)
+sat.act %>% 
+  group_by(gender,education) %>%
+  summarise(mean(ACT))
 ```
 ]
 
@@ -381,10 +383,11 @@ coef(m6)
 
 .pull-right2[
 ```{r}
-mean(
-  aggregate(ACT ~ 
-              gender+education, 
-          sat.act, mean)$ACT)
+sat.act %>% 
+  group_by(gender,education) %>%
+  summarise(m = mean(ACT)) %>% 
+  ungroup() %>% 
+  summarise(mean(m))
 ```
 ]
 
@@ -503,10 +506,11 @@ summary(m6)
 
 .pull-right2[
 ```{r}
-mean(
-  aggregate(ACT ~ 
-              gender+education, 
-          sat.act, mean)$ACT)
+sat.act %>% 
+  group_by(gender, education) %>%
+  summarise(m = mean(ACT)) %>% 
+  ungroup() %>% 
+  summarise(mean(m))
 ```
 ]
 
