@@ -105,3 +105,5 @@ hamrick-introduction-to-jupyter/advanced/1 - Reproducible Plots with Matplotlib.
 hamrick-introduction-to-jupyter/advanced/1 - Reproducible Plots with Matplotlib.py
 hamrick-introduction-to-jupyter/advanced/1 - Reproducible Plots with Matplotlib_files
 hamrick-introduction-to-jupyter/advanced/nbconvert_config.py
+
+*.DS_Store
