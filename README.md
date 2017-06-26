@@ -3,6 +3,7 @@
 **Dates**: June 26-29, 2017
 <br>**Website**: http://www.dataonthemind.org/2017-workshop
 <br>**Schedule**: http://www.dataonthemind.org/2017-workshop/schedule
+<br>**Video stream**: https://www.youtube.com/playlist?list=PLKW2Azk23ZtSOUnLafEn0W1FEf-Rw-8pi
 
 ## Tackling the new data frontier
 
@@ -22,7 +23,7 @@ For more, head over to our website: http://www.dataonthemind.org/2017-workshop/l
 
 ### Videos
 
-Tune in using the YouTube channel for the Berkeley Institute for Data Science: https://www.youtube.com/channel/UCBBd3JxQl455JkWBeulc-9w
+Tune in using the YouTube channel for the Berkeley Institute for Data Science: https://www.youtube.com/playlist?list=PLKW2Azk23ZtSOUnLafEn0W1FEf-Rw-8pi
 
 ### Server
 
