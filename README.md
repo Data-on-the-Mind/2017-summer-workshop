@@ -18,7 +18,27 @@ To help cognitive scientists and psychologists tackle these issues, Data on the 
 
 While we're no longer accepting applications for the in-person event, we are excited to announce that we will also be publicly broadcasting the event live via YouTube (at no cost). After the workshop, we'll be converting the broadcast into a series of online tutorials—all of which will also be posted for free on YouTube after the event. All workshop materials will also be made available for free to remote participants during the event and will be released publicly after the event.
 
-We'll be releasing more information about this soon, so keep an eye on our event website for more: http://www.dataonthemind.org/2017-workshop/live-stream
+For more, head over to our website: http://www.dataonthemind.org/2017-workshop/live-stream
+
+### Videos
+
+Tune in using the YouTube channel for the Berkeley Institute for Data Science: https://www.youtube.com/channel/UCBBd3JxQl455JkWBeulc-9w
+
+### Server
+
+You'll need to complete our registration form (on our live stream website) to get access. (**Please note** that this process is not automated and must be approved by the workshop instructors. As a result, it may take some time before your registration is approved. We highly recommend that you register at least several hours before the workshop that you're interested in attending.)  
+
+Once you've registered, you should receive an email with your account information.  You can log in on the JupyterHub server's website with your account information at this website: http://bit.ly/dotm-workshop
+
+The first time that you access the server, you'll also need to *pull* the GitHub repository with the workshop materials:
+ 1. In the top right-hand corner of the main JupyterHub screen, click on the "New" drop-down menu.
+ 1. Select "Terminal" from the menu.
+ 1. When you're in the new tab with the terminal window, paste this into the command line: `git clone https://github.com/Data-on-the-Mind/2017-summer-workshop/`
+ 1. Press enter.
+ 1. Wait for it to say `Checking connectivity... done`.
+ 1. Close the terminal tab.
+
+That's it! Again, you'll only need to do these steps the **first time** you log in.
 
 ## Scope of the workshop
 
