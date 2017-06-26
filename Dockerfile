@@ -24,7 +24,17 @@ RUN conda install --yes -n python2 pyvirtualdisplay xvfbwrapper
 RUN conda install --yes r-rjson r-formatr
 RUN conda install --yes r-data.table r-dt
 RUN Rscript -e "install.packages('ggthemes', dependencies = TRUE, repos='http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('wordbankr', dependencies = TRUE, repos='http://cran.us.r-project.org')"
 RUN Rscript -e "install.packages('sjstats', dependencies = TRUE, repos='http://cran.us.r-project.org')"
 RUN Rscript -e "install.packages('xaringan', dependencies = TRUE, repos='http://cran.us.r-project.org')"
+
+## installing r-mysql as a dependency for wordbankr triggers a long-standing bug
+## with the Anaconda libreadline library which does not link against ncurses, so
+## we will implement a crude workaround by copying the system libreadline over
+## the conda one. ugly, but it is a workaround. See:
+##   https://github.com/ContinuumIO/anaconda-issues/issues/152#
+##   https://github.com/IRkernel/IRkernel/issues/204#issuecomment-148991153
+RUN conda install --yes r-rmysql && \
+    cp -p /lib/x86_64-linux-gnu/libreadline.so.6 /opt/conda/lib/libreadline.so.6 && \
+    Rscript -e "install.packages('wordbankr', dependencies = TRUE, repos='http://cran.us.r-project.org')"
+
 RUN conda install --yes r-afex==0.17_8
