@@ -1,3 +1,8 @@
+import gzip, os
+from numpy import *
+from scipy.stats import zscore, pearsonr, linregress, scoreatpercentile
+from pandas import DataFrame, read_csv
+from datetime import datetime
 import re
 
 #download and uncompress the pluto datafiles (https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/nyc_pluto_11v2.zip  ) to this directory:
