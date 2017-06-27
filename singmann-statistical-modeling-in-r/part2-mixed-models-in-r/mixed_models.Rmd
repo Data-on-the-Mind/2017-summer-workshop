@@ -522,11 +522,11 @@ class: small
 require(afex)
 ```
 
+.pull-left[
+
 - `lmer` allows suppressing correlation among random effects using `||` syntax. However, **only for numerical variables.**
 - `afex::mixed()` allows using `||` also for factors if `expand_re = TRUE`:
 
-
-.pull-left[
 ```{r, results='hide', message=FALSE}
 m_red <- mixed(dv ~ c_given_a*rel_cond + 
                  (c_given_a*rel_cond||p_id), 
@@ -541,6 +541,29 @@ summary(m_red)$varcor
 .pull-right[
 ```{r}
 m_red
+```
+
+```{r, echo=FALSE, dpi=500, fig.width=7, fig.height=4, warning=FALSE}
+rnd_coefs <- coef(m_red$full_model)$p_id
+par(mfrow = c(1,2))
+par(pty="s")
+limits <- c(-0.5, 0.5)
+plot(dv ~ c_given_a, datr, subset = rel_cond == "PO", 
+     asp = 1, ylim=limits, xlim=limits, main ="PO")
+for (i in seq_len(nrow(rnd_coefs))) 
+  abline(a = rnd_coefs[i,4] + rnd_coefs[i,6] + rnd_coefs[i,2], 
+         b = rnd_coefs[i,5] + rnd_coefs[i,1] + rnd_coefs[i,7] + rnd_coefs[i,3],
+         col = "lightgrey")
+abline(a = coef(m_fixed)[1] + coef(m_fixed)[3], 
+       b = coef(m_fixed)[2] + coef(m_fixed)[4])
+plot(dv ~ c_given_a, datr, subset = rel_cond == "IR", 
+     asp = 1, ylim=limits, xlim=limits, main ="IR")
+for (i in seq_len(nrow(rnd_coefs))) 
+  abline(a = rnd_coefs[i,4] - (rnd_coefs[i,6] + rnd_coefs[i,2]), 
+         b = rnd_coefs[i,5] + rnd_coefs[i,1] - (rnd_coefs[i,7] + rnd_coefs[i,3]),
+         col = "lightgrey")
+abline(a = coef(m_fixed)[1] - coef(m_fixed)[3], 
+       b = coef(m_fixed)[2] - coef(m_fixed)[4])
 ```
 ]
 
