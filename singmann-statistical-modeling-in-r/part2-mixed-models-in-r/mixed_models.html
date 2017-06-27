@@ -668,6 +668,48 @@ class: small
 
 ### References Example Data:
 - Skovgaard-Olsen, N., Singmann, H., &amp; Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26-36. https://doi.org/10.1016/j.cognition.2015.12.017
+
+### Interpreting Residuals
+- Zuur et al. (2009). *Mixed Effects Models and Extensions in Ecology with R.* Springer. [Chapter 2]
+- Farraway (2002). *Practical Regression and Anova using R*. https://cran.r-project.org/doc/contrib/Faraway-PRA.pdf [Chapter 7]
+
+---
+class: small
+
+### Residuals
+
+.pull-left[
+
+
+```r
+plot(m_max, 
+     resid(.,scaled=TRUE) ~ c_given_a | rel_cond)
+```
+
+![](mixed_models_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```r
+lattice::qqmath(m_max)
+```
+
+![](mixed_models_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+
+]
+
+
+```r
+plot(m_max, p_id ~ resid(., scaled=TRUE) )
+plot(m_max, resid(., scaled=TRUE) ~ fitted(.) | rel_cond)
+?plot.merMod
+```
+
+- https://cran.r-project.org/doc/contrib/Faraway-PRA.pdf
+- https://htmlpreview.github.io/?https://github.com/bbolker/iiscvisit/blob/master/workshops/mixedlab.html
+
+---
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
