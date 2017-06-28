@@ -138,12 +138,6 @@ ggplot(iris, aes(Sepal.Width, Sepal.Length, col = Species)) +
   ggthemes::scale_color_solarized() 
 ```
 
-We can even bake in the theme for our other plots.
-
-```{r}
-theme_set(ggthemes::theme_few())
-```
-
 <!-- ----------------------------------------------------------------------- -->
 # Tidy Data Analysis with `dplyr`
 
@@ -341,6 +335,8 @@ We're going to look at data from the English Words and Sentences form. These dat
 ```{r}
 ws <- wordbankr::get_administration_data(language = "English", 
                                          form = "WS")
+# if this fails, try:
+# ws <- read_csv("data/ws.csv")
 ```
 
 Take a look at the data that comes out. 
@@ -396,26 +392,60 @@ ggplot(ws_sex,
 <!-- ----------------------------------------------------------------------- -->
 # Exciting stuff you can do with this workflow
 
-## Reading bigger files and better
+## Reading bigger files, faster
 
-+ `dbplyr`
-+ read_csv
-+ feather
+A few other things will help you with "medium size data":
+
++ `dbplyr` - For connecting directly to databases. this package got forked off of dplyr recently but is very useful. 
++ `read_csv` - *Much* faster than `read.csv` and has better defaults. 
++ `feather` - The `feather` package is a fast-loading binary format that is interoperable with python. All you need to know is `write_feather(d, "filename")` and `read_feather("filename")`. 
 
 ## Interactive visualization
 
-`shiny`
+The `shiny` package is a great way to do interactives in R.
+
+## Function application 
+
+`purrr` is an amazing package that introduces consistent ways to`map` functions. 
 
 <!-- ----------------------------------------------------------------------- -->
-# Exercise solution code
+# Exercise solutions
+
+Returning the third cell.
+
+```{r}
+iris$Petal.Length[3]
+iris[3,3]
+iris[3,"Petal.Length"]
+iris[[3]][3]
+iris[["Petal.Length"]][3]
+# probably more?
+```
 
 Piped commands. 
-
 
 ```{r}
 iris$Species %>%
   unique %>%
   length
+```
+
+Mean of participant means.
+
+```{r}
+sgf %>%
+  group_by(age_group, subid) %>%
+  summarise(correct = mean(correct)) %>%
+  summarise(mean_correct = mean(correct), 
+            sd_correct = sd(correct))
+```
+
+Sklar tidying.
+
+```{r}
+sklar %>%
+  gather(participant, RT, 8:28) 
+# might be a better way to select these columns than by number, e.g. regex
 ```
 
 Sex means.

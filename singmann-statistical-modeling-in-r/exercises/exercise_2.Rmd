@@ -3,7 +3,7 @@ title: "Exercise 2"
 output: html_notebook
 ---
 
-# Exercise 2A: Identifying Random Effects-Structure
+# Exercise 2: Identifying Random Effects-Structure
 
 Your task is to identify the *maximal random-effects structure justified by the design* (Barr, Levy, Scheepers, & Tily, 2013) for two data sets and implement this structure in `lme4::lmer` syntax.
 
@@ -64,14 +64,6 @@ mixed(log_rt ~ ...)
 
 ```
 
-
-
-## Exercise 2B: Analyse the data using a partial-pooling approach.
-- Details follow...
-
-```{r}
-# go
-```
 
 ## References 
 - Barr, D. J., Levy, R., Scheepers, C., & Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. *Journal of Memory and Language*, 68(3), 255-278. https://doi.org/10.1016/j.jml.2012.11.001
