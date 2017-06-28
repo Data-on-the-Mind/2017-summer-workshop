@@ -27,20 +27,16 @@
 name: title
 class: center, middle
 
-<img src="images/jspsych+psiturk.png" width="650">
+<img src="images/psiturk.png" width="500">
 
 
-# Using .blue[Mechanical Turk] and .blue[jspsych+psiTurk] for Dynamic Web Experiments
+# **The internet as psychology lab**: Using .blue[psiTurk] to deliver complex experiments on the web
 <hr>
 .author[
-**Josh de Leeuw**, organizer
-
-_Indiana University_  
-
-<hr>
 
 **Todd Gureckis** ([@todd_gureckis](http://twitter.com/todd_gureckis)),
-Anna Coenen ([@AnnaCoenen](http://twitter.com/AnnaCoenen)), **Doug Markant** ([@dougmarkant](http://twitter.com/dougmarkant)), Jay Martin, John McDonnell ([@johnvmcdonnell](http://twitter.com/johnvmcdonnell)), Alex Rich, and many github contributors! 
+**Alex Rich** ([@alex_s_rich](http://twitter.com/alex_s_rich)), and many github contributors to both
+psiTurk and JSPsych! 
 
 _[Computation and Cognition Lab](http://gureckislab.org)_, _New York University_  
 ]
@@ -52,13 +48,13 @@ class: middle
 
 # Agenda
 
-1. **Overview, What is Mechanical Turk?** What is important to know about running psychology experiments online?
-2. **Basics of using Amazon Mechanical Turk**
-3. Building dynamic web experiments using **jsPsych**.
-4. Introduction and overview of **psiTurk**
-5. We will get a quick tour of **psiTurk**'s experiment exchange.
-6. Using **psiTurk** to put our experiment on AMT.
-7. General Q & A with any remaining time.
+1. **Overview, What is Mechanical Turk?** What is important to know about running psychology experiments online? (Todd)
+2. **Basics of using Amazon Mechanical Turk** (Alex)
+3. Introduction and overview of **psiTurk** (Todd)
+4. We will get a quick tour of **psiTurk**'s experiment exchange. (Todd)
+5. Using **psiTurk** to put our experiment on AMT. (Todd)
+6. Building dynamic web experiments using **jsPsych**. (Alex)
+7. General Q & A with any remaining time. (Todd and Alex)
 
 ---
 
@@ -66,24 +62,18 @@ class: middle
 
 # What you will need to work hands-on
 
-1. The tutorial materials from [www.jspsych.org/cogsci2014](http://www.jspsych.org/cogsci2014)
-2. A programming-friendly text editor.
-3. For **psiTurk** portions, it would be best to be running Linux or OSX to install on your machine. Windows users can run PsiTurk on a cloud server using OpenShift.
-4. Register for an account at [psiturk.org/register](psiturk.org/register).
-5. You will need an Amazon Web Services account to use Mechanical Turk.
-<hr>
-Feel free to leave any subpart of this out and just watch.  Both libraries
-are extensively documented online and so you can use the workshop just to get
-oriented to the key concepts.
+1. Register for an account at [psiturk.org/register](psiturk.org/register).
+2. You will need an Amazon Web Services account to use Mechanical Turk.
+
 ---
 
 class: middle
 
 # If you need help
 
-1. All tutorial materials are available online. [www.jspsych.org/cogsci2014](http://www.jspsych.org/cogsci2014)
-2. Interrupt and ask questions
-3. Find a code-buddy
+1. psiTurk has extensive online documentation [www.psiturk.org/docs](http://psiturk.org/docs/)
+2. psiTurk has an active [google group](https://groups.google.com/forum/#!forum/psiturk)
+3. Interrupt and ask questions, raise red or blue sticky notes
 
 ---
 
@@ -265,42 +255,6 @@ thanks for participating in research
 ---
 
 .task[Part 1: What is AMT?]
-# Compensation
-
-- Median wage is $1.38/hour
-
-- Short tasks (~5 mins) award around 10 cents
-
-- Requester can reject work and revoke payment
-
-- And can also **award bonuses**
-
-- Amazon takes 10% of payments
-
-- Amazon tries to stay out of disputes
-
-
----
-
-
-.task[Part 1: What is AMT?]
-# Outside of the US
-
-- Unfortunately, getting a requester account from outside the US can be a bit tricky
-
-- Requires US billing address  and US debit or credit card
-
-- If you can't get a US credit card, setting up the account with a US American collaborator is an option
-
-- Or consider international/European alternatives to AMT, such as [clickworker](http://www.clickworker.com), [crowdflower](http://crowdflower.com). The latter actually uses AMT workers, but is accessible worldwide 
-
-- (the psiTurk toolbox could in principle be adapted to work with other platforms)
-
-
-
----
-
-.task[Part 1: What is AMT?]
 # Why use AMT-based experiments?
 
 - **Convenient**  And the jspsych+psiTurk toolbox will help you even more
@@ -374,189 +328,17 @@ name: replicationstudies
 
 .refs[
 
-- Gosling, S.D., Vazire, S., Srivastava, S., & John, O.P. (2004). [Should we trust web-based studies? A comparative analysis of six preconceptions about Internet questionnaires](http://ww.w.simine.com/docs/Gosling_et_al_AP_2004.pdf). _American Psychologist_, 59, 2, 93-104.
-
 - Paolacci, G., Chandler, J., & Ipeirotis, P. G. (2010). [Running experiments on Amazon Mechanical Turk](http://repub.eur.nl/res/pub/31983/jdm10630a[1].pdf). _Judgment and Decision Making_, 5, 411-419.
 
 - Buhrmester, M., Kwang, T., & Gosling, S. D. (2011). [Amazon's Mechanical Turk A New Source of Inexpensive, Yet High-Quality, Data?](http://pps.sagepub.com/content/6/1/3.full). _Perspectives on Psychological Science_, 6(1), 3-5.
 
 - Germine, L., Nakayama, K., Duchaine, B.C., Chabris, C.F., Chatterjee, G. & Wilmer, J.B. (2012).  [Is the Web as good as the lab?  Comparable performance from Web and lab in cognitive/perceptual experiments](http://www.springerlink.com/content/f0244t772070138w/)  _Psychonomic Bulletin & Review_,  19.5.
 
-
 - Shapiro, D. N., Chandler, J., & Mueller, P. A. (2013). [Using Mechanical Turk to Study Clinical Populations](http://s3.amazonaws.com/academia.edu.documents/30554524/Clinical_Psychological_Science-2013-Shapiro-2167702612469015.pdf?AWSAccessKeyId=AKIAIR6FSIMDFXPEERSA&Expires=1374090987&Signature=%2B4nErhKWOQhoWYY9gpgV0EbvVa0%3D&response-content-disposition=inline). _Clinical Psychological Science_, 1(2), 213-220.
 
-]
-
----
-
-
-.task[Part 1: What is AMT?]
-# Do classic findings replicate?
-
-- Some members of our lab recently contributed to this study that tested some classic psychology experiments on AMT.red[*]
-
-    - Crump, M. J., McDonnell, J. V., & Gureckis, T. M. (2013). [Evaluating Amazon's Mechanical Turk as a tool for experimental behavioral research.](http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0057410) PloS one, 8(3).
-
-
-- Focus was on reaction time findings that require sustained attention from subjects and precise recording of responses
-
-- And learning experiments involving more cognitive effort 
-
-
-.footnote[.red[*] For a summary of the paper see this [blog post](http://gureckislab.org/blog/?p=1297)]
-
----
-
-
-
-.task[Part 1: What is AMT?]
-# Stimulus Detection
-.left-column[ 
-
-Stroop
-
-  - People respond faster to congruent (e.g. .blue[blue]) than to incongruent (.green[blue]) items
-
-
-Task Switching
-
-  - Faster RT if task stays the same (e.g. "Odd or Even?") than when tasks alternate ("Odd or Even?" / "Small or Large?")
-
-Flanker
-
-  - When identifying a target (e.g. "h"), congruent flankers ("hhhhh") lead to faster RTs than incongruent ("ffhhff") ones
+- Crump, M. J., McDonnell, J. V., & Gureckis, T. M. (2013). [Evaluating Amazon's Mechanical Turk as a tool for experimental behavioral research.](http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0057410) PloS one, 8(3).
 
 ]
-  
-
-.center[.right-column[
-<img src="images/StroopResult.png" width="160">
-<img src="images/TaskSwitchingResult.png" width="160">
-<img src="images/FlankerResult.png" width="160">
-]]  
-
-
----
-
-.task[Part 1: What is AMT?]
-# Stimulus Detection
-.left-column[ 
-
-Simon
-
-  - Targets that are spatially compatible with response key are identified faster
-
-
-Visual Cuing 
-
-  - Stimulus detection is faster for cued  versus uncued targets if cue is presented after short interval (<=300ms) and slower after longer interval (>=400ms)
-
-Attentional Blink
-
-  - During rapid serial visual presentation visual target detection is impaired if target is displayed 100-500ms after another one
-
-
-]
-
-
-.center[.right-column[
-<img src="images/SimonResult.png" width="160">
-<img src="images/ContCueing.png" width="160">
-<img src="images/AttentionalBlink.png" width="160">
-]]  
-
----
-
-
-.task[Part 1: What is AMT?]
-# Subliminal Perception
-
-Masked priming
-
-  - Responding to arrow probes that are either compatibly (prime: >>, probe: >>) or incompatibly primed (prime: <<, probe: >>) at durations of 16, 32, 48, 64, 80, and 96 ms 
-
-  -  Previous finding was that compatibility effects are negative for very short prime durations and positive for longer ones
-
-
-  .center[
-   <img src="images/PrimingResult.png" width="330">
-   ]
-
-  - Only partially replicated: no negative compatibility effect
-
-  - Lower bound on display duration in browser!
-
----
-
-
-.task[Part 1: What is AMT?]
-# Category Learning
-
-- Classic Shepard, Hovland, & Jenkins (1961) paper
-
-- Six different ways of classifying the same 8 items (geometric figures with 3 binary dimensions) into deterministic categories
-
-- Generally Type I is learned faster than Type II which is faster that Types III-V, with Type VI the hardest
-.center[
-<img src="images/abstractstructureSHJ.png" width="150"><img src="images/dimstructureSHJ.png" width="170">
-<img src="images/SHJDifficulty.png" width="550">
-]
-
----
-
-.task[Part 1: What is AMT?]
-# Results
-
-Although type I was learned easily, performance on all other types was significantly worse than in the original study
-<br><br>
-
-.center[
-<img src="images/exp8-nosofsky.png" height="290"><img src="images/exp8-amt.png" height="290">
-]
-
-
----
-
-
-
-
-.task[Part 1: What is AMT?]
-# Incentives too low?
-There was little difference between high ($2 to $4.50 with bonus), medium ($1.50), and low-payment ($.75) groups
-<br><br>
-
-<img src="images/exp9-typeII.png" height="290">
-<img src="images/exp9-typeIV.png" height="290">
-
-
----
-
-
-.task[Part 1: What is AMT?]
-# Bad instructions?
-Including manipulation checks that asked non-trivial questions about the task improved performance on types II to VI
-<br><br>
-
-.center[<img src="images/exp10-l-vs-amt.png" height="310">]
-
-
----
-
-.task[Part 1: What is AMT?]
-# Replication in other Areas
-
-1. Clinical (Shapiro, et al, 2013)
-
-  - Scores on a range of psychometric tests had high internal consistency and test-retest reliability  (r =.87)
-
-2. Personality (Buhrmeser, et al, 2011)
-
-  - No difference in consistency on personality questionnaires at different payment levels, and absolute levels of consistency and test-retest reliability were high (r = .88)
-
-3. JDM (Paolacci, et al, 2010)
-  
-  -  Compared classic JDM studies (Asian Disease, Linda, Physicians Problem) on AMT and university subject pool
-  - No difference in failure rate of catch trials and pattern of behavior in studies but AMT subjects were more risk averse
 
 ---
 
@@ -606,7 +388,7 @@ A few recommendations to keep workers happy...
 .task[Part 1: What is AMT?]
 # Part 1: Summary
 
-1. AMT  allows you to collect data quickly and conveniently
+1. AMT allows you to collect data quickly and conveniently
 
 1. Web experiments can prevent experimenter effects and increase anonymity
 
@@ -815,238 +597,20 @@ class: center, middle
 # End of .blue[Part 2]
 ### .gray[Time for a break!]
  
+
 ---
 
 name: part3
 class: center, middle
 
-.task[Part 3: Building dynamic web experiments]
-# .blue[Part 3]: Building dynamic web experiments using jsPsych
-
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# Programming for the web:<br> .blue[The Good]
-
-- Web programming was developed specifically for user interaction.
-- Web experiments will run in the lab too!
-- Tons of existing resources, both .blue[libraries] and .blue[tutorials].
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# Programming for the web: <br>.blue[The Challenge]
-
-Web development has a lot of moving parts:
-
-- Code a .blue[web page]
-- .blue[Custom web server] to serve the experiment and interact with Amazon.
-- .blue[Database] for the server to store data.
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# Programming for the web: <br>.blue[The Challenge]
-
-Web development has a lot of moving parts:
-
-- Code a .blue[web page]  ✓
-- .blue[Custom web server] to serve the experiment and interact with Amazon. 
-- .blue[Database] for the server to store data. 
-
-<hr>
-**jsPsych** takes care of building the dynamic webpage.
-<br>
-<img src="images/jspsych.png" width="300">
-
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# Programming for the web: <br>.blue[The Challenge]
-
-Web development has a lot of moving parts:
-
-- Code a .blue[web page]
-- .blue[Custom web server] to serve the experiment and interact with Amazon. ✓ 
-- .blue[Database] for the server to store data. ✓ 
-
-<hr>
-**psiturk** takes care of the server, data storage, and interaction 
-with Amazon Mechanical turk.
-<br>
-<img src="images/psiturk.png" width="400">
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# Programming for the web: <br>.blue[The Challenge]
-
-
-- Code a .blue[web page]:
-    - Structure coded in <span class="blue">HTML</span>.
-    - Style defined in <span class="blue">CSS</span>.
-    - Programs written in <span class="blue">Javascript</span>.
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# What is JavaScript?
-
-- For one thing, it has .blue[nothing to do] with Java.
-- It is the .blue[only language] that browsers understand natively 
-    - (but flash is also an option).
-- These slides were compiled in Javascript!
-- Javascript's role in a behavioral experiment:
-    - Control the <span class="blue">task logic</span>: condition, etc.
-    - Control <span class="blue">what subjects see</span> and when.
-    - Collect and store <span class="blue">data</span>, then send it to the server.
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# What Javascript .blue[can] do
-
-- Interact with a web server (to send or request data for instance)
-- Track clicks, mouse movements, etc.
-- Record response times
-- Track changes in focus and window size
-- Enable group experiments
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# What Javascript .blue[can't] do
-
-- Control focus (lock participants in a window)
-- Disable browser actions (reloading, going back)
-- Saving directly to a file (server interaction is required)
-
----
-
-.task[Part 3: Building dynamic web experiments]
-# Learning Javascript
-
-Lots of resources for learning: E.g., [codecademy.com](http://codecademy.com):
-
-<img src="images/codecademy.png" width="750" />
-
-???
-
-No time to teach javascript
-
-One of the most commonly used languages.
-
-One resource I recommend for beginners is codecademy.
-
-Doesn't assume programming experimence.
-
-Guides you through Javascript interactively.
+.task[Part 3: psiTurk]
+# .blue[Part 3]: Introduction and overview of psiTurk
 
 ---
 
 class: center, middle
 
-.jspsych[jsPsych]
-<br><br><br>
-A JavaScript library for creating behavioral experiments that run in a web browser.
-
----
-
-class: middle
-
-## jsPsych separates the structure and content of experiments
-
-.left-half[
-##Structure
-
-* Show instructions
-* Show a stimulus and collect a keyboard response
-* Give feedback on a response
-* Show a visual search array]
-
-.right-half[
-##Content
-
-* What the instructions say
-* How long is the stimulus displayed
-* Which keys are acceptable responses
-* How many items are in the visual search array]
-
----
-
-class: middle
-
-# jsPsych provides the structure, you provide the content
-
----
-
-class: middle
-
-# Structures are created by defining plugins 
-
-Plugins can be assembled together in any combination to create an experiment.
-
----
-
-class: middle
-
-# Why is jsPsych helpful?
-
-* We tend to repeat the same structures across experiments, with variations in content.
-* Other researchers often want to use the same structures to replicate a finding.
-* jsPsych lets you rapidly assemble new experiments by providing all the functionality necessary to glue different structures together. 
-* jsPsych also provides a hanful of functions for interacting with data, randomizing factors, and developing new plugins.
-
----
-
-class: middle
-
-# When is jsPsych not helpful?
-
-* jsPsych works best when the entire experimental structure is known in advance.
-* If your experiment uses a very complicated and novel structure that you probably won't use again, it might not be worth it to use jsPsych.
-* Other tools do a better job with surveys.
-
----
-
-class: middle
-
-# How to learn more about jsPsych after today
-
-* All documentation is on the project's GitHub site: [https://www.github.com/jodeleeuw/jsPsych](https://www.github.com/jodeleeuw/jsPsych)
-* Mailing list for questions and answers: [https://groups.google.com/forum/#!forum/jspsych](https://groups.google.com/forum/#!forum/jspsych)
-
----
-
-
-class: center, middle
-# .blue[Part 3]
-### .gray[Begin hands-on jspsych tutorial]
- 
-
----
-
-
-class: center, middle
-# End of .blue[Part 3]
-### .gray[Time for a break!]
- 
----
-
-
-name: part4
-class: center, middle
-
-.task[Part 4: psiTurk]
-# .blue[Part 4]: Introduction and overview of psiTurk
-
----
-
-class: center, middle
-
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/psiturklogo_caption.png" width="730">
 
@@ -1054,7 +618,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/what_is_1.png" width="730">
 
@@ -1062,7 +626,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/what_is_2.png" width="730">
 
@@ -1070,7 +634,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/what_is_3.png" width="730">
 
@@ -1078,7 +642,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/what_is_4.png" width="730">
 
@@ -1086,13 +650,13 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/what_is_5.png" width="730">
 
 ---
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 # Architecture
 
 - **Command line tool** (this is the "player")
@@ -1107,7 +671,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/cloud_1.png" width="730">
 
@@ -1115,7 +679,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/cloud_2.png" width="730">
 
@@ -1123,7 +687,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/cloud_3.png" width="730">
 
@@ -1131,7 +695,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/cloud_4.png" width="730">
 
@@ -1139,7 +703,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/cloud_5.png" width="730">
 
@@ -1147,7 +711,7 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/cloud_6.png" width="730">
 
@@ -1155,13 +719,13 @@ class: center, middle
 
 class: center, middle
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 <img src="images/cloud_7.png" width="730">
 
 ---
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 # Installation
 
 **System requirements **
@@ -1181,7 +745,7 @@ class: center, middle
 
 ---
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 # Installation
 
 
@@ -1205,21 +769,21 @@ python get-pip.py
 
 ---
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 **3. Installing psiTurk**
 
 - To install psiTurk simply run:
 
 ```bash
-pip install psiturk
+pip2 install psiturk
 # If you get a permissions error try
 # sudo pip install psiturk
 ```
 
 ---
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 # Command line features
 
@@ -1244,13 +808,13 @@ pip install psiturk
 
 
 class: center, middle
-# .blue[Part 4]
+# .blue[Part 3]
 ### .gray[Checkout psiturk.org and documentation]
 
 
 ---
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
  # Workflow
 
@@ -1272,7 +836,7 @@ class: center, middle
 ---
 
 
-.task[Part 4: Using psiTurk]
+.task[Part 3: Using psiTurk]
 
 # Draw together example
 
@@ -1303,14 +867,14 @@ psiturk
 
 
 class: center, middle
-# .blue[Part 4]
+# .blue[Part 3]
 ### .gray[Begin semi hands-on psiturk demo]
  
 
 
 ---
 
-.task[Part 4: Building dynamic web experiments]
+.task[Part 3: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1343,7 +907,7 @@ static
 
 ---
 
-.task[Part 4: Building dynamic web experiments]
+.task[Part 3: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1371,7 +935,7 @@ static
 
 ---
 
-.task[Part 4: Building dynamic web experiments]
+.task[Part 3: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1400,7 +964,7 @@ static
 
 ---
 
-.task[Part 4: Building dynamic web experiments]
+.task[Part 3: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1429,7 +993,7 @@ static
 
 ---
 
-.task[Part 4: Building dynamic web experiments]
+.task[Part 3: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1489,7 +1053,7 @@ static
 
 ---
 
-.task[Part 4: Building dynamic web experiments]
+.task[Part 3: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1517,7 +1081,7 @@ static # <==== All other files
 
 ---
 
-.task[Part 4: Building dynamic web experiments]
+.task[Part 3: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1776,6 +1340,229 @@ class: center, middle
 # End of .blue[Part 3]
 Questions?
 
+
+
+
+
+---
+
+name: part3
+class: center, middle
+
+.task[Part 3: Building dynamic web experiments]
+# .blue[Part 3]: Building dynamic web experiments using jsPsych
+
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# Programming for the web:<br> .blue[The Good]
+
+- Web programming was developed specifically for user interaction.
+- Web experiments will run in the lab too!
+- Tons of existing resources, both .blue[libraries] and .blue[tutorials].
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+Web development has a lot of moving parts:
+
+- Code a .blue[web page]
+- .blue[Custom web server] to serve the experiment and interact with Amazon.
+- .blue[Database] for the server to store data.
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+Web development has a lot of moving parts:
+
+- Code a .blue[web page]  ✓
+- .blue[Custom web server] to serve the experiment and interact with Amazon. 
+- .blue[Database] for the server to store data. 
+
+<hr>
+**jsPsych** takes care of building the dynamic webpage.
+<br>
+<img src="images/jspsych.png" width="300">
+
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+Web development has a lot of moving parts:
+
+- Code a .blue[web page]
+- .blue[Custom web server] to serve the experiment and interact with Amazon. ✓ 
+- .blue[Database] for the server to store data. ✓ 
+
+<hr>
+**psiturk** takes care of the server, data storage, and interaction 
+with Amazon Mechanical turk.
+<br>
+<img src="images/psiturk.png" width="400">
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# Programming for the web: <br>.blue[The Challenge]
+
+
+- Code a .blue[web page]:
+    - Structure coded in <span class="blue">HTML</span>.
+    - Style defined in <span class="blue">CSS</span>.
+    - Programs written in <span class="blue">Javascript</span>.
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# What is JavaScript?
+
+- For one thing, it has .blue[nothing to do] with Java.
+- It is the .blue[only language] that browsers understand natively 
+    - (but flash is also an option).
+- These slides were compiled in Javascript!
+- Javascript's role in a behavioral experiment:
+    - Control the <span class="blue">task logic</span>: condition, etc.
+    - Control <span class="blue">what subjects see</span> and when.
+    - Collect and store <span class="blue">data</span>, then send it to the server.
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# What Javascript .blue[can] do
+
+- Interact with a web server (to send or request data for instance)
+- Track clicks, mouse movements, etc.
+- Record response times
+- Track changes in focus and window size
+- Enable group experiments
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# What Javascript .blue[can't] do
+
+- Control focus (lock participants in a window)
+- Disable browser actions (reloading, going back)
+- Saving directly to a file (server interaction is required)
+
+---
+
+.task[Part 3: Building dynamic web experiments]
+# Learning Javascript
+
+Lots of resources for learning: E.g., [codecademy.com](http://codecademy.com):
+
+<img src="images/codecademy.png" width="750" />
+
+???
+
+No time to teach javascript
+
+One of the most commonly used languages.
+
+One resource I recommend for beginners is codecademy.
+
+Doesn't assume programming experimence.
+
+Guides you through Javascript interactively.
+
+---
+
+class: center, middle
+
+.jspsych[jsPsych]
+<br><br><br>
+A JavaScript library for creating behavioral experiments that run in a web browser.
+
+---
+
+class: middle
+
+## jsPsych separates the structure and content of experiments
+
+.left-half[
+##Structure
+
+* Show instructions
+* Show a stimulus and collect a keyboard response
+* Give feedback on a response
+* Show a visual search array]
+
+.right-half[
+##Content
+
+* What the instructions say
+* How long is the stimulus displayed
+* Which keys are acceptable responses
+* How many items are in the visual search array]
+
+---
+
+class: middle
+
+# jsPsych provides the structure, you provide the content
+
+---
+
+class: middle
+
+# Structures are created by defining plugins 
+
+Plugins can be assembled together in any combination to create an experiment.
+
+---
+
+class: middle
+
+# Why is jsPsych helpful?
+
+* We tend to repeat the same structures across experiments, with variations in content.
+* Other researchers often want to use the same structures to replicate a finding.
+* jsPsych lets you rapidly assemble new experiments by providing all the functionality necessary to glue different structures together. 
+* jsPsych also provides a hanful of functions for interacting with data, randomizing factors, and developing new plugins.
+
+---
+
+class: middle
+
+# When is jsPsych not helpful?
+
+* jsPsych works best when the entire experimental structure is known in advance.
+* If your experiment uses a very complicated and novel structure that you probably won't use again, it might not be worth it to use jsPsych.
+* Other tools do a better job with surveys.
+
+---
+
+class: middle
+
+# How to learn more about jsPsych after today
+
+* All documentation is on the project's GitHub site: [https://www.github.com/jodeleeuw/jsPsych](https://www.github.com/jodeleeuw/jsPsych)
+* Mailing list for questions and answers: [https://groups.google.com/forum/#!forum/jspsych](https://groups.google.com/forum/#!forum/jspsych)
+
+---
+
+
+class: center, middle
+# .blue[Part 3]
+### .gray[Begin hands-on jspsych tutorial]
+ 
+
+---
+
+
+class: center, middle
+# End of .blue[Part 3]
+### .gray[Time for a break!]
+ 
+---
 
     </textarea>
     <script type="text/javascript">
