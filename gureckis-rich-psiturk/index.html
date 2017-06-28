@@ -51,10 +51,9 @@ class: middle
 1. **Overview, What is Mechanical Turk?** What is important to know about running psychology experiments online? (Todd)
 2. **Basics of using Amazon Mechanical Turk** (Alex)
 3. Introduction and overview of **psiTurk** (Todd)
-4. We will get a quick tour of **psiTurk**'s experiment exchange. (Todd)
-5. Using **psiTurk** to put our experiment on AMT. (Todd)
-6. Building dynamic web experiments using **jsPsych**. (Alex)
-7. General Q & A with any remaining time. (Todd and Alex)
+4. We will get a quick tour of **psiTurk**'s experiment exchange, using **psiTurk** to put our experiment on AMT, overview of experiment structure (Todd)
+5. Building dynamic web experiments using **jsPsych**. (Alex)
+6. General Q & A with any remaining time. (Todd and Alex)
 
 ---
 
@@ -514,6 +513,8 @@ class: middle
 
 
 class: center, middle
+.task[Part 2: Using AMT]
+
 # Let's request some HITs
 
 
@@ -833,12 +834,39 @@ class: center, middle
   - Collect data!
   - Javascript &larr;&rarr;  expt server  &larr;&rarr; AMT
 
+We'll aim to show you all three in the following section!
 ---
 
 
-.task[Part 3: Using psiTurk]
+name: part4
+class: center, middle
 
-# Draw together example
+.task[Part 4: psiTurk Experiment Exchange]
+# .blue[Part 4]: psiTurk Experiment Exchange
+
+---
+
+
+.task[Part 4: Experiment Exchange]
+
+# psiTurk Experiment Exchange
+
+***Goals***
+
+- Like an "app store" for online experiments
+- Easily download and experiment and within minutes be set up to do a replication
+- Common workflow enhances sharability
+- Bootstrap your own experiments by finding a similar example in the exchange an building on it
+- Detect bugs in published experiments and make fixes
+- Share "best practices" for improving data quality across labs and research groups
+
+Click to open: [The psiTurk Experiment Exchange](http://psiturk.org/ee)
+
+---
+
+.task[Part 4: Experiment Exchange]
+
+# Drawtogether example
 
 ***Goals***
 
@@ -847,12 +875,17 @@ class: center, middle
 - Post a HIT in AMT sandbox (requires AMT account).
 - Maybe collect live data
 
+---
+
+.task[Part 4: Experiment Exchange]
+
+# Drawtogether example
 
 **1. Load demo experiment code**
 
 ```bash
-psiturk-setup-example
-cd psiturk-example
+psiturk-install HW3XfPCTUjPDdtE87aHRHi
+cd drawtogether
 ```
 
 **2. Start command line**
@@ -867,14 +900,12 @@ psiturk
 
 
 class: center, middle
-# .blue[Part 3]
+# .blue[Part 4]
 ### .gray[Begin semi hands-on psiturk demo]
- 
-
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 4: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -907,7 +938,7 @@ static
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 4: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -935,7 +966,7 @@ static
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 4: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -964,7 +995,7 @@ static
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 4: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -993,7 +1024,7 @@ static
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 4: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1053,7 +1084,7 @@ static
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 4: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1081,7 +1112,7 @@ static # <==== All other files
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 4: Building dynamic web experiments]
 # Anatomy of a project
 
 ```bash
@@ -1337,7 +1368,7 @@ class: center, middle
 
 .task[Part 4: Using psiTurk]
 
-# End of .blue[Part 3]
+# End of .blue[Part 4]
 Questions?
 
 
@@ -1346,16 +1377,16 @@ Questions?
 
 ---
 
-name: part3
+name: part5
 class: center, middle
 
-.task[Part 3: Building dynamic web experiments]
-# .blue[Part 3]: Building dynamic web experiments using jsPsych
+.task[Part 5: Building dynamic web experiments]
+# .blue[Part 5]: Building dynamic web experiments using jsPsych
 
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # Programming for the web:<br> .blue[The Good]
 
 - Web programming was developed specifically for user interaction.
@@ -1364,7 +1395,7 @@ class: center, middle
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # Programming for the web: <br>.blue[The Challenge]
 
 Web development has a lot of moving parts:
@@ -1375,7 +1406,7 @@ Web development has a lot of moving parts:
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # Programming for the web: <br>.blue[The Challenge]
 
 Web development has a lot of moving parts:
@@ -1392,7 +1423,7 @@ Web development has a lot of moving parts:
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # Programming for the web: <br>.blue[The Challenge]
 
 Web development has a lot of moving parts:
@@ -1409,7 +1440,7 @@ with Amazon Mechanical turk.
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # Programming for the web: <br>.blue[The Challenge]
 
 
@@ -1420,7 +1451,7 @@ with Amazon Mechanical turk.
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # What is JavaScript?
 
 - For one thing, it has .blue[nothing to do] with Java.
@@ -1434,7 +1465,7 @@ with Amazon Mechanical turk.
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # What Javascript .blue[can] do
 
 - Interact with a web server (to send or request data for instance)
@@ -1445,7 +1476,7 @@ with Amazon Mechanical turk.
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # What Javascript .blue[can't] do
 
 - Control focus (lock participants in a window)
@@ -1454,7 +1485,7 @@ with Amazon Mechanical turk.
 
 ---
 
-.task[Part 3: Building dynamic web experiments]
+.task[Part 5: Building dynamic web experiments]
 # Learning Javascript
 
 Lots of resources for learning: E.g., [codecademy.com](http://codecademy.com):
@@ -1559,7 +1590,7 @@ class: center, middle
 
 
 class: center, middle
-# End of .blue[Part 3]
+# End of .blue[Part 5]
 ### .gray[Time for a break!]
  
 ---
