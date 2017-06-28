@@ -1594,10 +1594,10 @@ class: middle
 .left-half[
 ```javascript
 {
-  type: “single-stim”,
-  stimulus: “face1.jpg”,
+  type: "single-stim",
+  stimulus: "face1.jpg",
   choices: ['A', 'B'],
-  prompt: “Is this person in group A or group B?”
+  prompt: "Is this person in group A or group B?"
 }
 ```
 
@@ -1614,10 +1614,10 @@ class: middle
 .left-half[
 ```javascript
 {
-  type: “single-stim”,
-  stimulus: “face2.jpg”,
+  type: "single-stim",
+  stimulus: "face2.jpg",
   choices: ['A', 'B'],
-  prompt: “Is this person in group A or group B?”
+  prompt: "Is this person in group A or group B?"
 }
 ```
 
@@ -1634,8 +1634,8 @@ class: middle
 .left-half[
 ```javascript
 {
-  type: “single-stim”,
-  stimulus: “<p style=“font-size:80px”>+</p>”,
+  type: "single-stim",
+  stimulus: "<p style='font-size:80px'>+</p>",
   choices: jsPsych.NO_KEYS,
   timing_response: 500
 }
@@ -1654,11 +1654,10 @@ class: middle
 .left-half[
 ```javascript
 {
-  type: “single-stim”,
-  stimulus: "<video autoplay>" +
-    "<source src='mov/traffic.mp4' type='video/mp4'></video>",
-  choices: [‘enter’],
-  prompt: “Press enter to continue.”
+  type: "single-stim",
+  stimulus: "<video autoplay><source src='mov/traffic.mp4' type='video/mp4'></video>",
+  choices: ['enter'],
+  prompt: "Press enter to continue."
 }
 ```
 
@@ -1672,7 +1671,7 @@ class: middle
 
 class: middle
 
-# Plugins are squenced in a timeline.
+# Plugins are sequenced in a timeline.
 
 ---
 
@@ -1723,6 +1722,38 @@ class: middle
 
 * If your experiment uses a very complicated and novel structure that you probably won't use again, it might not be worth it to use jsPsych.
 * Other tools do a better job with surveys.
+
+---
+
+# Including jsPsych in a psiTurk project
+
+```bash
+config.txt
+participants.db
+server.log
+templates
+| exp.html
+\ ...
+static 
+| favicon.ico
+| images
+| \ myimage.jpg
+| css
+| \ task.css
+| js
+| | psiturk.js
+| | task.js
+| | utils.js
+| | jsPsych <--- jsPsych added here
+| | | jsPsych.js <---
+| | \ plugins <---
+| |   | jspych-single-stim.js <---
+| |   \ ...
+| | 
+\ lib # 
+  | jquery-min.js
+  \ ...
+```
 
 ---
 
