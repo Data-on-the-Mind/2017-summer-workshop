@@ -1506,6 +1506,52 @@ Guides you through Javascript interactively.
 
 ---
 
+# Extremely short guide to javascript
+
+.left-half[
+```javascript
+/* variables */
+var x = 7;
+x; // = 7
+
+/* functions */
+var myFn = function (param1, param2) {
+    return param1 + param2;
+};
+myFn(2, 3); // = 5
+
+/* objects */
+var myObj = {key1: 'hello',
+             key2: 7};
+myObj.key1; // = 'hello'
+myObj.key3 = 'world';
+myObj; // =  {key1: 'hello', 
+       // key2: 7, key3: 'world'}
+
+
+// arrays
+var myArray = [2, 'word1']
+myArray[0]; // = 2;
+myArray.push('word2')
+myArray; // = [2, 'word1', 'word2']
+```
+]
+
+--
+
+.right-half[
+## Practice 
+* Open the developer tools in any tab and click on the 'Console'
+* create a variable `x` equal to '5'
+* create a function called `square` that squares its input, then pass `x` to the function.
+* create an object `name` with keys `first` and `last`, with your first and last name as values.
+* create an array `myArray` holding `1` and `2`.
+* push `name` onto `myArray`, then print myArray by typing `myArray` or `console.log(myArray)`.
+
+] 
+
+---
+
 class: center, middle
 
 .jspsych[jsPsych]
@@ -1522,6 +1568,7 @@ class: middle
 ##Structure
 
 * Show instructions
+* Sequentially display trials
 * Show a stimulus and collect a keyboard response
 * Give feedback on a response
 * Show a visual search array]
@@ -1538,15 +1585,124 @@ class: middle
 
 class: middle
 
-# jsPsych provides the structure, you provide the content
+# Trials are created by defining plugins
 
 ---
 
 class: middle
 
-# Structures are created by defining plugins 
+.left-half[
+```javascript
+{
+  type: “single-stim”,
+  stimulus: “face1.jpg”,
+  choices: ['A', 'B'],
+  prompt: “Is this person in group A or group B?”
+}
+```
 
-Plugins can be assembled together in any combination to create an experiment.
+]
+
+.right-half[
+<img src="images/plugin-1.png" width="350" />
+]
+
+---
+
+class: middle
+
+.left-half[
+```javascript
+{
+  type: “single-stim”,
+  stimulus: “face2.jpg”,
+  choices: ['A', 'B'],
+  prompt: “Is this person in group A or group B?”
+}
+```
+
+]
+
+.right-half[
+<img src="images/plugin-2.png" width="350" />
+]
+
+---
+
+class: middle
+
+.left-half[
+```javascript
+{
+  type: “single-stim”,
+  stimulus: “<p style=“font-size:80px”>+</p>”,
+  choices: jsPsych.NO_KEYS,
+  timing_response: 500
+}
+```
+
+]
+
+.right-half[
+<img src="images/plugin-3.png" width="350" />
+]
+
+---
+
+class: middle
+
+.left-half[
+```javascript
+{
+  type: “single-stim”,
+  stimulus: "<video autoplay>" +
+    "<source src='mov/traffic.mp4' type='video/mp4'></video>",
+  choices: [‘enter’],
+  prompt: “Press enter to continue.”
+}
+```
+
+]
+
+.right-half[
+<img src="images/plugin-4.png" width="350" />
+]
+
+---
+
+class: middle
+
+# Plugins are squenced in a timeline.
+
+---
+
+class: middle
+
+<img src="images/timeline-1.png" width="750" />
+
+---
+
+class: middle
+
+<img src="images/timeline-2.png" width="750" />
+
+---
+
+class: middle
+
+<img src="images/timeline-3.png" width="750" />
+
+---
+
+class: middle
+
+<img src="images/timeline-4.png" width="750" />
+
+---
+
+class: middle
+
+<img src="images/timeline-5.png" width="750" />
 
 ---
 
@@ -1556,7 +1712,7 @@ class: middle
 
 * We tend to repeat the same structures across experiments, with variations in content.
 * Other researchers often want to use the same structures to replicate a finding.
-* jsPsych lets you rapidly assemble new experiments by providing all the functionality necessary to glue different structures together. 
+* jsPsych lets you rapidly assemble new experiments by providing all the functionality necessary to glue different structures together.
 * jsPsych also provides a hanful of functions for interacting with data, randomizing factors, and developing new plugins.
 
 ---
@@ -1565,7 +1721,6 @@ class: middle
 
 # When is jsPsych not helpful?
 
-* jsPsych works best when the entire experimental structure is known in advance.
 * If your experiment uses a very complicated and novel structure that you probably won't use again, it might not be worth it to use jsPsych.
 * Other tools do a better job with surveys.
 
@@ -1575,7 +1730,8 @@ class: middle
 
 # How to learn more about jsPsych after today
 
-* All documentation is on the project's GitHub site: [https://www.github.com/jodeleeuw/jsPsych](https://www.github.com/jodeleeuw/jsPsych)
+* Documentation is available at [http://docs.jspsych.org](http://docs.jspsych.org)
+* Source code is available on the project's GitHub site: [https://www.github.com/jodeleeuw/jsPsych](https://www.github.com/jodeleeuw/jsPsych)
 * Mailing list for questions and answers: [https://groups.google.com/forum/#!forum/jspsych](https://groups.google.com/forum/#!forum/jspsych)
 
 ---
