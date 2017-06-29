@@ -40,3 +40,10 @@ RUN pip2 install dallinger[data]==3.2.0
 #RUN cp -p /lib/x86_64-linux-gnu/libreadline.so.6 /opt/conda/lib/libreadline.so.6 && \
 #RUN Rscript -e "install.packages('wordbankr', dependencies = TRUE, repos='http://cran.us.r-project.org')"
 RUN touch /tmp/testing
+RUN conda install --yes            setuptools
+RUN conda install --yes -n python2 setuptools
+RUN ln -s $CONDA_DIR/envs/python2/bin/psiturk-install $CONDA_DIR/bin/psiturk-install && \
+    ln -s $CONDA_DIR/envs/python2/bin/psiturk-server $CONDA_DIR/bin/psiturk-server && \
+    ln -s $CONDA_DIR/envs/python2/bin/psiturk-setup-example $CONDA_DIR/bin/psiturk-setup-example && \
+    ln -s $CONDA_DIR/envs/python2/bin/psiturk-shell $CONDA_DIR/bin/psiturk-shell
+
