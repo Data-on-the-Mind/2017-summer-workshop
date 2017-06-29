@@ -77,16 +77,17 @@ summary(m3)
 
 ## ---- include=FALSE------------------------------------------------------
 op <- options(width = 40)
+require(dplyr)
 
 ## ------------------------------------------------------------------------
 mean(sat.act$ACT)
-aggregate(ACT ~ gender, sat.act, 
-          mean)
+sat.act %>% group_by(gender) %>%
+  summarise(m = mean(ACT))
 
 ## ------------------------------------------------------------------------
-diff(aggregate(ACT ~ gender, 
-               sat.act, 
-          mean)$ACT)
+sat.act %>% group_by(gender) %>%
+  summarise(m = mean(ACT)) %>%
+  {.$m[2] - .$m[1]}
 
 ## ---- include=FALSE------------------------------------------------------
 options(op)
@@ -112,11 +113,12 @@ op <- options(width = 40)
 
 ## ------------------------------------------------------------------------
 mean(sat.act$ACT)
-aggregate(ACT ~ gender, sat.act, 
-          mean)
-mean(aggregate(ACT ~ gender, 
-               sat.act, 
-          mean)$ACT)
+sat.act %>% group_by(gender) %>%
+  summarise(m = mean(ACT))
+sat.act %>% group_by(gender) %>%
+  summarise(m = mean(ACT)) %>% 
+  summarise(mean(m))
+
 
 ## ---- include=FALSE------------------------------------------------------
 options(op)
@@ -132,8 +134,9 @@ m5 <- lm(ACT ~ gender*education, sat.act)
 coef(m5)
 
 ## ------------------------------------------------------------------------
-aggregate(ACT ~ gender+education, 
-          sat.act, mean)
+sat.act %>% 
+  group_by(gender,education) %>%
+  summarise(mean(ACT))
 
 ## ---- include=FALSE------------------------------------------------------
 options(op)
@@ -149,10 +152,11 @@ m6 <- lm(ACT ~ gender*education, sat.act)
 coef(m6)
 
 ## ------------------------------------------------------------------------
-mean(
-  aggregate(ACT ~ 
-              gender+education, 
-          sat.act, mean)$ACT)
+sat.act %>% 
+  group_by(gender,education) %>%
+  summarise(m = mean(ACT)) %>% 
+  ungroup() %>% 
+  summarise(mean(m))
 
 ## ---- include=FALSE------------------------------------------------------
 options(op)
@@ -206,10 +210,11 @@ m6 <- lm(ACT ~ gender*education, sat.act)
 summary(m6)
 
 ## ------------------------------------------------------------------------
-mean(
-  aggregate(ACT ~ 
-              gender+education, 
-          sat.act, mean)$ACT)
+sat.act %>% 
+  group_by(gender, education) %>%
+  summarise(m = mean(ACT)) %>% 
+  ungroup() %>% 
+  summarise(mean(m))
 
 ## ---- include=FALSE------------------------------------------------------
 options(op)

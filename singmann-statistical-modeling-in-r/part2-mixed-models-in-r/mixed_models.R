@@ -69,7 +69,7 @@ for (i in seq_len(nrow(rnd_coefs)))
 abline(a = coef(m_fixed)[1] - coef(m_fixed)[3], 
        b = coef(m_fixed)[2] - coef(m_fixed)[4])
 
-## ---- echo=FALSE, dpi=500, fig.width=7, fig.height=4, warning=FALSE------
+## ---- echo=FALSE, dpi=500, fig.width=7, fig.height=3.5, warning=FALSE----
 m_tmp <- lmer(dv ~ c_given_a*rel_cond + (1+c_given_a|p_id), datr)
 rnd_coefs <- coef(m_tmp)$p_id
 par(mfrow = c(1,2))
@@ -262,6 +262,28 @@ summary(m_red)$varcor
 ## ------------------------------------------------------------------------
 m_red
 
+## ---- echo=FALSE, dpi=500, fig.width=7, fig.height=4, warning=FALSE------
+rnd_coefs <- coef(m_red$full_model)$p_id
+par(mfrow = c(1,2))
+par(pty="s")
+limits <- c(-0.5, 0.5)
+plot(dv ~ c_given_a, datr, subset = rel_cond == "PO", 
+     asp = 1, ylim=limits, xlim=limits, main ="PO")
+for (i in seq_len(nrow(rnd_coefs))) 
+  abline(a = rnd_coefs[i,4] + rnd_coefs[i,6] + rnd_coefs[i,2], 
+         b = rnd_coefs[i,5] + rnd_coefs[i,1] + rnd_coefs[i,7] + rnd_coefs[i,3],
+         col = "lightgrey")
+abline(a = coef(m_fixed)[1] + coef(m_fixed)[3], 
+       b = coef(m_fixed)[2] + coef(m_fixed)[4])
+plot(dv ~ c_given_a, datr, subset = rel_cond == "IR", 
+     asp = 1, ylim=limits, xlim=limits, main ="IR")
+for (i in seq_len(nrow(rnd_coefs))) 
+  abline(a = rnd_coefs[i,4] - (rnd_coefs[i,6] + rnd_coefs[i,2]), 
+         b = rnd_coefs[i,5] + rnd_coefs[i,1] - (rnd_coefs[i,7] + rnd_coefs[i,3]),
+         col = "lightgrey")
+abline(a = coef(m_fixed)[1] - coef(m_fixed)[3], 
+       b = coef(m_fixed)[2] - coef(m_fixed)[4])
+
 ## ---- echo=FALSE, results='hide', message=FALSE--------------------------
 require(afex)
 load("fitted_lmms.rda")
@@ -325,6 +347,18 @@ m2 <- lmer(dv ~ 1 + (rel_cond:c_given_a|p_id),
  #          rel_condIR:c_given_a 0.3262   0.571    -0.48  0.75
  # Residual                      0.0570   0.239 
 icc(m2)
+
+## ---- fig.width=5, fig.height=4------------------------------------------
+plot(m_max, 
+     resid(.,scaled=TRUE) ~ c_given_a | rel_cond)
+
+## ---- fig.width=4, fig.height=4------------------------------------------
+lattice::qqmath(m_max)
+
+## ---- eval=FALSE---------------------------------------------------------
+## plot(m_max, p_id ~ resid(., scaled=TRUE) )
+## plot(m_max, resid(., scaled=TRUE) ~ fitted(.) | rel_cond)
+## ?plot.merMod
 
 ## ---- eval=FALSE, include=FALSE------------------------------------------
 ## require(afex)

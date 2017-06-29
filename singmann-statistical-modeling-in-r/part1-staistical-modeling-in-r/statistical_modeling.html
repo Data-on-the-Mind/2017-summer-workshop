@@ -390,27 +390,28 @@ mean(sat.act$ACT)
 ```
 
 ```r
-aggregate(ACT ~ gender, sat.act, 
-          mean)
+sat.act %&gt;% group_by(gender) %&gt;%
+  summarise(m = mean(ACT))
 ```
 
 ```
-##   gender   ACT
+## # A tibble: 2 x 2
+##   gender     m
+##   &lt;fctr&gt; &lt;dbl&gt;
 ## 1   male 28.82
 ## 2 female 28.40
 ```
 
+
 ```r
-diff(aggregate(ACT ~ gender, 
-               sat.act, 
-          mean)$ACT)
+sat.act %&gt;% group_by(gender) %&gt;%
+  summarise(m = mean(ACT)) %&gt;%
+  {.$m[2] - .$m[1]}
 ```
 
 ```
 ## [1] -0.42
 ```
-
-
 ]
 
 
@@ -550,24 +551,29 @@ mean(sat.act$ACT)
 ```
 
 ```r
-aggregate(ACT ~ gender, sat.act, 
-          mean)
+sat.act %&gt;% group_by(gender) %&gt;%
+  summarise(m = mean(ACT))
 ```
 
 ```
-##   gender   ACT
+## # A tibble: 2 x 2
+##   gender     m
+##   &lt;fctr&gt; &lt;dbl&gt;
 ## 1   male 28.82
 ## 2 female 28.40
 ```
 
 ```r
-mean(aggregate(ACT ~ gender, 
-               sat.act, 
-          mean)$ACT)
+sat.act %&gt;% group_by(gender) %&gt;%
+  summarise(m = mean(ACT)) %&gt;% 
+  summarise(mean(m))
 ```
 
 ```
-## [1] 28.61
+## # A tibble: 1 x 1
+##   `mean(m)`
+##       &lt;dbl&gt;
+## 1     28.61
 ```
 
 ]
@@ -617,24 +623,28 @@ coef(m5)
 .pull-right2[
 
 ```r
-aggregate(ACT ~ gender+education, 
-          sat.act, mean)
+sat.act %&gt;% 
+  group_by(gender,education) %&gt;%
+  summarise(mean(ACT))
 ```
 
 ```
-##    gender education   ACT
-## 1    male         0 29.04
-## 2  female         0 26.07
-## 3    male         1 26.58
-## 4  female         1 27.83
-## 5    male         2 26.65
-## 6  female         2 27.20
-## 7    male         3 28.67
-## 8  female         3 28.16
-## 9    male         4 28.94
-## 10 female         4 29.37
-## 11   male         5 30.83
-## 12 female         5 29.12
+## # A tibble: 12 x 3
+## # Groups:   gender [?]
+##    gender education `mean(ACT)`
+##    &lt;fctr&gt;    &lt;fctr&gt;       &lt;dbl&gt;
+##  1   male         0       29.04
+##  2   male         1       26.58
+##  3   male         2       26.65
+##  4   male         3       28.67
+##  5   male         4       28.94
+##  6   male         5       30.83
+##  7 female         0       26.07
+##  8 female         1       27.83
+##  9 female         2       27.20
+## 10 female         3       28.16
+## 11 female         4       29.37
+## 12 female         5       29.12
 ```
 ]
 
@@ -679,14 +689,18 @@ coef(m6)
 .pull-right2[
 
 ```r
-mean(
-  aggregate(ACT ~ 
-              gender+education, 
-          sat.act, mean)$ACT)
+sat.act %&gt;% 
+  group_by(gender,education) %&gt;%
+  summarise(m = mean(ACT)) %&gt;% 
+  ungroup() %&gt;% 
+  summarise(mean(m))
 ```
 
 ```
-## [1] 28.21
+## # A tibble: 1 x 1
+##   `mean(m)`
+##       &lt;dbl&gt;
+## 1     28.21
 ```
 ]
 
@@ -903,14 +917,18 @@ summary(m6)
 .pull-right2[
 
 ```r
-mean(
-  aggregate(ACT ~ 
-              gender+education, 
-          sat.act, mean)$ACT)
+sat.act %&gt;% 
+  group_by(gender, education) %&gt;%
+  summarise(m = mean(ACT)) %&gt;% 
+  ungroup() %&gt;% 
+  summarise(mean(m))
 ```
 
 ```
-## [1] 28.21
+## # A tibble: 1 x 1
+##   `mean(m)`
+##       &lt;dbl&gt;
+## 1     28.21
 ```
 ]
 

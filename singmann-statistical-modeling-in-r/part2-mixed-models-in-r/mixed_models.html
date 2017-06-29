@@ -163,14 +163,14 @@ class: small
 
 First model did not allow for different intercepts, `\(\beta_0\)`, for each participant. 
 
-`$$y=\beta_0 + \S_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + \beta_{r}X_{r} + \beta_{I}X_{I} + \epsilon$$`
-- Model now has a random intercept, `\(\S_0\)`, and a random slope, `\(S_{C|A}\)`.
-- `\(S\)`-vectors are still zero-centered vector of participant specific random effects. However, we now estimate both, variance and covariance of random effects:
+`$$y=\beta_0 + S_0 + (\beta_{C|A}+ S_{C|A})X_{C|A} + \beta_{r}X_{r} + \beta_{I}X_{I} + \epsilon$$`
+- Model now has a random intercept, `\(S_0\)`, and a random slope, `\(S_{C|A}\)`.
+- `\(S\)`-vectors still zero-centered vectors of participant specific random effects. However, we now estimate both, variance and covariance of random effects:
   
 `$$\left( \begin{matrix} S_0 \\ S_{C|A} \end{matrix} \right)
  \sim \mathcal{N}\left( \left[ \begin{matrix} 0 \\ 0 \end{matrix} \right] , \left[ \begin{matrix} \sigma^2_{S_0}&amp;\rho_{S_{0},S_{C|A}}\sigma_{S_{0}}\sigma_{S_{C|A}} \\ \rho_{S_{C|A},S_{0}}\sigma_{S_{0}}\sigma_{S_{C|A}}&amp;\sigma^2_{S_{C|A}} \end{matrix} \right] \right)$$`
 
-- This model allows each participant to have an idiosyncratic intercept and slope.
+Each `\(S_i\)` idiosyncratic intercept &amp; slope: `lmer(dv ~ c_given_a*rel_cond + (c_given_a|p_id), datr)`
 
 .pull-left[
 ![](mixed_models_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
@@ -186,7 +186,7 @@ First model did not allow for different intercepts, `\(\beta_0\)`, for each part
 - zero-centered offsets/displacements for each level of random effect grouping factor
 - added to specific fixed effect parameter
 - assumed to follow normal distribution which provides hierarchical shrinkage, thereby avoids over-fitting
-- should be added to each parameter that varies within the levels of a random effects grouping factor
+- should be added to each parameter that varies within the levels of a random effects grouping factor (i.e., factor is *crossed* with random effects grouping factor)
 
 .pull-left[
 ![](mixed_models_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
@@ -402,11 +402,11 @@ class: small
 
 
 
+.pull-left[
+
 - `lmer` allows suppressing correlation among random effects using `||` syntax. However, **only for numerical variables.**
 - `afex::mixed()` allows using `||` also for factors if `expand_re = TRUE`:
 
-
-.pull-left[
 
 ```r
 m_red &lt;- mixed(dv ~ c_given_a*rel_cond + 
@@ -447,6 +447,8 @@ m_red
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
+
+![](mixed_models_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -668,6 +670,48 @@ class: small
 
 ### References Example Data:
 - Skovgaard-Olsen, N., Singmann, H., &amp; Klauer, K. C. (2016). The relevance effect and conditionals. *Cognition*, 150, 26-36. https://doi.org/10.1016/j.cognition.2015.12.017
+
+---
+class: small
+
+### Residuals
+
+.pull-left[
+
+
+```r
+plot(m_max, 
+     resid(.,scaled=TRUE) ~ c_given_a | rel_cond)
+```
+
+![](mixed_models_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```r
+lattice::qqmath(m_max)
+```
+
+![](mixed_models_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+
+]
+
+
+```r
+plot(m_max, p_id ~ resid(., scaled=TRUE) )
+plot(m_max, resid(., scaled=TRUE) ~ fitted(.) | rel_cond)
+?plot.merMod
+```
+
+- https://cran.r-project.org/doc/contrib/Faraway-PRA.pdf
+- https://htmlpreview.github.io/?https://github.com/bbolker/iiscvisit/blob/master/workshops/mixedlab.html
+
+---
+
+### Interpreting Residuals
+- Zuur et al. (2009). *Mixed Effects Models and Extensions in Ecology with R.* Springer. [Chapter 2]
+- Farraway (2002). *Practical Regression and Anova using R*. https://cran.r-project.org/doc/contrib/Faraway-PRA.pdf [Chapter 7]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
