@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Thanks for participating</h1>
+{% if mode == 'debug' %}
+  <p>You have completed the experiment.</p>
+{% else %}
+  <p>To complete the HIT, simply press the button below.</p>
+  <form id="mturk_form" action="{{ external_submit_url }}" method="post">
+    <input type="hidden" id="assignmentId" name="assignmentId" value="{{ assignmentid }}"  />
+    <input type="hidden" id="hitId" name="hitId" value="{{ hitid }}"  />
+    <input type="hidden" id="workerId" name="workerId" value="{{ workerid }}"  />
+    <input type="submit" class="button" value="Complete HIT" />
+  </form>
+{% endif %}
+{% endblock %}

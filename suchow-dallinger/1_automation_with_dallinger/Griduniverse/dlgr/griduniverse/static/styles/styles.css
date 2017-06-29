@@ -1,0 +1,188 @@
+.container {
+    max-width: 60rem !important;
+    margin-top: 4rem !important;
+}
+
+#instructions {
+    display: none;
+}
+
+#dashboard { }
+
+#ad-logo {
+    width: 100px;
+}
+
+canvas {
+    display: none;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    margin-top: 0px !important;
+}
+
+#chat {
+    width: 100%;
+}
+
+#chatlog {
+    margin-top: 10px;
+    overflow-y: auto;
+    border: 1px solid #cccccc;
+    min-height: 100px;
+    height: calc(100vh - 475px);
+    color: #333333;
+}
+
+#chatlog ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#chatlog li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 8px;
+    padding-right: 0px;
+    margin-bottom: 0px;
+}
+
+#chatlog li:nth-child(odd) {
+    background: #eee;
+}
+
+#chat form {
+    display: none;
+}
+
+.name {
+    font-weight: bold;
+}
+
+#message {
+    width: 300px;
+    background-color: #eeeeee;
+    margin-top: 5px;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+#submit-message {
+    background:none;
+    border:none;
+    margin:0;
+    padding-left: 5px;
+    color: #1693A5;
+    font-weight: bold;
+}
+
+#game-over {
+    display: none;
+}
+
+#opt-out {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+.DIFI {
+    border: solid 1px #ccc;
+    width: 100%;
+    margin: 10px auto;
+    padding-top: 40%;
+    position: relative;
+}
+
+.DIFI-controls {
+    left: 10px;
+    position: absolute;
+    text-align: center;
+    top: 10px;
+}
+
+.DIFI-controls button {
+    margin-right: 5px;
+    padding: 0 1.5rem;
+}
+
+.DIFI-range {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 55%;
+    padding-top: 20%;
+    transform: translateY(-50%);
+}
+
+.DIFI-me {
+    background-color: rgba(255, 255, 255, .8);
+    border: solid 1px #000;
+    border-radius: 50%;
+    cursor: move;
+    cursor: grab;
+    cursor: -webkit-grab;
+    padding-top: 25%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 25%;
+    user-select: none;
+}
+
+.DIFI-me.dragging {
+    cursor: move;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.DIFI-me label {
+    cursor: move;
+    cursor: grab;
+    cursor: -webkit-grab;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.DIFI-group {
+    background-color: #ccc;
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: 50%;
+    left: 80%;
+    padding-top: 30%;
+    position: absolute;
+    top: 55%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+}
+
+.DIFI-group label {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -100%);
+    white-space: nowrap;
+}
+
+#donate button {
+    padding: 0 0.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 2.5rem;
+    height: auto;
+}
+
+#donate label {
+    display: inline;
+    vertical-align: middle;
+    padding-right: 0.5rem;
+}
+
+#donate button:focus, #donate button:hover {
+    color: #ffffff;
+    background-color: #9b4dca;
+}

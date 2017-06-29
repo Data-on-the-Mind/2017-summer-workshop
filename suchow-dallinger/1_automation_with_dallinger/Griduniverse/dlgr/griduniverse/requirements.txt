@@ -1,0 +1,2 @@
+dallinger==3.3.0
+faker==0.7.10

@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block head %}
+{{ super() }}
+<script type="text/javascript">
+    // Parameters
+    settings = {};
+    settings.block_size = {{ experiment.grid.block_size }};
+    settings.padding = {{ experiment.grid.padding }};
+    settings.respawn_food = {% if experiment.grid.respawn_food %}true{% else %}false{% endif %};
+    settings.dollars_per_point = {{ experiment.grid.dollars_per_point }};
+    settings.rows = {{ experiment.grid.rows }};
+    settings.columns = {{ experiment.grid.columns }};
+    settings.window_columns = {{ experiment.grid.window_columns }};
+    settings.window_rows = {{ experiment.grid.window_rows }};
+    settings.mutable_colors = {% if experiment.grid.mutable_colors %}true{% else %}false{% endif %};
+    settings.player_overlap = {% if experiment.grid.player_overlap %}true{% else %}false{% endif %};
+    settings.background_animation = {% if experiment.grid.background_animation %}true{% else %}false{% endif %};
+    settings.time_per_round = {{ experiment.grid.time_per_round }};
+    settings.num_rounds = {{ experiment.grid.num_rounds }};
+    settings.tax = {{ experiment.grid.tax }};
+    settings.walls = "{{ experiment.grid.wall_type }}";
+    settings.show_grid = {% if experiment.grid.show_grid %}true{% else %}false{% endif %};
+    settings.visibility = {{ experiment.grid.visibility }};
+    settings.others_visible = {% if experiment.grid.others_visible %}true{% else %}false{% endif %};
+    settings.identity_signaling = {% if experiment.grid.identity_signaling %}true{% else %}false{% endif %};
+    settings.identity_starts_visible = {% if experiment.grid.identity_starts_visible %}true{% else %}false{% endif %};
+    settings.food_visible = {% if experiment.grid.food_visible %}true{% else %}false{% endif %};
+    settings.show_chatroom = {% if experiment.grid.show_chatroom %}true{% else %}false{% endif %};
+    settings.pseudonyms = {% if experiment.grid.pseudonyms %}true{% else %}false{% endif %};
+    settings.walls_visible = {% if experiment.grid.walls_visible %}true{% else %}false{% endif %};
+    settings.build_walls = {% if experiment.grid.build_walls %}true{% else %}false{% endif %};
+    settings.wall_building_cost = {{ experiment.grid.wall_building_cost }};
+    settings.donation_amount = {{ experiment.grid.donation_amount }};
+    settings.donation_individual = {% if experiment.grid.donation_individual %}true{% else %}false{% endif %};
+    settings.donation_group = {% if experiment.grid.donation_group %}true{% else %}false{% endif %};
+    settings.donation_public = {% if experiment.grid.donation_public %}true{% else %}false{% endif %};
+    settings.donation_type = null;
+    settings.score_visible = {% if experiment.grid.score_visible %}true{% else %}false{% endif %};
+    settings.alternate_consumption_donation = {% if experiment.grid.alternate_consumption_donation %}true{% else %}false{% endif %};
+</script>
+{% endblock %}
+
+{% block body %}
+<div id="game-over">
+    <h2>Game over.</h2>
+</div>
+
+<div id="dashboard">
+    <p>
+        <span id="score">0</span> points ($<span id="dollars">0.00</span>),
+        <span id="time">?</span> seconds remaining
+        {% if experiment.grid.num_rounds > 1 %}in round <span id="round">?</span>{% endif %}
+    </p>
+</div>
+
+<div id="grid">
+    <!-- Grid will be inserted here. -->
+</div>
+
+{% if experiment.grid.donation_amount %}
+<div id="donate" class="for-players">
+    <label>Give {{ experiment.grid.donation_amount }} point{{experiment.grid.donation_amount > 1 and 's' or ''}} to:</label>
+    {% if experiment.grid.donation_individual %}
+        <button id="individual-donate" class="button-outline">Player</button>
+    {% endif %}
+    {% if experiment.grid.donation_group %}
+        <button id="group-donate" class="button-outline">Group</button>
+    {% endif %}
+    {% if experiment.grid.donation_public %}
+        <button id="public-donate">Everyone</button>
+    {% endif %}
+</div>
+{% endif %}
+
+<div id="chat">
+    <div id="chatlog">
+        <ul id="messages"></ul>
+    </div>
+    <form action="" class="for-players">
+        <input id="message" autocomplete="off" placeholder="Message the group." />
+        <button id="submit-message" class="button button-clear">Send to everyone</button>
+    </form>
+</div>
+
+<div id="instructions" class="for-players">
+    <h1>Instructions</h1>
+    <p>You are one of the squares. Move using the arrow keys.</p>
+    {% if experiment.grid.mutable_colors %}
+        <p>Press 'b' or 'y' to switch to blue or yellow.</p>
+    {% endif %}
+    {% if experiment.grid.identity_signaling %}
+        <p>Your group is initially {% if experiment.grid.identity_starts_visible %}visible{% else %}invisible{% endif %} to other players. Press 'v' to toggle your group visibility.</p>
+    {% endif %}
+</div>
+
+<script src="static/scripts/dist/bundle.js"></script>
+{% endblock %}
+
+{% block opt_out %}
+<div class="for-players">
+    <button class="button button-clear button-small" id="opt-out">Opt out</button>
+</div>
+{% endblock %}
