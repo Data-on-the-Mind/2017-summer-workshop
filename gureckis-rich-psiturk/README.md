@@ -7,6 +7,14 @@ To be ready for the workshop please create a Amazon account (AWS) and an account
 1. Up to date instructions for AWS: http://psiturk.readthedocs.io/en/latest/psiturk_org_setup.html
 2. Up to date instructions for psiturk: http://psiturk.readthedocs.io/en/latest/psiturk_org_setup.html
 
+## Accessing the workshop materials
+
+### slides
+The workshop slides are made using [remarkjs](https://remarkjs.com/) and are contained in this folder. To view them, navigate to the folder in a terminal and type `python -m SimpleHTTPServer 8000`. Then open a browser and enter `http://localhost:8000/index.html` in the address bar.
+
+### psiTurk + jsPsych stroop example
+The example experiment can be downloaded from the [psiTurk experiment exchange](http://psiturk.org/ee/) by typing the command `psiturk-install Vn8uJAA2RGCSJp6pAoFgTH` in a terminal. The `experiment_complete` folder contains the complete experiment. The `experiment_skeleton` folder contains the minimal functioning experiment. Navigate to `experiment_skeleton/static/js/` to find six javascript files that build the experiment up step by step, with comments.
+
 ## psiTurk documentation
 
 In this workshop, we'll walk through the basics of creating and running an
