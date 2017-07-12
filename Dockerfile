@@ -1,5 +1,17 @@
 FROM aculich/rockyter
 
+MAINTAINER Aaron Culich / Berkeley Research Computing <brc+aculich@berkeley.edu>
+
+## Please feel free to contact Berkeley Research Computing (BRC) if you have
+## questions or if you want dedicated computational infrastructure if
+## http://beta.mybinder.org/ does not provide enough power or if you need a
+## dedicated resource for your own research or workshop.
+##
+## - http://research-it.berkeley.edu/brc
+## - http://research-it.berkeley.edu/services/cloud-computing-support
+##
+## Contact: Aaron Culich <brc+aculich@berkeley.edu>
+
 RUN conda install --yes r-psych r-afex r-lsmeans r-lme4 r-car r-broom r-purrr
 
 RUN conda install --yes            beautifulsoup4 selenium lxml nose rpy2
