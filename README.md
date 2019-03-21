@@ -39,7 +39,7 @@ This workshop includes programming in both R and Python, and tutorials assume th
 Pleaes keep in mind that we will not be covering any introductions to basic programming in our workshop, so be sure to complete some basic R and/or Python tutorials before attending in person or remotely. We link to some free online basic programming tutorials here: http://www.dataonthemind.org/2017-workshop/introductions-r-and-python
 
 ## Questions?
-Contact Alex Paxton at <paxton [dot] alexandra [at] berkeley [dot] edu>.
+Contact Alex Paxton at <alexandra [dot] paxton [at] uconn [dot] edu>.
 
 ## Organizing committee
 * Tom Griffiths (University of California, Berkeley)
